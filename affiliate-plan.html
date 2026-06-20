@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Yourself First</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-primary': '#389400', 
+                        'brand-dark': '#1c1c1c',
+                        'footer-bg': '#1f2022',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdn.pagesense.io/js/payyourselffirst/c2e5673c7d15457d8a0925080101f545.js"></script>
+
+    <style>
+        /* Custom styles for sticky header transition */
+         .sticky-header { transition: transform 0.3s ease-in-out; }
+        .header-hidden { transform: translateY(-100%); }
+        
+    </style>
+
+</head>
+
+<body class="bg-white text-gray-800 font-sans antialiased flex flex-col min-h-screen">
+
+   <div id="main-header" class="fixed top-0 left-0 w-full z-50 sticky-header shadow-md">
+        <div class="bg-brand-dark text-white py-6 text-xs font-semibold">
+            <div class="container mx-auto px-4 flex justify-end items-center space-x-6">
+                <a href="#" class="flex items-center hover:text-brand-primary transition">
+                    <div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas fa-dollar-sign"></i></div> DISCOUNT PORTAL
+                </a>
+                <a href="#" class="flex items-center hover:text-brand-primary transition">
+                    <i class="fas fa-user text-brand-primary mr-2"></i> AFFILIATE LOGIN
+                </a>
+            </div>
+        </div>
+        <nav class="bg-white py-4">
+            <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
+                <a href="index.html"><img src="pyf-logo.svg" alt="Pay Yourself First Logo" class="h-12 object-contain"></a>
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl text-brand-dark focus:outline-none"><i class="fas fa-bars"></i></button>
+                <div data-site-nav-desktop class="hidden lg:flex items-center space-x-5 text-xs xl:text-sm font-bold text-gray-700 uppercase"></div>
+            </div>
+            <div id="mobile-menu" data-site-nav-mobile class="hidden lg:hidden text-sm bg-white border-t mt-4 p-4 flex flex-col space-y-4 font-bold text-gray-700 uppercase"></div>
+        </nav>
+    </div>
+
+ <header class="container mx-auto px-4 mb-16 mt-48" data-affiliate-section="hero">
+        <div class="relative rounded-[2rem] overflow-hidden h-[500px] md:h-[600px] shadow-2xl group">
+            
+            <img id="affiliate-hero-image" src="Free-affiliate-page/Affiliate Page_Hero.jpg" 
+                 alt="Money Background" 
+                 class="absolute inset-0 w-full h-full object-cover">
+            
+           <div class="absolute inset-0 bg-black/40"></div>
+
+            <div class="relative z-10 h-full flex flex-col justify-center px-6 md:px-20 max-w-6xl">
+                
+                <h1 id="affiliate-hero-headline" class="text-3xl md:text-5xl font-extrabold text-white mb-6 uppercase leading-tight drop-shadow-md">
+                    Start Earning Referral Fees.<br>
+                    <span class="text-[#75C400]">Free To Join.</span>
+                </h1>
+                
+                <p id="affiliate-hero-desc" class="text-base md:text-xl text-gray-100 mb-10 font-medium leading-relaxed max-w-4xl">
+                    Join as a Free Affiliate and earn referral fees promoting Pay Yourself First.<br>
+                    <span class="font-bold text-white">No investment required.</span>
+                </p>
+                
+                <div id="affiliate-hero-buttons" class="flex flex-wrap gap-4">
+                    <a href="#" class="bg-[#75C400] text-white font-bold py-4 px-10 rounded shadow hover:bg-[#389400] transition uppercase text-sm tracking-wide inline-block">
+                        Become An Affiliate
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="affiliate-main" class="flex-grow">
+
+        <section class="py-16 md:py-24 bg-white" data-affiliate-section="benefits">
+            <div class="container mx-auto px-4">
+                
+                <div class="text-center max-w-4xl mx-auto mb-16">
+                    <h2 id="affiliate-benefits-headline" class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-6">
+                        What You <span class="text-brand-primary">Get As An Affiliate</span>
+                    </h2>
+                    <p id="affiliate-benefits-desc" class="text-gray-600 font-medium text-lg">
+                        The Affiliate program includes tools and resources to allow you to begin sharing Pay Yourself First. <br>
+                        As a Pay Yourself First Affiliate you can earn referral fees by sharing PYF products.
+                    </p>
+                </div>
+
+                <div id="affiliate-benefits-cards" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <div class="bg-[#F2FFEB] p-8 rounded-2xl text-center flex flex-col items-center hover:shadow-lg transition">
+                        <div class="w-20 h-20 bg-brand-primary rounded-full flex items-center justify-center text-white text-3xl mb-6 shadow-md">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-dark mb-4">Marketing Tools</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Personal referral link and back-office access to track your referral activity and promotional efforts. Marketing materials to allow you to share Pay Yourself First compliantly.
+                        </p>
+                    </div>
+
+                    <div class="bg-[#F2FFEB] p-8 rounded-2xl text-center flex flex-col items-center hover:shadow-lg transition">
+                        <div class="w-20 h-20 bg-brand-primary rounded-full flex items-center justify-center text-white text-3xl mb-6 shadow-md">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-dark mb-4">Pay Yourself First Certification</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Quick training on how to promote PYF compliantly.
+                        </p>
+                    </div>
+
+                    <div class="bg-brand-primary p-8 rounded-2xl text-center flex flex-col items-center shadow-xl transform md:scale-105">
+                        <div class="w-20 h-20 bg-[#F2FFEB] rounded-full flex items-center justify-center text-brand-primary text-3xl mb-6 shadow-md">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-4">Affiliate Resources</h3>
+                        <p class="text-white text-opacity-90 text-sm leading-relaxed mb-4">
+                            Training materials and promotional guidance.
+                        </p>
+                        <p class="text-white font-bold text-xs uppercase tracking-wide bg-[#2d7a00] py-2 px-4 rounded-full">
+                            As an Affiliate you have no meeting requirements
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 md:py-24 bg-white" data-affiliate-section="steps">
+            <div class="container mx-auto px-4">
+                
+                <h2 id="affiliate-steps-headline" class="text-3xl md:text-4xl font-extrabold text-center text-brand-dark uppercase mb-16">
+                    Three Simple <span class="text-brand-primary">Steps To Start</span>
+                </h2>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                    
+                    <div id="affiliate-steps-list" class="space-y-8">
+                        <div id="affiliate-steps-cards" class="space-y-8">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 w-20 h-20 bg-brand-primary rounded-full flex items-center justify-center text-white text-3xl shadow-lg z-10 border-4 border-white">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <div class="bg-[#F2FFEB] flex-grow -ml-10 pl-14 pr-8 py-6 rounded-r-2xl shadow-sm">
+                                    <h4 class="font-bold text-brand-dark text-lg">Step 1: Join Free</h4>
+                                    <p class="text-sm text-gray-600">Complete your registration—no credit card required</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 w-20 h-20 bg-brand-primary rounded-full flex items-center justify-center text-white text-3xl shadow-lg z-10 border-4 border-white">
+                                    <i class="fas fa-id-card-alt"></i>
+                                </div>
+                                <div class="bg-[#F2FFEB] flex-grow -ml-10 pl-14 pr-8 py-6 rounded-r-2xl shadow-sm">
+                                    <h4 class="font-bold text-brand-dark text-lg">Step 2: Get PYF Certified</h4>
+                                    <p class="text-sm text-gray-600">Take our 15-30 minute training to learn the basics</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 w-20 h-20 bg-[#dcfce7] rounded-full flex items-center justify-center text-brand-primary text-3xl shadow-lg z-10 border-4 border-white">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="bg-brand-primary flex-grow -ml-10 pl-14 pr-8 py-6 rounded-r-2xl shadow-lg origin-left">
+                                    <h4 class="font-bold text-white text-lg">Step 3: Start Sharing</h4>
+                                    <p class="text-sm text-white text-opacity-90">Share PYF online or offline and start earning referral fees.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="affiliate-steps-buttons" class="mt-8 pl-10 flex flex-wrap gap-4">
+                            <a href="#" class="bg-[#75C400] text-white font-bold py-4 px-10 rounded shadow hover:bg-[#389400] transition uppercase text-sm tracking-wide inline-block">
+                                Become An Affiliate
+                            </a>
+                        </div>
+
+                    </div>
+
+                    <div class="h-full min-h-[500px] relative">
+                        <img id="affiliate-steps-image" src="Free-affiliate-page/Affiliate Page_3 Simple Steps.jpg" 
+                             alt="Excited Affiliate" 
+                             class="rounded-[2rem] shadow-2xl w-full h-full object-cover">
+                        
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 md:py-24 bg-gray-50" data-affiliate-section="faq">
+            <div class="container mx-auto px-4 max-w-4xl">
+                
+                <h2 id="affiliate-faq-headline" class="text-3xl md:text-4xl font-extrabold text-center text-brand-dark uppercase mb-12">
+                    Common <span class="text-brand-primary">Questions</span>
+                </h2>
+
+                <div id="affiliate-faq-items" class="space-y-4">
+                    
+                    <div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
+                        <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-gray-50 transition focus:outline-none">
+                            <span class="font-bold text-gray-900 text-left">Is the Free Affiliate plan really free?</span>
+                            <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-6 border-t border-gray-100 text-gray-600 text-sm leading-relaxed">
+                            Yes. There is no investment to be a Free PYF Affiliate. You can join and start promoting PYF today.
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
+                        <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-gray-50 transition focus:outline-none">
+                            <span class="font-bold text-gray-900 text-left">How do I earn money as a Free Affiliate?</span>
+                            <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-6 border-t border-gray-100 text-gray-600 text-sm leading-relaxed">
+                            You earn one-time referral fees when people join PYF through your referral. No purchase is required to be an affiliate.
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
+                        <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-gray-50 transition focus:outline-none">
+                            <span class="font-bold text-gray-900 text-left">Can I become a Pro Affiliate later?</span>
+                            <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-6 border-t border-gray-100 text-gray-600 text-sm leading-relaxed">
+                            Absolutely. You can start as a Free Affiliate and become a Pro Affiliate when you’re ready to maximize your tax deductions and build residual income.
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
+                        <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-gray-50 transition focus:outline-none">
+                            <span class="font-bold text-gray-900 text-left">Is there a commitment or contract?</span>
+                            <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-6 border-t border-gray-100 text-gray-600 text-sm leading-relaxed">
+                            None. You can stay as a Free Affiliate as long as you want and become a Pro Affiliate at any time.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+
+
+
+
+   <footer class="relative bg-footer-bg text-white pt-16 pb-6 border-t-4 border-brand-primary">
+        <div class="absolute inset-0 overflow-hidden opacity-5 pointer-events-none">
+            <img src="Homepage/Footer_general.jpg" class="w-full h-full object-cover grayscale">
+        </div>
+
+        <div class="relative container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-6 pb-2 border-b border-gray-600 inline-block w-full">Find Us</h3>
+                    <ul class="space-y-6">
+                        
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt text-brand-primary text-xl mr-4 w-6"></i>
+                            <span class="text-gray-300 text-sm">+1 (855) 793-2582</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-brand-primary text-xl mr-4 w-6"></i>
+                            <a href="mailto:Service@PayYourselfFirst.com" class="text-gray-300 text-sm hover:text-brand-primary transition">info@payyourselffirst.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-6 pb-2 border-b border-gray-600 inline-block w-full">Legal</h3>
+                    <ul class="space-y-4 text-sm text-gray-300">
+                        <li><a href="terms.html" class="hover:text-brand-primary transition" target="_blank">Terms & Conditions</a></li>
+                        <li><a href="privacy.html" class="hover:text-brand-primary transition" target="_blank" >Privacy Policy</a></li>
+                        <li><a href="cookie.html" class="hover:text-brand-primary transition" target="_blank" >Cookie Policy</a></li>
+                        <li><a href="disclaimer.html" class="hover:text-brand-primary transition" target="_blank" >Disclaimer</a></li>
+                        <li><a href="use-policy.html" class="hover:text-brand-primary transition" target="_blank" >Acceptable Use Policy</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-6 pb-2 border-b border-gray-600 inline-block w-full">Quick Links</h3>
+                    <ul class="space-y-4 text-sm text-gray-300 mb-8">
+                        <li><a href="https://backoffice.pyfaffiliates.com/affiliates/signup.php#SignupForm" class="hover:text-brand-primary transition" target="_blank"> Become an Affiliate</a></li>
+                        <li><a href="packages.html" class="hover:text-brand-primary transition" target="_blank" >Join Now</a></li>
+                        <li><a href="contact-us.html" class="hover:text-brand-primary transition" target="_blank" >Contact Us</a></li>
+                    </ul>
+                    
+                    <div class="flex space-x-3">
+                        <a href="https://www.facebook.com/share/1SgQW8W1qQ/?mibextid=wwXIfr" class="w-10 h-10 rounded-full bg-brand-primary hover:bg-white text-brand-dark hover:text-brand-primary flex items-center justify-center transition shadow-lg" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://x.com/pyfinc" target="_blank" class="w-10 h-10 rounded-full bg-brand-primary hover:bg-white text-brand-dark hover:text-brand-primary flex items-center justify-center transition shadow-lg">
+                         <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/pay_yourself_first_inc" target="_blank" class="w-10 h-10 rounded-full bg-brand-primary hover:bg-white text-brand-dark hover:text-brand-primary flex items-center justify-center transition shadow-lg">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/pay-yourself-first-inc/about/?viewAsMember=true" target="_blank" class="w-10 h-10 rounded-full bg-brand-primary hover:bg-white text-brand-dark hover:text-brand-primary flex items-center justify-center transition shadow-lg">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
+                <p class="mb-2 md:mb-0">Copyright © 2025 - <span class="text-brand-primary">Pay Yourself First</span>. All Rights Reserved.</p>
+                <p>Powered By <span class="text-brand-primary">SapphireLead</span> © 2025</p>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+    <script>
+        const supabaseUrl = 'https://nqwggnereuhphwmkqove.supabase.co';
+    </script>
+    <script>
+        const affiliateSupabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJz dXBhYmFzZSIsInJlZiI6Im5xd2dnbmVyZXVocGh3bWtxb3ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDUxMjAsImV4cCI6MjA5MTM4MTEyMH0.1OM-fLTth5FcMKUPHgepeM3BdJMydHiK1coD0vw0o0M'.replace(/\s+/g, '');
+        const affiliatePageId = 'affiliate';
+        const affiliateSupabase = window.supabase?.createClient
+            ? window.supabase.createClient(supabaseUrl, affiliateSupabaseKey)
+            : null;
+
+        function showAffiliateRuntimeError(message) {
+            let banner = document.getElementById('affiliate-runtime-error');
+            if (!banner) {
+                banner = document.createElement('div');
+                banner.id = 'affiliate-runtime-error';
+                banner.className = 'fixed bottom-4 left-4 right-4 md:right-auto md:max-w-xl z-[9999] rounded-lg bg-red-600 text-white px-4 py-3 shadow-2xl text-sm font-semibold';
+                document.body.appendChild(banner);
+            }
+
+            banner.textContent = message;
+        }
+
+        function clearAffiliateRuntimeError() {
+            const banner = document.getElementById('affiliate-runtime-error');
+            if (banner) banner.remove();
+        }
+
+        function getDefaultAffiliateContent() {
+            return {
+                page_id: affiliatePageId,
+                hero: {
+                    headline: 'Start Earning Referral Fees.<br><span class="text-[#75C400]">Free To Join.</span>',
+                    desc: 'Join as a Free Affiliate and earn referral fees promoting Pay Yourself First.<br><span class="font-bold text-white">No investment required.</span>',
+                    image: 'Free-affiliate-page/Affiliate Page_Hero.jpg',
+                    buttons: [
+                        { text: 'Become An Affiliate', link: 'https://backoffice.pyfaffiliates.com/affiliates/signup.php#SignupForm', style: 'primary' }
+                    ]
+                },
+                benefits: {
+                    headline: 'What You <span class="text-brand-primary">Get As An Affiliate</span>',
+                    desc: 'The Affiliate program includes tools and resources to allow you to begin sharing Pay Yourself First. <br>As a Pay Yourself First Affiliate you can earn referral fees by sharing PYF products.',
+                    cards: [
+                        {
+                            title: 'Marketing Tools',
+                            desc: 'Personal referral link and back-office access to track your referral activity and promotional efforts. Marketing materials to allow you to share Pay Yourself First compliantly.',
+                            icon: 'fa-bullhorn',
+                            accent: 'light',
+                            badge: ''
+                        },
+                        {
+                            title: 'Pay Yourself First Certification',
+                            desc: 'Quick training on how to promote PYF compliantly.',
+                            icon: 'fa-certificate',
+                            accent: 'light',
+                            badge: ''
+                        },
+                        {
+                            title: 'Affiliate Resources',
+                            desc: 'Training materials and promotional guidance.',
+                            icon: 'fa-chalkboard-teacher',
+                            accent: 'primary',
+                            badge: 'As an Affiliate you have no meeting requirements'
+                        }
+                    ]
+                },
+                steps: {
+                    headline: 'Three Simple <span class="text-brand-primary">Steps To Start</span>',
+                    image: 'Free-affiliate-page/Affiliate Page_3 Simple Steps.jpg',
+                    steps: [
+                        { title: 'Step 1: Join Free', desc: 'Complete your registration-no credit card required', icon: 'fa-user-plus', accent: 'light' },
+                        { title: 'Step 2: Get PYF Certified', desc: 'Take our 15-30 minute training to learn the basics', icon: 'fa-id-card-alt', accent: 'light' },
+                        { title: 'Step 3: Start Sharing', desc: 'Share PYF online or offline and start earning referral fees.', icon: 'fa-money-bill-wave', accent: 'primary' }
+                    ],
+                    buttons: [
+                        { text: 'Become An Affiliate', link: 'https://backoffice.pyfaffiliates.com/affiliates/signup.php#SignupForm', style: 'primary' }
+                    ]
+                },
+                faq: {
+                    headline: 'Common <span class="text-brand-primary">Questions</span>',
+                    items: [
+                        { q: 'Is the Free Affiliate plan really free?', a: 'Yes. There is no investment to be a Free PYF Affiliate. You can join and start promoting PYF today.' },
+                        { q: 'How do I earn money as a Free Affiliate?', a: 'You earn one-time referral fees when people join PYF through your referral. No purchase is required to be an affiliate.' },
+                        { q: 'Can I become a Pro Affiliate later?', a: 'Absolutely. You can start as a Free Affiliate and become a Pro Affiliate when you are ready to maximize your tax deductions and build residual income.' },
+                        { q: 'Is there a commitment or contract?', a: 'None. You can stay as a Free Affiliate as long as you want and become a Pro Affiliate at any time.' }
+                    ]
+                },
+                sections: [
+                    { id: 'affiliate-hero', type: 'hero', enabled: true, order: 1, label: 'Hero Banner' },
+                    { id: 'affiliate-benefits', type: 'benefits', enabled: true, order: 2, label: 'Benefits Grid' },
+                    { id: 'affiliate-steps', type: 'steps', enabled: true, order: 3, label: 'Three Steps' },
+                    { id: 'affiliate-faq', type: 'faq', enabled: true, order: 4, label: 'FAQ' }
+                ]
+            };
+        }
+
+        function normalizeAffiliateButtons(buttons, fallbackButtons = []) {
+            const source = Array.isArray(buttons) && buttons.length ? buttons : fallbackButtons;
+            return (Array.isArray(source) ? source : []).map((button, index) => ({
+                text: button?.text || `Button ${index + 1}`,
+                url: button?.url || button?.link || '#',
+                link: button?.url || button?.link || '#',
+                style: button?.style === 'secondary' ? 'secondary' : 'primary'
+            }));
+        }
+
+        function normalizeAffiliatePayload(payload) {
+            const defaults = getDefaultAffiliateContent();
+            const sections = Array.isArray(payload?.sections) ? payload.sections : defaults.sections;
+            const getSectionContent = (type) => sections.find(section => section.type === type)?.content || {};
+
+            const heroSection = getSectionContent('hero');
+            const benefitsSection = getSectionContent('benefits');
+            const stepsSection = getSectionContent('steps');
+            const faqSection = getSectionContent('faq');
+
+            const heroButtons = normalizeAffiliateButtons(payload?.hero?.buttons, Array.isArray(heroSection.buttons) && heroSection.buttons.length ? heroSection.buttons : defaults.hero.buttons);
+            const stepsButtons = normalizeAffiliateButtons(payload?.steps?.buttons, Array.isArray(stepsSection.buttons) && stepsSection.buttons.length ? stepsSection.buttons : defaults.steps.buttons);
+
+            return {
+                page_id: affiliatePageId,
+                hero: {
+                    ...defaults.hero,
+                    ...heroSection,
+                    ...(payload?.hero || {}),
+                    buttons: heroButtons
+                },
+                benefits: {
+                    ...defaults.benefits,
+                    ...benefitsSection,
+                    ...(payload?.benefits || {}),
+                    cards: (Array.isArray(payload?.benefits?.cards) && payload.benefits.cards.length ? payload.benefits.cards : (Array.isArray(benefitsSection.cards) && benefitsSection.cards.length ? benefitsSection.cards : defaults.benefits.cards)).map((card, index) => ({
+                        title: card?.title || `Benefit Card ${index + 1}`,
+                        description: card?.description || card?.desc || '',
+                        desc: card?.description || card?.desc || '',
+                        icon: card?.icon || 'fa-star',
+                        accent: card?.accent === 'primary' ? 'primary' : 'light',
+                        badge: card?.badge || ''
+                    }))
+                },
+                steps: {
+                    ...defaults.steps,
+                    ...stepsSection,
+                    ...(payload?.steps || {}),
+                    steps: (Array.isArray(payload?.steps?.steps) && payload.steps.steps.length ? payload.steps.steps : (Array.isArray(stepsSection.steps) && stepsSection.steps.length ? stepsSection.steps : defaults.steps.steps)).map((step, index) => ({
+                        title: step?.title || `Step ${index + 1}`,
+                        description: step?.description || step?.desc || '',
+                        desc: step?.description || step?.desc || '',
+                        icon: step?.icon || 'fa-star',
+                        accent: step?.accent === 'primary' ? 'primary' : 'light'
+                    })),
+                    buttons: stepsButtons
+                },
+                faq: {
+                    ...defaults.faq,
+                    ...faqSection,
+                    ...(payload?.faq || {}),
+                    faqs: (Array.isArray(payload?.faq?.faqs) && payload.faq.faqs.length ? payload.faq.faqs : (Array.isArray(payload?.faq?.items) && payload.faq.items.length ? payload.faq.items : (Array.isArray(faqSection.faqs) && faqSection.faqs.length ? faqSection.faqs : (Array.isArray(faqSection.items) && faqSection.items.length ? faqSection.items : defaults.faq.items)))).map((item) => ({
+                        question: item?.question || item?.q || '',
+                        answer: item?.answer || item?.a || '',
+                        q: item?.question || item?.q || '',
+                        a: item?.answer || item?.a || ''
+                    })),
+                    items: (Array.isArray(payload?.faq?.faqs) && payload.faq.faqs.length ? payload.faq.faqs : (Array.isArray(payload?.faq?.items) && payload.faq.items.length ? payload.faq.items : (Array.isArray(faqSection.faqs) && faqSection.faqs.length ? faqSection.faqs : (Array.isArray(faqSection.items) && faqSection.items.length ? faqSection.items : defaults.faq.items)))).map((item) => ({
+                        question: item?.question || item?.q || '',
+                        answer: item?.answer || item?.a || '',
+                        q: item?.question || item?.q || '',
+                        a: item?.answer || item?.a || ''
+                    }))
+                },
+                sections: (Array.isArray(sections) ? sections : defaults.sections)
+                    .map((section, index) => ({
+                        id: section?.id || defaults.sections[index]?.id || `affiliate-section-${index + 1}`,
+                        type: section?.type || defaults.sections[index]?.type || 'hero',
+                        label: section?.label || defaults.sections[index]?.label || 'Section',
+                        enabled: section?.enabled !== false,
+                        order: Number.isFinite(Number(section?.order)) ? Number(section.order) : index + 1
+                    }))
+                    .sort((a, b) => a.order - b.order)
+            };
+        }
+
+        function renderAffiliateBenefits(cards) {
+            const container = document.getElementById('affiliate-benefits-cards');
+            container.innerHTML = cards.map((card) => {
+                const isPrimary = card.accent === 'primary';
+                return `
+                    <div class="${isPrimary ? 'bg-brand-primary shadow-xl transform md:scale-105' : 'bg-[#F2FFEB] hover:shadow-lg'} p-8 rounded-2xl text-center flex flex-col items-center transition">
+                        <div class="w-20 h-20 ${isPrimary ? 'bg-[#F2FFEB] text-brand-primary' : 'bg-brand-primary text-white'} rounded-full flex items-center justify-center text-3xl mb-6 shadow-md">
+                            <i class="fas ${card.icon}"></i>
+                        </div>
+                        <h3 class="text-xl font-bold ${isPrimary ? 'text-white' : 'text-brand-dark'} mb-4">${card.title}</h3>
+                        <p class="${isPrimary ? 'text-white text-opacity-90' : 'text-gray-600'} text-sm leading-relaxed${card.badge ? ' mb-4' : ''}">
+                            ${card.description || card.desc || ''}
+                        </p>
+                        ${card.badge ? `<p class="text-white font-bold text-xs uppercase tracking-wide bg-[#2d7a00] py-2 px-4 rounded-full">${card.badge}</p>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderAffiliateButtons(containerId, buttons) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = (Array.isArray(buttons) ? buttons : []).map((button) => `
+                <a href="${button.url || button.link || '#'}" target="_blank" rel="noopener noreferrer" class="bg-[#75C400] text-white font-bold py-4 px-10 rounded shadow hover:bg-[#389400] transition uppercase text-sm tracking-wide inline-block">
+                    ${button.text || 'Become An Affiliate'}
+                </a>
+            `).join('');
+        }
+
+        function renderAffiliateSteps(steps) {
+            const container = document.getElementById('affiliate-steps-cards') || document.getElementById('affiliate-steps-list');
+            if (!container) return;
+            container.innerHTML = `
+                ${steps.map((step) => {
+                    const isPrimary = step.accent === 'primary';
+                    return `
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 w-20 h-20 ${isPrimary ? 'bg-[#dcfce7] text-brand-primary' : 'bg-brand-primary text-white'} rounded-full flex items-center justify-center text-3xl shadow-lg z-10 border-4 border-white">
+                                <i class="fas ${step.icon}"></i>
+                            </div>
+                            <div class="${isPrimary ? 'bg-brand-primary shadow-lg origin-left' : 'bg-[#F2FFEB] shadow-sm'} flex-grow -ml-10 pl-14 pr-8 py-6 rounded-r-2xl">
+                                <h4 class="font-bold ${isPrimary ? 'text-white' : 'text-brand-dark'} text-lg">${step.title}</h4>
+                                <p class="text-sm ${isPrimary ? 'text-white text-opacity-90' : 'text-gray-600'}">${step.description || step.desc || ''}</p>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            `;
+        }
+
+        function bindAffiliateFaq() {
+            document.querySelectorAll('.faq-btn').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    content.classList.toggle('hidden');
+                    button.querySelector('i').classList.toggle('rotate-180');
+                });
+            });
+        }
+
+        function renderAffiliateFaq(items) {
+            const container = document.getElementById('affiliate-faq-items');
+            container.innerHTML = items.map((item) => `
+                <div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
+                    <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-gray-50 transition focus:outline-none">
+                        <span class="font-bold text-gray-900 text-left">${item.question || item.q || ''}</span>
+                        <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden p-6 border-t border-gray-100 text-gray-600 text-sm leading-relaxed">
+                        ${item.answer || item.a || ''}
+                    </div>
+                </div>
+            `).join('');
+            bindAffiliateFaq();
+        }
+
+        function renderAffiliatePage(pageData) {
+            document.getElementById('affiliate-hero-image').src = pageData.hero.image || 'Free-affiliate-page/Affiliate Page_Hero.jpg';
+            document.getElementById('affiliate-hero-headline').innerHTML = pageData.hero.headline || '';
+            document.getElementById('affiliate-hero-desc').innerHTML = pageData.hero.desc || '';
+            renderAffiliateButtons('affiliate-hero-buttons', pageData.hero.buttons || []);
+
+            document.getElementById('affiliate-benefits-headline').innerHTML = pageData.benefits.headline || '';
+            document.getElementById('affiliate-benefits-desc').innerHTML = pageData.benefits.desc || '';
+            renderAffiliateBenefits(pageData.benefits.cards || []);
+
+            document.getElementById('affiliate-steps-headline').innerHTML = pageData.steps.headline || '';
+            document.getElementById('affiliate-steps-image').src = pageData.steps.image || 'Free-affiliate-page/Affiliate Page_3 Simple Steps.jpg';
+            renderAffiliateSteps(pageData.steps.steps || []);
+            renderAffiliateButtons('affiliate-steps-buttons', pageData.steps.buttons || []);
+
+            document.getElementById('affiliate-faq-headline').innerHTML = pageData.faq.headline || '';
+            renderAffiliateFaq(pageData.faq.faqs || pageData.faq.items || []);
+
+            const main = document.getElementById('affiliate-main');
+            const heroSection = document.querySelector('[data-affiliate-section="hero"]');
+            const mappedSections = new Map(
+                Array.from(main.querySelectorAll('[data-affiliate-section]')).map((section) => [section.dataset.affiliateSection, section])
+            );
+            const heroConfig = (Array.isArray(pageData.sections) ? pageData.sections : []).find((section) => section.type === 'hero');
+            if (heroSection) {
+                heroSection.style.display = heroConfig?.enabled === false ? 'none' : '';
+            }
+
+            pageData.sections.forEach((section) => {
+                if (section.type === 'hero') return;
+                const element = mappedSections.get(section.type);
+                if (!element) return;
+                element.style.display = section.enabled === false ? 'none' : '';
+                main.appendChild(element);
+            });
+        }
+
+        async function loadAffiliateContent() {
+            const previewMode = new URLSearchParams(window.location.search).get('mode') === 'preview';
+
+            try {
+                if (!affiliateSupabase) {
+                    throw new Error('Supabase client failed to initialize');
+                }
+
+                const { data, error } = await affiliateSupabase
+                    .from('site_content')
+                    .select('*')
+                    .eq('page_id', affiliatePageId)
+                    .single();
+
+                if (error) throw error;
+
+                const source = previewMode
+                    ? (data?.draft_content || data?.live_content || {})
+                    : (data?.live_content || data?.draft_content || {});
+                const pageData = normalizeAffiliatePayload(source);
+                const draftHeadline = data?.draft_content?.hero?.headline
+                    || data?.draft_content?.sections?.find((section) => section.type === 'hero')?.content?.headline
+                    || '(missing)';
+                const liveHeadline = data?.live_content?.hero?.headline
+                    || data?.live_content?.sections?.find((section) => section.type === 'hero')?.content?.headline
+                    || '(missing)';
+
+                console.log('[affiliate-page][fetch]', {
+                    page_id: affiliatePageId,
+                    mode: previewMode ? 'preview' : 'live',
+                    row: data,
+                    draftHeadline,
+                    liveHeadline,
+                    finalPageData: pageData
+                });
+
+                clearAffiliateRuntimeError();
+                renderAffiliatePage(pageData);
+            } catch (error) {
+                console.error('[affiliate-page][fetch] failed, using fallback content', error);
+                showAffiliateRuntimeError(`Affiliate CMS load failed: ${error.message || error}`);
+                renderAffiliatePage(getDefaultAffiliateContent());
+            }
+        }
+
+        loadAffiliateContent();
+    </script>
+    <script src="js/site-nav.js"></script>
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Sticky Header Logic
+        let lastScrollTop = 0;
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) { header.classList.add('header-hidden'); } 
+            else { header.classList.remove('header-hidden'); }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+    </script>
+
+    <button id="backToTopBtn" 
+            onclick="scrollToTop()" 
+            class="fixed bottom-8 right-8 z-50 bg-brand-primary hover:bg-[#2d7a00] text-white w-12 h-12 rounded-full shadow-lg transition-all duration-300 transform translate-y-20 opacity-0 flex items-center justify-center focus:outline-none">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        // Show/Hide logic based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show after scrolling down 300px
+                backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
+            } else {
+                backToTopBtn.classList.add('translate-y-20', 'opacity-0');
+            }
+        });
+
+        // Smooth scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        bindAffiliateFaq();
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,149 @@
+import re
+import json
+
+def parse_about_us():
+    with open('about-us.html', 'r', encoding='utf-8') as f:
+        content = f.read()
+
+    # We will build the exact structure that maps the UI
+    about_data = {
+        "hero": {
+            "headline": "We're Here To Help <span class=\"text-[#bbf7d0]\">Everyday People</span><br>\n                    Take Control Of Their Financial Future",
+            "desc": "Pay Yourself First was created to make financial stability accessible to everyone, not just the wealthy or very high-income earners. Our system gives people access to the tools, guidance, and support to earn more, keep more, and spend less through practical, real-world solutions.",
+            "btn1_text": "How We Help You",
+            "btn1_link": "how-we-help-you.html",
+            "btn2_text": "View Our Packages",
+            "btn2_link": "packages.html",
+            "image": "About-us/About Us_Hero.jpg"
+        },
+        "who_we_are": {
+            "headline": "Who <span class=\"text-brand-primary\">We Are</span>",
+            "desc1": "Pay Yourself First (PYF) is a financial empowerment company built on a simple belief: <span class=\"font-bold text-brand-primary\">You deserve a clear, practical way to improve your finances.</span>",
+            "desc2": "As the cost of living rises and financial pressure grows, too many people feel stuck.",
+            "list": [
+                "W-2 workers overpaying taxes without realizing it",
+                "1099 earners facing unstable income",
+                "Families spending more but saving less",
+                "Individuals working hard but falling behind financially."
+            ],
+            "desc3": "PYF was created to solve these problems by giving you access to the tools, education, and professional support they need to gain financial control.",
+            "desc4": "Our company is built around a system. One designed to help people break\nnegative financial cycles, build financial stability, and move forward with clarity\nand confidence.",
+            "image": "About-us/About Us_Who We Are.jpg"
+        },
+        "origin": {
+            "headline": "Our <span class=\"text-brand-primary\">Origin</span>",
+            "desc1": "PYF was built by financial professionals with decades of experience guiding real people—just like you—toward better financial outcomes. Through this work, a consistent pattern emerged:",
+            "list": [
+                "People earned money but struggled to keep it",
+                "Tax rules were confusing and costly",
+                "Financial tools used by the wealthy were out of reach for most",
+                "Independent earners lacked support systems",
+                "Many families headed toward an uncertain financial future"
+            ],
+            "desc2": "The team behind PYF recognized a gap: people needed a system — not just products, tips, or one-time fixes, but a comprehensive approach that helped them improve their financial lives year after year.",
+            "headline_bottom": "PYF was created to <span class=\"text-brand-primary\">fill that gap.</span>",
+            "image": "About-us/About Us_Our Origin.jpg"
+        },
+        "mission": {
+            "headline": "Our <span class=\"text-brand-primary\">Mission</span>",
+            "subtitle": "Our mission is simple",
+            "desc": "To help everyday people gain control of their finances by giving them access to tools, education, and expert support normally out of reach to them.",
+            "image": "About-us/About Us_Our Mission.jpg"
+        },
+        "serving": {
+            "headline": "Serving Everyday Americans For Over A <span class=\"text-brand-primary\">Decade</span>",
+            "stats": [
+                {"title": "14+ Years", "desc": "In business supporting individuals and families."},
+                {"title": "46 States", "desc": "Nationwide coverage and accessibility."},
+                {"title": "Thousands", "desc": "Of users building better financial futures."}
+            ],
+            "principles": [
+                {"icon": "fas fa-brain", "title": "Taxpayer Awareness"},
+                {"icon": "fas fa-book-reader", "title": "Financial Literacy"},
+                {"icon": "fas fa-city", "title": "Entrepreneurship"}
+            ],
+            "image": "About-us/About Us_Serving Everyday Americans.jpg"
+        },
+        "system": {
+            "headline": "A system, not a personality. <br> <span class=\"text-brand-primary\">PYF is designed </span> to work regardless of who <span class=\"text-brand-primary\">uses </span> it",
+            "subtitle": "Financial control comes from mastering three critical levers:",
+            "cards": [
+                {
+                    "id": "1",
+                    "title": "1. Earn More",
+                    "desc": "PYF offers simple, accessible ways for people to open new income pathways through home-based entrepreneurship — supported by:",
+                    "list": ["Education", "Tools", "Professional Guidance"],
+                    "image": "About-us/About Us_Built For Real Life_Earn More.jpg"
+                },
+                {
+                    "id": "2",
+                    "title": "2. Keep More",
+                    "desc": "Most W-2 earners unknowingly overpay their taxes. PYF connects users with licensed tax professionals who help them:",
+                    "list": ["Adjust withholding correctly", "Unlock home-based deductions", "Maximize tax savings", "Reduce taxes to legal minimum"],
+                    "image": "About-us/About Us_Built For Real Life_Keep More.jpg",
+                    "quote": "\"This single category often creates the biggest transformation for everyday Americans.\""
+                },
+                {
+                    "id": "3",
+                    "title": "3. Spend Less",
+                    "desc": "Access to nationwide savings programs that reduce everyday expenses, including:",
+                    "list": ["Shopping", "Dining", "Vision", "Dental", "Travel", "Telehealth", "Auto Care", "Rx Meds"],
+                    "footer": "Every dollar saved is a dollar that strengthens long-term stability.",
+                    "image": "About-us/About Us_Built For Real Life_Spend Less.jpg"
+                }
+            ]
+        },
+        "who_we_serve": {
+            "headline": "Who We <span class=\"text-brand-primary\">Serve</span>",
+            "subtitle": "PYF is built for real people with real financial goals.",
+            "list": [
+                "W-2 workers who want to keep more of what they earn",
+                "1099 earners who need stability and tax guidance",
+                "Home-based entrepreneurs building supplemental income",
+                "Gig workers seeking predictable support",
+                "Families lowering household expenses",
+                "Individuals planning for long-term security"
+            ],
+            "footer": "If financial improvement is your goal, PYF is designed for you.",
+            "image": "About-us/About Us_Who We Serve.jpg"
+        },
+        "different": {
+            "headline": "What Makes <span class=\"text-brand-primary\">PYF Different</span>",
+            "list": [
+                "Professional-grade tax and legal support for everyday people",
+                "Real savings programs that reduce real expenses",
+                "Entrepreneurial tools and education resources that are simple to use",
+                "A system, not a personality. PYF is designed to work regardless of who leads it",
+                "A clear, step-by-step path toward financial clarity for those who want it",
+                "Support year-round, not just during tax season"
+            ],
+            "image": "About-us/About Us_What Makes PYF Different.jpg"
+        },
+        "pledge": {
+            "headline": "Our <span class=\"text-brand-primary\">Pledge To Help You</span>",
+            "list": [
+                "Understand your finances",
+                "Reduce unnecessary expenses",
+                "Legally minimize your tax burden",
+                "Increase your income opportunities",
+                "Gain a clearer path toward long-term stability",
+                "Access professional guidance"
+            ],
+            "image": "About-us/About Us_Built For Real Life_Our Commitment.jpg"
+        },
+        "journey": {
+            "headline": "Start Your PYF Journey",
+            "desc": "Choose the path that fits your goals today. PYF will support\nyou every step of the way.",
+            "btn1_text": "BECOME AN AFFILIATE",
+            "btn1_link": "https://backoffice.pyfaffiliates.com/affiliates/signup.php#SignupForm",
+            "btn2_text": "View Service Packages",
+            "btn2_link": "packages.html"
+        }
+    }
+
+    with open('about_data.json', 'w', encoding='utf-8') as f:
+        json.dump(about_data, f, indent=4)
+        
+    print("Exported about_data.json")
+
+parse_about_us()

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Yourself First</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Roboto Flex", 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-primary': '#389400', 
+                        'brand-dark': '#1c1c1c',
+                        'footer-bg': '#1f2022',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom styles for sticky header transition */
+         .sticky-header { transition: transform 0.3s ease-in-out; }
+        .header-hidden { transform: translateY(-100%); }
+        
+    </style>
+
+    <script src="https://cdn.pagesense.io/js/payyourselffirst/c2e5673c7d15457d8a0925080101f545.js"></script>
+
+</head>
+
+<body class="bg-white text-gray-800 font-sans antialiased flex flex-col min-h-screen">
+
+   <div id="main-header" class="fixed top-0 left-0 w-full z-50 sticky-header shadow-md">
+        <div class="bg-brand-dark text-white py-6 text-xs font-semibold">
+            <div class="container mx-auto px-4 flex justify-end items-center space-x-6">
+                <a href="https://payyourselffirst.benefithub.com/Welcome" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas fa-dollar-sign"></i></div> DISCOUNT PORTAL
+                </a>
+                <a href="https://backoffice.pyfaffiliates.com/merchants/login.php#login" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <i class="fas fa-user text-brand-primary mr-2"></i> AFFILIATE LOGIN
+                </a>
+            </div>
+        </div>
+        <nav class="bg-white py-4">
+            <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
+                <a href="index.html"><img src="pyf-logo.svg" alt="Pay Yourself First Logo" class="h-12 object-contain"></a>
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl text-brand-dark focus:outline-none"><i class="fas fa-bars"></i></button>
+                <div data-site-nav-desktop class="hidden lg:flex items-center space-x-5 text-xs xl:text-sm font-bold text-gray-700 uppercase">
+                    <a href="#" class="text-brand-primary transition">Home</a>
+                    <a href="how-we-help-you.html" class="hover:text-brand-primary transition">How We Help You</a>
+                    <a href="packages.html" class="hover:text-brand-primary transition">Packages</a>
+                    <a href="tax-season-discount.html" class="border-2 border-gray-800 px-3 py-2 hover:bg-gray-800 hover:text-white transition">Tax Season Discount</a>
+                    <a href="support.html" class="hover:text-brand-primary transition">Support</a>
+                    <a href="about-us.html" class="hover:text-brand-primary transition">About Us</a>
+                    <a href="contact-us.html" class="hover:text-brand-primary transition">Contact Us</a>
+                    <a href="business-support-package.html" class="bg-gradient-to-r from-[#389400] to-[#75C400] text-white px-4 py-3 rounded shadow-md hover:shadow-lg hover:opacity-90 transition whitespace-nowrap"> Business Support Package</a>
+                </div>
+            </div>
+            <div id="mobile-menu" data-site-nav-mobile class="hidden lg:hidden text-sm bg-white border-t mt-4 p-4 flex flex-col space-y-4 font-bold text-gray-700 uppercase">
+                 <a href="#" class="text-brand-primary transition">Home</a>
+                   <a href="how-we-help-you.html" class="hover:text-brand-primary transition">How We Help You</a>
+                    <a href="packages.html" class="hover:text-brand-primary transition">Packages</a>
+                    <a href="tax-season-discount.html" class="border-2 border-gray-800 px-3 py-2 hover:bg-gray-800 hover:text-white transition">Tax Season Discount</a>
+                    <a href="support.html" class="hover:text-brand-primary transition">Support</a>
+                    <a href="about-us.html" class="hover:text-brand-primary transition">About Us</a>
+                    <a href="contact-us.html" class="hover:text-brand-primary transition">Contact Us</a>
+                <a href="Business Support Package" class="bg-brand-primary text-white text-center py-3 rounded">Business Support Package</a>
+            </div>
+        </nav>
+    </div>
+
+<header class="bg-brand-dark text-white py-16 mb-12 border-b-4 border-brand-primary relative overflow-hidden">
+       
+    </header>
+
+    <main class="flex-grow container mx-auto px-4 max-w-4xl pb-24 text-gray-700 text-sm md:text-base leading-relaxed">
+        
+        <div class="container mx-auto px-4 relative z-10 text-center">
+            <h1 class="text-3xl md:text-5xl font-extrabold uppercase tracking-wide mb-4">Cookie Policy</h1>
+            <p class="text-brand-primary font-bold text-sm md:text-base">Last updated October 04, 2025</p>
+        </div> <br> <br>
+
+        <p class="mb-4">
+            This Cookie Policy explains how Gr8 Global Development, Inc DBA Pay Yourself First Inc ("<strong>Company</strong>," "<strong>we</strong>," "<strong>us</strong>," and "<strong>our</strong>") uses cookies and similar technologies to recognize you when you visit our website at <a href="https://payyourselffirst.com" class="text-brand-primary hover:underline">https://payyourselffirst.com</a> ("<strong>Website</strong>").
+        </p>
+        <p class="mb-8">
+            It explains what these technologies are and why we use them, as well as your rights to control our use of them. In some cases we may use cookies to collect personal information, or that becomes personal information if we combine it with other information.
+        </p>
+
+        <div class="bg-[#F2FFEB] border border-[#dcfce7] rounded-xl p-6 md:p-8 mb-12">
+            <h2 class="text-xl font-bold text-brand-primary uppercase mb-6 border-b border-[#bbf7d0] pb-2">Table of Contents</h2>
+            <ul class="space-y-2 font-semibold text-brand-dark">
+                <li><a href="#what-are-cookies" class="hover:text-brand-primary transition">What are cookies?</a></li>
+                <li><a href="#why-do-we-use-cookies" class="hover:text-brand-primary transition">Why do we use cookies?</a></li>
+                <li><a href="#how-can-i-control-cookies" class="hover:text-brand-primary transition">How can I control cookies?</a></li>
+                <li><a href="#how-can-i-control-browser" class="hover:text-brand-primary transition">How can I control cookies on my browser?</a></li>
+                <li><a href="#other-tracking" class="hover:text-brand-primary transition">What about other tracking technologies, like web beacons?</a></li>
+                <li><a href="#flash-cookies" class="hover:text-brand-primary transition">Do you use Flash cookies or Local Shared Objects?</a></li>
+                <li><a href="#targeted-ads" class="hover:text-brand-primary transition">Do you serve targeted advertising?</a></li>
+                <li><a href="#updates" class="hover:text-brand-primary transition">How often will you update this Cookie Policy?</a></li>
+                <li><a href="#further-info" class="hover:text-brand-primary transition">Where can I get further information?</a></li>
+            </ul>
+        </div>
+
+        <h2 id="what-are-cookies" class="text-2xl font-bold text-brand-dark uppercase mt-12 mb-4 scroll-mt-32">What are cookies?</h2>
+        <p class="mb-4">Cookies are small data files that are placed on your computer or mobile device when you visit a website. Cookies are widely used by website owners in order to make their websites work, or to work more efficiently, as well as to provide reporting information.</p>
+        <p class="mb-4">Cookies set by the website owner (in this case, Gr8 Global Development, Inc DBA Pay Yourself First Inc) are called "first-party cookies." Cookies set by parties other than the website owner are called "third-party cookies."</p>
+        <p class="mb-6">Third-party cookies enable third-party features or functionality to be provided on or through the website (e.g., advertising, interactive content, and analytics). The parties that set these third-party cookies can recognize your computer both when it visits the website in question and also when it visits certain other websites.</p>
+
+        <h2 id="why-do-we-use-cookies" class="text-2xl font-bold text-brand-dark uppercase mt-12 mb-4 scroll-mt-32">Why do we use cookies?</h2>
+        <p class="mb-4">We use first- and third-party cookies for several reasons. Some cookies are required for technical reasons in order for our Website to operate, and we refer to these as "essential" or "strictly necessary" cookies. Other cookies also enable us to track and target the interests of our users to enhance the experience on our Online Properties.</p>
+        <p class="mb-6">Third parties serve cookies through our Website for advertising, analytics, and other purposes. This is described in more detail below.</p>
+
+        <h2 id="how-can-i-control-cookies" class="text-2xl font-bold text-brand-dark uppercase mt-12 mb-4 scroll-mt-32">How can I control cookies?</h2>
+        <p class="mb-4">You have the right to decide whether to accept or reject cookies. You can exercise your cookie rights by setting your preferences in the Cookie Consent Manager. The Cookie Consent Manager allows you to select which categories of cookies you accept or reject. Essential cookies cannot be rejected as they are strictly necessary to provide you with services.</p>
+        <p class="mb-4">The Cookie Consent Manager can be found in the notification banner and on our Website. If you choose to reject cookies, you may still use our Website though your access to some functionality and areas of our Website may be restricted. You may also set or amend your web browser controls to accept or refuse cookies.</p>
+        <p class="mb-6">The specific types of first- and third-party cookies served through our Website and the purposes they perform are described in the table below (please note that the specific cookies served may vary depending on the specific Online Properties you visit):</p>
+
+        <h3 class="text-xl font-bold text-gray-800 mb-2">Essential website cookies:</h3>
+        <p class="mb-4">These cookies are strictly necessary to provide you with services available through our Website and to use some of its features, such as access to secure areas.</p>
+        
+        <div class="overflow-x-auto shadow-lg rounded-lg border border-gray-200 mb-8">
+            <table class="w-full text-sm text-left border-collapse bg-white">
+                <tbody class="divide-y divide-gray-200">
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 w-1/4 bg-gray-50 border-r">Name:</td>
+                        <td class="p-4 text-brand-primary font-mono">ASP.NET_SessionId</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Purpose:</td>
+                        <td class="p-4">Used by Microsoft .NET-based sites to maintain an anonymized user session by the server. This cookie expires at the end of a browsing session which is determined by the application configuration.</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Provider:</td>
+                        <td class="p-4">.payyourselffirst.com</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Service:</td>
+                        <td class="p-4">.NET platform</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Type:</td>
+                        <td class="p-4">server_cookie</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Expires in:</td>
+                        <td class="p-4">session</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="text-xl font-bold text-gray-800 mt-8 mb-2">Performance and functionality cookies:</h3>
+        <p class="mb-4">These cookies are used to enhance the performance and functionality of our Website but are non-essential to their use. However, without these cookies, certain functionality (like videos) may become unavailable.</p>
+
+        <div class="overflow-x-auto shadow-lg rounded-lg border border-gray-200 mb-8 space-y-4">
+            <table class="w-full text-sm text-left border-collapse bg-white">
+                <tbody class="divide-y divide-gray-200">
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 w-1/4 bg-gray-50 border-r">Name:</td>
+                        <td class="p-4 text-brand-primary font-mono">VISITOR_PRIVACY_METADATA</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Purpose:</td>
+                        <td class="p-4">to store the user's cookie consent state for the current domain</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Provider:</td>
+                        <td class="p-4">.youtube.com</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Service:</td>
+                        <td class="p-4">Youtube</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Type:</td>
+                        <td class="p-4">server_cookie</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 border-b-4 border-gray-300">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Expires in:</td>
+                        <td class="p-4">5 months 27 days</td>
+                    </tr>
+                    
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 w-1/4 bg-gray-50 border-r">Name:</td>
+                        <td class="p-4 text-brand-primary font-mono">__Secure-ROLLOUT_TOKEN</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Purpose:</td>
+                        <td class="p-4">is used by YouTube to manage the phased rollout of new features and updates</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Provider:</td>
+                        <td class="p-4">.youtube.com</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Service:</td>
+                        <td class="p-4">Youtube</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Type:</td>
+                        <td class="p-4">server_cookie</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 border-b-4 border-gray-300">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Expires in:</td>
+                        <td class="p-4">5 months 27 days</td>
+                    </tr>
+
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 w-1/4 bg-gray-50 border-r">Name:</td>
+                        <td class="p-4 text-brand-primary font-mono">ytidb::LAST_RESULT_ENTRY_KEY</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Purpose:</td>
+                        <td class="p-4">Stores the last result entry key used by YouTube</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Provider:</td>
+                        <td class="p-4">www.youtube.com</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Service:</td>
+                        <td class="p-4">YouTube</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Type:</td>
+                        <td class="p-4">html_local_storage</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Expires in:</td>
+                        <td class="p-4">persistent</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="text-xl font-bold text-gray-800 mt-8 mb-2">Analytics and customization cookies:</h3>
+        <p class="mb-4">These cookies collect information that is used either in aggregate form to help us understand how our Website is being used or how effective our marketing campaigns are, or to help us customize our Website for you.</p>
+
+        <div class="overflow-x-auto shadow-lg rounded-lg border border-gray-200 mb-8 space-y-4">
+            <table class="w-full text-sm text-left border-collapse bg-white">
+                <tbody class="divide-y divide-gray-200">
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 w-1/4 bg-gray-50 border-r">Name:</td>
+                        <td class="p-4 text-brand-primary font-mono">s7</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Purpose:</td>
+                        <td class="p-4">Gather data regarding site usage and user behavior on the website.</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Provider:</td>
+                        <td class="p-4">.payyourselffirst.com</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Service:</td>
+                        <td class="p-4">Adobe Analytics</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Type:</td>
+                        <td class="p-4">server_cookie</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 border-b-4 border-gray-300">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Expires in:</td>
+                        <td class="p-4">1 month</td>
+                    </tr>
+
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 w-1/4 bg-gray-50 border-r">Name:</td>
+                        <td class="p-4 text-brand-primary font-mono">s7</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Purpose:</td>
+                        <td class="p-4">Gather data regarding site usage and user behavior on the website.</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Provider:</td>
+                        <td class="p-4">payyourselffirst.com</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Service:</td>
+                        <td class="p-4">Adobe Analytics</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Type:</td>
+                        <td class="p-4">pixel_tracker</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Expires in:</td>
+                        <td class="p-4">session</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="text-xl font-bold text-gray-800 mt-8 mb-2">Advertising cookies:</h3>
+        <p class="mb-4">These cookies are used to make advertising messages more relevant to you. They perform functions like preventing the same ad from continuously reappearing, ensuring that ads are properly displayed for advertisers, and in some cases selecting advertisements that are based on your interests.</p>
+
+        <div class="overflow-x-auto shadow-lg rounded-lg border border-gray-200 mb-8 space-y-4">
+            <table class="w-full text-sm text-left border-collapse bg-white">
+                <tbody class="divide-y divide-gray-200">
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 w-1/4 bg-gray-50 border-r">Name:</td>
+                        <td class="p-4 text-brand-primary font-mono">VISITOR_INFO1_LIVE</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Purpose:</td>
+                        <td class="p-4">YouTube is a Google-owned platform for hosting and sharing videos. YouTube collects user data through videos embedded in websites, which is aggregated with profile data from other Google services in order to display targeted advertising to web visitors across a broad range of their own and other websites. Used by Google in combination with SID to verify Google user account and most recent login time.</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Provider:</td>
+                        <td class="p-4">.youtube.com</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Service:</td>
+                        <td class="p-4">YouTube</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Type:</td>
+                        <td class="p-4">server_cookie</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 border-b-4 border-gray-300">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Expires in:</td>
+                        <td class="p-4">5 months 27 days</td>
+                    </tr>
+
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 w-1/4 bg-gray-50 border-r">Name:</td>
+                        <td class="p-4 text-brand-primary font-mono">YSC</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Purpose:</td>
+                        <td class="p-4">YouTube is a Google-owned platform for hosting and sharing videos. YouTube collects user data through videos embedded in websites, which is aggregated with profile data from other Google services in order to display targeted advertising to web visitors across a broad range of their own and other websites. Used by Google in combination with SID to verify Google user account and most recent login time.</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Provider:</td>
+                        <td class="p-4">.youtube.com</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Service:</td>
+                        <td class="p-4">YouTube</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Type:</td>
+                        <td class="p-4">server_cookie</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-4 font-bold text-gray-800 bg-gray-50 border-r">Expires in:</td>
+                        <td class="p-4">session</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="text-xl font-bold text-gray-800 mt-8 mb-2">Unclassified cookies:</h3>
+        <p class="mb-4">These are cookies that have not yet been categorized. We are in the process of classifying these cookies with the help of their providers.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="bg-gray-50 border border-gray-200 p-4 rounded text-sm space-y-1">
+                <p><strong>Name:</strong> <span class="text-brand-primary font-mono">CurrencyId</span></p>
+                <p><strong>Provider:</strong> .payyourselffirst.com</p>
+                <p><strong>Type:</strong> server_cookie</p>
+                <p><strong>Expires in:</strong> 29 years 11 months 30 days</p>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 p-4 rounded text-sm space-y-1">
+                <p><strong>Name:</strong> <span class="text-brand-primary font-mono">AlternateColorThiefRgb</span></p>
+                <p><strong>Provider:</strong> payyourselffirst.com</p>
+                <p><strong>Type:</strong> html_session_storage</p>
+                <p><strong>Expires in:</strong> Session</p>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 p-4 rounded text-sm space-y-1">
+                <p><strong>Name:</strong> <span class="text-brand-primary font-mono">colorThiefRgb</span></p>
+                <p><strong>Provider:</strong> payyourselffirst.com</p>
+                <p><strong>Type:</strong> html_session_storage</p>
+                <p><strong>Expires in:</strong> Session</p>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 p-4 rounded text-sm space-y-1">
+                <p><strong>Name:</strong> <span class="text-brand-primary font-mono">altColorLight</span></p>
+                <p><strong>Provider:</strong> payyourselffirst.com</p>
+                <p><strong>Type:</strong> html_session_storage</p>
+                <p><strong>Expires in:</strong> Session</p>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 p-4 rounded text-sm space-y-1">
+                <p><strong>Name:</strong> <span class="text-brand-primary font-mono">_fp</span></p>
+                <p><strong>Provider:</strong> payyourselffirst.com</p>
+                <p><strong>Type:</strong> http_cookie</p>
+                <p><strong>Expires in:</strong> 11 months 30 days</p>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 p-4 rounded text-sm space-y-1">
+                <p><strong>Name:</strong> <span class="text-brand-primary font-mono">DefaultPageTypeId</span></p>
+                <p><strong>Provider:</strong> .payyourselffirst.com</p>
+                <p><strong>Type:</strong> server_cookie</p>
+                <p><strong>Expires in:</strong> Session</p>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 p-4 rounded text-sm space-y-1">
+                <p><strong>Name:</strong> <span class="text-brand-primary font-mono">CountryId</span></p>
+                <p><strong>Provider:</strong> .payyourselffirst.com</p>
+                <p><strong>Type:</strong> server_cookie</p>
+                <p><strong>Expires in:</strong> 29 years 11 months 30 days</p>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 p-4 rounded text-sm space-y-1">
+                <p><strong>Name:</strong> <span class="text-brand-primary font-mono">ActiveMenu</span></p>
+                <p><strong>Provider:</strong> payyourselffirst.com</p>
+                <p><strong>Type:</strong> http_cookie</p>
+                <p><strong>Expires in:</strong> Session</p>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 p-4 rounded text-sm space-y-1">
+                <p><strong>Name:</strong> <span class="text-brand-primary font-mono">CurrencyCode</span></p>
+                <p><strong>Provider:</strong> .payyourselffirst.com</p>
+                <p><strong>Type:</strong> server_cookie</p>
+                <p><strong>Expires in:</strong> 29 years 11 months 30 days</p>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 p-4 rounded text-sm space-y-1">
+                <p><strong>Name:</strong> <span class="text-brand-primary font-mono">CultureId</span></p>
+                <p><strong>Provider:</strong> .payyourselffirst.com</p>
+                <p><strong>Type:</strong> server_cookie</p>
+                <p><strong>Expires in:</strong> 29 years 11 months 30 days</p>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 p-4 rounded text-sm space-y-1">
+                <p><strong>Name:</strong> <span class="text-brand-primary font-mono">CultureCode</span></p>
+                <p><strong>Provider:</strong> .payyourselffirst.com</p>
+                <p><strong>Type:</strong> server_cookie</p>
+                <p><strong>Expires in:</strong> 29 years 11 months 30 days</p>
+            </div>
+            <div class="bg-gray-50 border border-gray-200 p-4 rounded text-sm space-y-1">
+                <p><strong>Name:</strong> <span class="text-brand-primary font-mono">altColorDark</span></p>
+                <p><strong>Provider:</strong> payyourselffirst.com</p>
+                <p><strong>Type:</strong> html_session_storage</p>
+                <p><strong>Expires in:</strong> session</p>
+            </div>
+        </div>
+
+        <h2 id="how-can-i-control-browser" class="text-2xl font-bold text-brand-dark uppercase mt-12 mb-4 scroll-mt-32">How can I control cookies on my browser?</h2>
+        <p class="mb-4">As the means by which you can refuse cookies through your web browser controls vary from browser to browser, you should visit your browser's help menu for more information. The following is information about how to manage cookies on the most popular browsers:</p>
+        <ul class="list-disc pl-8 mb-4 space-y-1">
+            <li>Chrome</li>
+            <li>Internet Explorer</li>
+            <li>Firefox</li>
+            <li>Safari</li>
+            <li>Edge</li>
+            <li>Opera</li>
+        </ul>
+        <p class="mb-4">In addition, most advertising networks offer you a way to opt out of targeted advertising. If you would like to find out more information, please visit:</p>
+        <ul class="list-disc pl-8 mb-6 space-y-1">
+            <li>Digital Advertising Alliance</li>
+            <li>Digital Advertising Alliance of Canada</li>
+            <li>European Interactive Digital Advertising Alliance</li>
+        </ul>
+
+        <h2 id="other-tracking" class="text-2xl font-bold text-brand-dark uppercase mt-12 mb-4 scroll-mt-32">What about other tracking technologies, like web beacons?</h2>
+        <p class="mb-4">Cookies are not the only way to recognize or track visitors to a website. We may use other, similar technologies from time to time, like web beacons (sometimes called "tracking pixels" or "clear gifs"). These are tiny graphics files that contain a unique identifier that enables us to recognize when someone has visited our Website or opened an email including them.</p>
+        <p class="mb-4">This allows us, for example, to monitor the traffic patterns of users from one page within a website to another, to deliver or communicate with cookies, to understand whether you have come to the website from an online advertisement displayed on a third-party website, to improve site performance, and to measure the success of email marketing campaigns.</p>
+        <p class="mb-6">In many instances, these technologies are reliant on cookies to function properly, and so declining cookies will impair their functioning.</p>
+
+        <h2 id="flash-cookies" class="text-2xl font-bold text-brand-dark uppercase mt-12 mb-4 scroll-mt-32">Do you use Flash cookies or Local Shared Objects?</h2>
+        <p class="mb-4">Websites may also use so-called "Flash Cookies" (also known as Local Shared Objects or "LSOs") to, among other things, collect and store information about your use of our services, fraud prevention, and for other site operations.</p>
+        <p class="mb-4">If you do not want Flash Cookies stored on your computer, you can adjust the settings of your Flash player to block Flash Cookies storage using the tools contained in the Website Storage Settings Panel. You can also control Flash Cookies by going to the Global Storage Settings Panel and following the instructions (which may include instructions that explain, for example, how to delete existing Flash Cookies (referred to "information" on the Macromedia site), how to prevent Flash LSOs from being placed on your computer without your being asked, and (for Flash Player 8 and later) how to block Flash Cookies that are not being delivered by the operator of the page you are on at the time).</p>
+        <p class="mb-6">Please note that setting the Flash Player to restrict or limit acceptance of Flash Cookies may reduce or impede the functionality of some Flash applications, including, potentially, Flash applications used in connection with our services or online content.</p>
+
+        <h2 id="targeted-ads" class="text-2xl font-bold text-brand-dark uppercase mt-12 mb-4 scroll-mt-32">Do you serve targeted advertising?</h2>
+        <p class="mb-4">Third parties may serve cookies on your computer or mobile device to serve advertising through our Website. These companies may use information about your visits to this and other websites in order to provide relevant advertisements about goods and services that you may be interested in. They may also employ technology that is used to measure the effectiveness of advertisements.</p>
+        <p class="mb-4">They can accomplish this by using cookies or web beacons to collect information about your visits to this and other sites in order to provide relevant advertisements about goods and services of potential interest to you. The information collected through this process does not enable us or them to identify your name, contact details, or other details that directly identify you unless you choose to provide these.</p>
+
+        <h2 id="updates" class="text-2xl font-bold text-brand-dark uppercase mt-12 mb-4 scroll-mt-32">How often will you update this Cookie Policy?</h2>
+        <p class="mb-4">We may update this Cookie Policy from time to time in order to reflect, for example, changes to the cookies we use or for other operational, legal, or regulatory reasons. Please therefore revisit this Cookie Policy regularly to stay informed about our use of cookies and related technologies.</p>
+        <p class="mb-6">The date at the top of this Cookie Policy indicates when it was last updated.</p>
+
+        <h2 id="further-info" class="text-2xl font-bold text-brand-dark uppercase mt-12 mb-4 scroll-mt-32">Where can I get further information?</h2>
+        <p class="mb-4">If you have any questions about our use of cookies or other technologies, please email us at <a href="mailto:service@payyourselffirst.com" class="text-brand-primary hover:underline">service@payyourselffirst.com</a> or by post to:</p>
+        <address class="not-italic pl-4 border-l-4 border-gray-200 text-gray-600">
+            Gr8 Global Development, Inc DBA Pay Yourself First Inc<br>
+            2205 E Pershing Blvd Suite 2<br>
+            Cheyenne, WY 82001<br>
+            United States<br>
+            <strong>Phone:</strong> (+1)8557932582
+        </address>
+
+    </main>
+
+
+
+
+   <div data-pyf-footer-root></div>
+
+
+
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Sticky Header Logic
+        let lastScrollTop = 0;
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) { header.classList.add('header-hidden'); } 
+            else { header.classList.remove('header-hidden'); }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+    </script>
+
+    <button id="backToTopBtn" 
+            onclick="scrollToTop()" 
+            class="fixed bottom-8 right-8 z-50 bg-brand-primary hover:bg-[#2d7a00] text-white w-12 h-12 rounded-full shadow-lg transition-all duration-300 transform translate-y-20 opacity-0 flex items-center justify-center focus:outline-none">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        // Show/Hide logic based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show after scrolling down 300px
+                backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
+            } else {
+                backToTopBtn.classList.add('translate-y-20', 'opacity-0');
+            }
+        });
+
+        // Smooth scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+    <script src="js/site-nav.js"></script>
+    <script src="js/site-footer.js"></script>
+</body>
+</html>

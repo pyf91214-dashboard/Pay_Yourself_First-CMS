@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Yourself First - Contact Us</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+   <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                       sans: ["Roboto Flex", 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-primary': '#389400', 
+                        'brand-dark': '#1c1c1c',
+                        'footer-bg': '#1f2022',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdn.pagesense.io/js/payyourselffirst/c2e5673c7d15457d8a0925080101f545.js"></script>
+
+    <script src="js/validation.js"></script>
+
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        /* Custom styles for sticky header transition */
+         .sticky-header { transition: transform 0.3s ease-in-out; }
+        .header-hidden { transform: translateY(-100%); }
+        
+    </style>
+
+</head>
+
+<body class="bg-white text-gray-800 font-sans antialiased flex flex-col min-h-screen" x-data="pageData()" x-cloak>
+
+   <div id="main-header" class="fixed top-0 left-0 w-full z-50 sticky-header shadow-md">
+        <div class="bg-brand-dark text-white py-6 text-xs font-semibold">
+            <div class="container mx-auto px-4 flex justify-end items-center space-x-6">
+                <a href="#" class="flex items-center hover:text-brand-primary transition">
+                    <div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas fa-dollar-sign"></i></div> DISCOUNT PORTAL
+                </a>
+                <a href="#" class="flex items-center hover:text-brand-primary transition">
+                    <i class="fas fa-user text-brand-primary mr-2"></i> AFFILIATE LOGIN
+                </a>
+            </div>
+        </div>
+        <nav class="bg-white py-4">
+            <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
+                <a href="index.html"><img src="pyf-logo.svg" alt="Pay Yourself First Logo" class="h-12 object-contain"></a>
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl text-brand-dark focus:outline-none"><i class="fas fa-bars"></i></button>
+                <div data-site-nav-desktop class="hidden lg:flex items-center space-x-5 text-xs xl:text-sm font-bold text-gray-700 uppercase"></div>
+            </div>
+            <div id="mobile-menu" data-site-nav-mobile class="hidden lg:hidden text-sm bg-white border-t mt-4 p-4 flex flex-col space-y-4 font-bold text-gray-700 uppercase"></div>
+        </nav>
+    </div>
+
+<template x-if="false">
+<header class="container mx-auto px-4 mb-16 mt-48">
+        <div class="relative rounded-[2rem] overflow-hidden h-[400px] md:h-[600px] shadow-2xl group">
+            
+            <img x-show="imageReady.hero" x-cloak :src="getCacheBustedImageUrl(pageData.contact_us.hero.image || 'Contact-us/Contact Us_Hero.jpg')" 
+                 alt="Contact Us Team" 
+                 class="absolute inset-0 w-full h-full object-cover transition-opacity duration-200"
+                 :class="isCmsLoading ? 'opacity-0' : 'opacity-100'">
+            
+           <div class="absolute inset-0 bg-black/40"></div>
+
+            <div class="relative z-10 h-full flex flex-col justify-center px-6 md:px-20 max-w-4xl">
+                
+                <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-6 uppercase leading-tight drop-shadow-md" x-html="pageData.contact_us.hero.headline"></h1>
+                
+                <p class="text-base md:text-xl text-gray-100 font-medium leading-relaxed max-w-2xl whitespace-pre-line" x-html="pageData.contact_us.hero.desc"></p>
+                
+            </div>
+        </div>
+    </header>
+</template>
+
+    <main class="flex-grow" x-show="!isCmsLoading" x-cloak>
+        <template x-for="(section, sectionIndex) in (pageData.contact_us.sections || [])" :key="section.id || `${section.type}-${sectionIndex}`">
+            <div>
+                <section x-show="section.type === 'hero'" x-cloak class="container mx-auto px-4 mb-16 mt-48">
+                    <div class="relative rounded-[2rem] overflow-hidden h-[400px] md:h-[600px] shadow-2xl group">
+                        <img x-show="imageReady.hero" x-cloak :src="getCacheBustedImageUrl(section.image || 'Contact-us/Contact Us_Hero.jpg')" alt="Contact Us Team" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-200" :class="isCmsLoading ? 'opacity-0' : 'opacity-100'">
+                        <div class="absolute inset-0 bg-black/40"></div>
+                        <div class="relative z-10 h-full flex flex-col justify-center px-6 md:px-20 max-w-4xl">
+                            <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-6 uppercase leading-tight drop-shadow-md" x-html="section.headline"></h1>
+                            <p class="text-base md:text-xl text-gray-100 font-medium leading-relaxed max-w-2xl whitespace-pre-line" x-html="section.desc"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <section x-show="section.type === 'form'" x-cloak x-ref="contactFormSection" id="contact-form" class="py-16 bg-white">
+                    <div class="container mx-auto px-4">
+                        <form :action="section.form_action || 'https://forms.zohopublic.com/payyourselffirst1/form/PYFMainSiteContactUs/formperma/c6Fb3hI5V4Qrp9CMD5OPrutVAxOgF5v8wy10YwxFd8A/htmlRecords/submit'" name="form" method="POST" onSubmit="javascript:document.charset='UTF-8'; return zf_ValidateAndSubmit();" accept-charset="UTF-8" enctype="multipart/form-data" id="form" class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-gray-100">
+                            <input type="hidden" name="zf_referrer_name" value="">
+                            <input type="hidden" name="zf_redirect_url" value="">
+                            <input type="hidden" name="zc_gad" value="">
+                            <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-8 text-center" x-html="section.heading"></h2>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2"><span x-text="section.name_label"></span> <span class="text-red-500">*</span></label>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <input type="text" maxlength="255" name="Name_First" fieldType="7" :placeholder="section.first_name_placeholder" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#389400] focus:border-[#389400] focus:outline-none transition text-gray-800 bg-gray-50 hover:bg-white" />
+                                        <input type="text" maxlength="255" name="Name_Last" fieldType="7" :placeholder="section.last_name_placeholder" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#389400] focus:border-[#389400] focus:outline-none transition text-gray-800 bg-gray-50 hover:bg-white" />
+                                    </div>
+                                    <p id="Name_error" class="zf-errorMessage text-red-500 text-xs mt-2 font-medium" style="display:none;">Invalid value</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2"><span x-text="section.email_label"></span> <span class="text-red-500">*</span></label>
+                                    <input type="text" name="Email" checktype="c5" value="" maxlength="255" fieldType="9" :placeholder="section.email_placeholder" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#389400] focus:border-[#389400] focus:outline-none transition text-gray-800 bg-gray-50 hover:bg-white" />
+                                    <p id="Email_error" class="zf-errorMessage text-red-500 text-xs mt-2 font-medium" style="display:none;">Invalid value</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2" x-text="section.phone_label"></label>
+                                    <input type="text" compname="PhoneNumber" name="PhoneNumber_countrycode" maxlength="20" checktype="c7" value="" phoneFormat="1" isCountryCodeEnabled="false" fieldType="11" id="international_PhoneNumber_countrycode" valType="number" phoneFormatType="1" :placeholder="section.phone_placeholder" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#389400] focus:border-[#389400] focus:outline-none transition text-gray-800 bg-gray-50 hover:bg-white" />
+                                    <p id="PhoneNumber_error" class="zf-errorMessage text-red-500 text-xs mt-2 font-medium" style="display:none;">Invalid value</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2" x-text="section.reason_label"></label>
+                                    <select name="Dropdown" checktype="c1" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#389400] focus:border-[#389400] focus:outline-none transition text-gray-800 bg-gray-50 hover:bg-white cursor-pointer">
+                                        <option selected="true" value="-Select-" x-text="section.reason_placeholder"></option>
+                                        <template x-for="(option, optionIndex) in (section.reason_options || [])" :key="`${section.id}-reason-${optionIndex}`">
+                                            <option :value="option" x-text="option"></option>
+                                        </template>
+                                    </select>
+                                    <p id="Dropdown_error" class="zf-errorMessage text-red-500 text-xs mt-2 font-medium" style="display:none;">Invalid value</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2" x-text="section.message_label"></label>
+                                    <textarea name="MultiLine" checktype="c1" maxlength="65535" :placeholder="section.message_placeholder" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#389400] focus:border-[#389400] focus:outline-none transition text-gray-800 bg-gray-50 hover:bg-white resize-y"></textarea>
+                                    <p id="MultiLine_error" class="zf-errorMessage text-red-500 text-xs mt-2 font-medium" style="display:none;">Invalid value</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 mb-2" x-text="section.hear_about_label"></label>
+                                    <select name="Dropdown1" checktype="c1" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#389400] focus:border-[#389400] focus:outline-none transition text-gray-800 bg-gray-50 hover:bg-white cursor-pointer">
+                                        <option selected="true" value="-Select-" x-text="section.hear_about_placeholder"></option>
+                                        <template x-for="(option, optionIndex) in (section.hear_about_options || [])" :key="`${section.id}-hear-${optionIndex}`">
+                                            <option :value="option" x-text="option"></option>
+                                        </template>
+                                    </select>
+                                    <p id="Dropdown1_error" class="zf-errorMessage text-red-500 text-xs mt-2 font-medium" style="display:none;">Invalid value</p>
+                                </div>
+                                <div class="flex items-start bg-[#F2FFEB] p-4 rounded-lg border border-[#dcfce7] mt-4">
+                                    <div class="flex items-center h-5 mt-1">
+                                        <input type="checkbox" checktype="c1" id="DecisionBox" name="DecisionBox" class="w-5 h-5 text-[#389400] border-gray-300 rounded focus:ring-[#389400] cursor-pointer" />
+                                    </div>
+                                    <div class="ml-3">
+                                        <label for="DecisionBox" class="font-bold text-brand-dark cursor-pointer text-sm"><span x-text="section.consent_label"></span> <span class="text-red-500">*</span></label>
+                                        <p class="text-gray-600 text-xs mt-1 leading-relaxed" x-text="section.consent_text"></p>
+                                        <p id="DecisionBox_error" class="zf-errorMessage text-red-500 text-xs mt-1 font-medium" style="display:none;">Invalid value</p>
+                                    </div>
+                                </div>
+                                <div class="pt-4 text-center">
+                                    <button type="submit" class="w-full md:w-auto bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-4 px-12 rounded shadow-lg transition uppercase text-sm tracking-widest inline-block transform hover:-translate-y-1">
+                                        <span x-text="section.submit_text"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <script type="text/javascript">
+                            var dateAndMonthRegexFormateArray = zf_SetDateAndMonthRegexBasedOnDateFormate('dd-MMM-yyyy');
+                            var zf_DateRegex = new RegExp(dateAndMonthRegexFormateArray[0]);
+                            var zf_MonthYearRegex = new RegExp(dateAndMonthRegexFormateArray[1]);
+                            var zf_MandArray = [ "Name_First", "Name_Last", "Email", "DecisionBox"];
+                            var zf_FieldArray = [ "Name_First", "Name_Last", "Email", "PhoneNumber_countrycode", "Dropdown", "MultiLine", "Dropdown1", "DecisionBox"];
+                            var isSalesIQIntegrationEnabled = false;
+                            var salesIQFieldsArray = [];
+                        </script>
+                    </div>
+                </section>
+
+                <section x-show="section.type === 'support_hub'" x-cloak class="py-16 md:py-24 bg-white">
+                    <div class="container mx-auto px-4">
+                        <h2 class="text-3xl font-extrabold text-center text-brand-dark uppercase mb-12" x-html="section.support_heading"></h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20 max-w-6xl mx-auto">
+                            <template x-for="(card, cardIndex) in (section.cards || [])" :key="card.id || cardIndex">
+                                <div class="bg-[#F2FFEB] rounded-lg p-8 text-center hover:shadow-lg transition">
+                                    <div class="w-16 h-16 bg-[#1c4a00] rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl">
+                                        <i class="fas" :class="card.icon"></i>
+                                    </div>
+                                    <p class="text-sm font-bold text-gray-900">
+                                        <span x-text="card.label"></span>
+                                        <template x-if="card.link">
+                                            <a :href="card.link" class="hover:text-brand-primary ml-1" x-text="card.text"></a>
+                                        </template>
+                                        <template x-if="!card.link">
+                                            <span class="ml-1" x-text="card.text"></span>
+                                        </template>
+                                    </p>
+                                </div>
+                            </template>
+                        </div>
+                        <h2 class="text-3xl font-extrabold text-center text-brand-dark uppercase mb-12" x-html="section.helpful_links_heading"></h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 max-w-6xl mx-auto">
+                            <template x-for="(linkItem, linkIndex) in (section.helpful_links || [])" :key="linkItem.id || linkIndex">
+                                <div class="bg-[#F2FFEB] rounded-lg p-8 text-center hover:shadow-lg transition group cursor-pointer">
+                                    <div class="w-16 h-16 bg-[#1c4a00] rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl group-hover:bg-brand-primary transition">
+                                        <i class="fas" :class="linkItem.icon"></i>
+                                    </div>
+                                    <p class="text-sm font-bold text-gray-900">
+                                        <span x-text="section.link_prefix || 'Link to'"></span>
+                                        <a :href="linkItem.link" target="_blank" class="text-[#3498db] hover:underline ml-1" x-text="linkItem.text"></a>
+                                    </p>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
+                            <template x-for="(button, buttonIndex) in (section.portal_buttons || [])" :key="button.id || buttonIndex">
+                                <a :href="button.link" class="bg-[#66b510] hover:bg-[#4a8a0a] text-white font-bold py-4 px-8 rounded shadow text-sm uppercase text-center transition" x-text="button.text"></a>
+                            </template>
+                        </div>
+                    </div>
+                </section>
+
+                <section x-show="section.type === 'service_provider'" x-cloak class="py-16 md:py-24 bg-[#F2FFEB]">
+                    <div class="container mx-auto px-4">
+                        <h2 class="text-3xl font-extrabold text-center text-brand-dark uppercase mb-16" x-html="section.headline"></h2>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                            <div>
+                                <p class="text-gray-700 mb-6 font-medium" x-text="section.desc1"></p>
+                                <p class="text-gray-700 mb-4 font-medium" x-text="section.desc2"></p>
+                                <ul class="space-y-3 mb-8">
+                                    <template x-for="(item, itemIndex) in (section.list || [])" :key="`${section.id}-item-${itemIndex}`">
+                                        <li class="flex items-center text-gray-900 font-bold">
+                                            <i class="fas fa-circle text-[#1c4a00] text-[10px] mr-3"></i><span x-text="item"></span>
+                                        </li>
+                                    </template>
+                                </ul>
+                                <p class="text-gray-700 mb-8 font-medium" x-text="section.desc3"></p>
+                                <a :href="section.cta_link || '#contact-form'" @click.prevent="scrollToContactTarget(section.cta_link || '#contact-form')" class="bg-[#66b510] hover:bg-[#4a8a0a] text-white font-bold py-3 px-8 rounded shadow text-xs uppercase inline-block transition" x-text="section.cta_text"></a>
+                            </div>
+                            <div class="h-full min-h-[400px]">
+                                <img x-show="imageReady.serviceProvider" x-cloak :src="getCacheBustedImageUrl(section.image || 'Contact-us/Contact Us_Need help with a service provider.jpg')" alt="Service Provider Help" class="rounded-[2rem] shadow-xl w-full h-full object-cover transition-opacity duration-200" :class="isCmsLoading ? 'opacity-0' : 'opacity-100'">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section x-show="section.type === 'mailing_address'" x-cloak class="relative bg-white">
+                    <div class="relative h-[400px] w-full">
+                        <img x-show="imageReady.map" x-cloak :src="getCacheBustedImageUrl(section.image || 'Contact-us/Contact Us_Mailing Address.jpg')" alt="Map Background" class="w-full h-full object-cover grayscale opacity-60 transition-opacity duration-200" :class="isCmsLoading ? 'opacity-0' : 'opacity-60'">
+                        <div class="absolute inset-0 bg-[#064e3b] mix-blend-multiply opacity-90"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#1c4a00] to-transparent opacity-80"></div>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
+                            <i class="fas fa-map-marker-alt text-yellow-400 text-6xl mb-4 drop-shadow-lg animate-bounce"></i>
+                            <h2 class="text-3xl font-extrabold uppercase mb-4 tracking-wide" x-text="section.heading"></h2>
+                            <p class="text-lg font-medium leading-relaxed whitespace-pre-line" x-html="section.address"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <section x-show="section.type === 'bottom_notices'" x-cloak class="relative bg-white">
+                    <div class="container mx-auto px-4 py-16 md:py-24">
+                        <div class="text-center max-w-5xl mx-auto mb-16">
+                            <h2 class="text-2xl font-bold text-brand-dark leading-relaxed" x-text="section.bottom_text"></h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <template x-for="(notice, noticeIndex) in (section.notices || [])" :key="notice.id || noticeIndex">
+                                <div class="bg-[#F2FFEB] p-8 rounded-lg flex flex-col items-center text-center h-full">
+                                    <div class="w-16 h-16 bg-[#1c4a00] rounded-full flex items-center justify-center mb-6 text-white text-2xl">
+                                        <i class="fas" :class="notice.icon"></i>
+                                    </div>
+                                    <p class="text-sm font-bold text-gray-800" x-text="notice.text"></p>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </template>
+    </main>
+
+    <template x-if="false">
+    <main class="hidden">
+
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <form :action="pageData.contact_us.form_action || 'https://forms.zohopublic.com/payyourselffirst1/form/PYFMainSiteContactUs/formperma/c6Fb3hI5V4Qrp9CMD5OPrutVAxOgF5v8wy10YwxFd8A/htmlRecords/submit'" 
+      name='form' 
+      method='POST' 
+      onSubmit='javascript:document.charset="UTF-8"; return zf_ValidateAndSubmit();' 
+      accept-charset='UTF-8' 
+      enctype='multipart/form-data' 
+      id='form' 
+      class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-gray-100">
+
+    <input type="hidden" name="zf_referrer_name" value="">
+    <input type="hidden" name="zf_redirect_url" value="">
+    <input type="hidden" name="zc_gad" value="">
+
+    <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-8 text-center" x-html="pageData.contact_us.form ? pageData.contact_us.form.heading : 'Contact <span class=&quot;text-brand-primary&quot;>Us</span>'">
+        Contact <span class="text-brand-primary">Us</span>
+    </h2>
+    
+    <div class="space-y-6">
+        
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2"><span x-text="pageData.contact_us.form ? pageData.contact_us.form.name_label : 'Name'">Name</span> <span class="text-red-500">*</span></label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <input type="text" maxlength="255" name="Name_First" fieldType="7" :placeholder="pageData.contact_us.form ? pageData.contact_us.form.first_name_placeholder : 'First Name'" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#389400] focus:border-[#389400] focus:outline-none transition text-gray-800 bg-gray-50 hover:bg-white" />
+                </div>
+                <div>
+                    <input type="text" maxlength="255" name="Name_Last" fieldType="7" :placeholder="pageData.contact_us.form ? pageData.contact_us.form.last_name_placeholder : 'Last Name'" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#389400] focus:border-[#389400] focus:outline-none transition text-gray-800 bg-gray-50 hover:bg-white" />
+                </div>
+            </div>
+            <p id="Name_error" class="zf-errorMessage text-red-500 text-xs mt-2 font-medium" style="display:none;">Invalid value</p>
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2"><span x-text="pageData.contact_us.form ? pageData.contact_us.form.email_label : 'Email'">Email</span> <span class="text-red-500">*</span></label>
+            <input type="text" name="Email" checktype="c5" value="" maxlength="255" fieldType="9" :placeholder="pageData.contact_us.form ? pageData.contact_us.form.email_placeholder : 'Enter your email address'" 
+                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#389400] focus:border-[#389400] focus:outline-none transition text-gray-800 bg-gray-50 hover:bg-white" />
+            <p id="Email_error" class="zf-errorMessage text-red-500 text-xs mt-2 font-medium" style="display: none;">Invalid value</p>
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2" x-text="pageData.contact_us.form ? pageData.contact_us.form.phone_label : 'Phone'">Phone</label>
+            <input type="text" compname="PhoneNumber" name="PhoneNumber_countrycode" maxlength="20" checktype="c7" value="" phoneFormat="1" isCountryCodeEnabled="false" fieldType="11" id="international_PhoneNumber_countrycode" valType="number" phoneFormatType="1" :placeholder="pageData.contact_us.form ? pageData.contact_us.form.phone_placeholder : 'Phone Number'" 
+                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#389400] focus:border-[#389400] focus:outline-none transition text-gray-800 bg-gray-50 hover:bg-white" />
+            <p id="PhoneNumber_error" class="zf-errorMessage text-red-500 text-xs mt-2 font-medium" style="display:none;">Invalid value</p>
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2" x-text="pageData.contact_us.form ? pageData.contact_us.form.reason_label : 'Reason For Contact'">Reason For Contact</label>
+            <select name="Dropdown" checktype="c1" 
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#389400] focus:border-[#389400] focus:outline-none transition text-gray-800 bg-gray-50 hover:bg-white cursor-pointer">
+                <option selected="true" value="-Select-" x-text="pageData.contact_us.form ? pageData.contact_us.form.reason_placeholder : '-Select-'">-Select-</option>
+                <template x-for="(option, index) in (pageData.contact_us.form ? pageData.contact_us.form.reason_options : ['Billing Question', 'Technical Question', 'Product Question', 'Affiliate Question', 'Referral Fee Question', 'Business Inquiry', 'General Inquiry'])" :key="index">
+                    <option :value="option" x-text="option"></option>
+                </template>
+            </select>
+            <p id="Dropdown_error" class="zf-errorMessage text-red-500 text-xs mt-2 font-medium" style="display:none;">Invalid value</p>
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2" x-text="pageData.contact_us.form ? pageData.contact_us.form.message_label : 'Message Box'">Message Box</label>
+            <textarea name="MultiLine" checktype="c1" maxlength="65535" :placeholder="pageData.contact_us.form ? pageData.contact_us.form.message_placeholder : 'How can we help you?'" rows="4" 
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#389400] focus:border-[#389400] focus:outline-none transition text-gray-800 bg-gray-50 hover:bg-white resize-y"></textarea>
+            <p id="MultiLine_error" class="zf-errorMessage text-red-500 text-xs mt-2 font-medium" style="display: none;">Invalid value</p>
+        </div>  
+
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2" x-text="pageData.contact_us.form ? pageData.contact_us.form.hear_about_label : 'How Did You Hear About Us?'">How Did You Hear About Us?</label>
+            <select name="Dropdown1" checktype="c1" 
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#389400] focus:border-[#389400] focus:outline-none transition text-gray-800 bg-gray-50 hover:bg-white cursor-pointer">
+                <option selected="true" value="-Select-" x-text="pageData.contact_us.form ? pageData.contact_us.form.hear_about_placeholder : '-Select-'">-Select-</option>
+                <template x-for="(option, index) in (pageData.contact_us.form ? pageData.contact_us.form.hear_about_options : ['Friend/Family', 'Pay Yourself First Affiliate', 'Online Ad', 'Social Media', 'Search Engine', 'Flyer'])" :key="index">
+                    <option :value="option" x-text="option"></option>
+                </template>
+            </select>
+            <p id="Dropdown1_error" class="zf-errorMessage text-red-500 text-xs mt-2 font-medium" style="display:none;">Invalid value</p>
+        </div>
+
+        <div class="flex items-start bg-[#F2FFEB] p-4 rounded-lg border border-[#dcfce7] mt-4">
+            <div class="flex items-center h-5 mt-1">
+                <input type="checkbox" checktype="c1" id="DecisionBox" name="DecisionBox" 
+                       class="w-5 h-5 text-[#389400] border-gray-300 rounded focus:ring-[#389400] cursor-pointer" />
+            </div>
+            <div class="ml-3">
+                <label for="DecisionBox" class="font-bold text-brand-dark cursor-pointer text-sm">
+                    <span x-text="pageData.contact_us.form ? pageData.contact_us.form.consent_label : 'Please Check'">Please Check</span> <span class="text-red-500">*</span>
+                </label>
+                <p class="text-gray-600 text-xs mt-1 leading-relaxed" x-text="pageData.contact_us.form ? pageData.contact_us.form.consent_text : 'I consent to receive responses to my inquiry via email and, if I provided my phone number, by phone. I can opt out of promotional communications at any time.'">
+                    I consent to receive responses to my inquiry via email and, if I provided my phone number, by phone. I can opt out of promotional communications at any time.
+                </p>
+                <p id="DecisionBox_error" class="zf-errorMessage text-red-500 text-xs mt-1 font-medium" style="display: none;">Invalid value</p>
+            </div>
+        </div>
+
+        <div class="pt-4 text-center">
+            <button type="submit" class="w-full md:w-auto bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-4 px-12 rounded shadow-lg transition uppercase text-sm tracking-widest inline-block transform hover:-translate-y-1">
+                <span x-text="pageData.contact_us.form ? pageData.contact_us.form.submit_text : 'Submit Message'">Submit Message</span>
+            </button>
+        </div>
+
+    </div>
+</form>
+
+<script type="text/javascript">
+    var dateAndMonthRegexFormateArray = zf_SetDateAndMonthRegexBasedOnDateFormate('dd-MMM-yyyy');
+    var zf_DateRegex = new RegExp(dateAndMonthRegexFormateArray[0]);
+    var zf_MonthYearRegex = new RegExp(dateAndMonthRegexFormateArray[1]);
+    var zf_MandArray = [ "Name_First", "Name_Last", "Email", "DecisionBox"]; 
+    var zf_FieldArray = [ "Name_First", "Name_Last", "Email", "PhoneNumber_countrycode", "Dropdown", "MultiLine", "Dropdown1", "DecisionBox"]; 
+    var isSalesIQIntegrationEnabled = false;
+    var salesIQFieldsArray = [];
+</script>
+            </div>
+        </section>
+
+        <section class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4">
+                
+                <h2 class="text-3xl font-extrabold text-center text-brand-dark uppercase mb-12" x-html="pageData.contact_us.support_section ? pageData.contact_us.support_section.heading : 'PYF <span class=&quot;text-brand-primary&quot;>Support</span> Email'">
+                    PYF <span class="text-brand-primary">Support</span> Email
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20 max-w-6xl mx-auto">
+                    <div class="bg-[#F2FFEB] rounded-lg p-8 text-center hover:shadow-lg transition">
+                        <div class="w-16 h-16 bg-[#1c4a00] rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl">
+                            <i class="fas" :class="pageData.contact_us.support_section ? pageData.contact_us.support_section.email_icon : 'fa-at'"></i>
+                        </div>
+                        <p class="text-sm font-bold text-gray-900">
+                            <span x-text="pageData.contact_us.support_section ? pageData.contact_us.support_section.email_label : 'Email address:'">Email address:</span> <a :href="'mailto:' + (pageData.contact_us.info ? pageData.contact_us.info.email : 'service@payyourselffirst.com')" class="hover:text-brand-primary" x-text="pageData.contact_us.info ? pageData.contact_us.info.email : 'service@payyourselffirst.com'">service@payyourselffirst.com</a>
+                        </p>
+                    </div>
+
+                    <div class="bg-[#F2FFEB] rounded-lg p-8 text-center hover:shadow-lg transition">
+                        <div class="w-16 h-16 bg-[#1c4a00] rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl">
+                            <i class="fas" :class="pageData.contact_us.support_section ? pageData.contact_us.support_section.response_icon : 'fa-clock'"></i>
+                        </div>
+                        <p class="text-sm font-bold text-gray-900" x-text="((pageData.contact_us.support_section ? pageData.contact_us.support_section.response_label : 'Expected response time:') + ' ' + (pageData.contact_us.info ? pageData.contact_us.info.response_time : '1-2 business days')).trim()">Expected response time: 1-2 business days</p>
+                    </div>
+
+                    <div class="bg-[#F2FFEB] rounded-lg p-8 text-center hover:shadow-lg transition">
+                        <div class="w-16 h-16 bg-[#1c4a00] rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl">
+                            <i class="fas" :class="pageData.contact_us.support_section ? pageData.contact_us.support_section.hours_icon : 'fa-business-time'"></i>
+                        </div>
+                        <p class="text-sm font-bold text-gray-900" x-text="((pageData.contact_us.support_section ? pageData.contact_us.support_section.hours_label : 'Support hours:') + ' ' + (pageData.contact_us.info ? pageData.contact_us.info.support_hours : '9am - 5pm ET')).trim()">Support hours: 9am - 5pm ET</p>
+                    </div>
+                </div>
+
+                <h2 class="text-3xl font-extrabold text-center text-brand-dark uppercase mb-12" x-html="pageData.contact_us.service_links ? pageData.contact_us.service_links.heading : 'Helpful <span class=&quot;text-brand-primary&quot;>Service Links</span>'">
+                    Helpful <span class="text-brand-primary">Service Links</span>
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 max-w-6xl mx-auto">
+                    <div class="bg-[#F2FFEB] rounded-lg p-8 text-center hover:shadow-lg transition group cursor-pointer">
+                        <div class="w-16 h-16 bg-[#1c4a00] rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl group-hover:bg-brand-primary transition">
+                            <i class="fas" :class="pageData.contact_us.service_links ? pageData.contact_us.service_links.faq_icon : 'fa-globe'"></i>
+                        </div>
+                        <p class="text-sm font-bold text-gray-900">
+                            <span x-text="pageData.contact_us.service_links ? pageData.contact_us.service_links.link_prefix : 'Link to'">Link to</span> <a :href="pageData.contact_us.service_links ? pageData.contact_us.service_links.faq_link : 'support.html'" target="_blank" class="text-[#3498db] hover:underline" x-text="pageData.contact_us.service_links ? pageData.contact_us.service_links.faq_text : 'Support / FAQ Page'">Support / FAQ Page</a>
+                        </p>
+                    </div>
+
+                    <div class="bg-[#F2FFEB] rounded-lg p-8 text-center hover:shadow-lg transition group cursor-pointer">
+                        <div class="w-16 h-16 bg-[#1c4a00] rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl group-hover:bg-brand-primary transition">
+                            <i class="fas" :class="pageData.contact_us.service_links ? pageData.contact_us.service_links.package_icon : 'fa-globe'"></i>
+                        </div>
+                        <p class="text-sm font-bold text-gray-900">
+                            <span x-text="pageData.contact_us.service_links ? pageData.contact_us.service_links.link_prefix : 'Link to'">Link to</span> <a :href="pageData.contact_us.service_links ? pageData.contact_us.service_links.package_link : 'packages.html'" target="_blank" class="text-[#3498db] hover:underline" x-text="pageData.contact_us.service_links ? pageData.contact_us.service_links.package_text : 'Package Overview'">Package Overview</a>
+                        </p>
+                    </div>
+
+                    <div class="bg-[#F2FFEB] rounded-lg p-8 text-center hover:shadow-lg transition group cursor-pointer">
+                        <div class="w-16 h-16 bg-[#1c4a00] rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl group-hover:bg-brand-primary transition">
+                            <i class="fas" :class="pageData.contact_us.service_links ? pageData.contact_us.service_links.affiliate_icon : 'fa-globe'"></i>
+                        </div>
+                        <p class="text-sm font-bold text-gray-900">
+                            <span x-text="pageData.contact_us.service_links ? pageData.contact_us.service_links.link_prefix : 'Link to'">Link to</span> <a :href="pageData.contact_us.service_links ? pageData.contact_us.service_links.affiliate_link : 'affiliate-page.html'" target="_blank" class="text-[#3498db] hover:underline" x-text="pageData.contact_us.service_links ? pageData.contact_us.service_links.affiliate_text : 'Affiliate Support Section'">Affiliate Support Section</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a :href="pageData.contact_us.portals ? pageData.contact_us.portals.customer : 'https://payyourselffirst.benefithub.com/welcome/'" class="bg-[#66b510] hover:bg-[#4a8a0a] text-white font-bold py-4 px-8 rounded shadow text-sm uppercase text-center transition" x-text="pageData.contact_us.support_section ? pageData.contact_us.support_section.customer_portal_text : 'Customer Portal Login'">Customer Portal Login</a>
+                    <a :href="pageData.contact_us.portals ? pageData.contact_us.portals.affiliate : 'https://backoffice.pyfaffiliates.com/merchants/login.php#login'" target="_blank" class="bg-[#66b510] hover:bg-[#4a8a0a] text-white font-bold py-4 px-8 rounded shadow text-sm uppercase text-center transition" x-text="pageData.contact_us.support_section ? pageData.contact_us.support_section.affiliate_portal_text : 'Affiliate Portal Login'">Affiliate Portal Login</a>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="py-16 md:py-24 bg-[#F2FFEB]">
+            <div class="container mx-auto px-4">
+                
+                <h2 class="text-3xl font-extrabold text-center text-brand-dark uppercase mb-16" x-html="pageData.contact_us.service_provider ? pageData.contact_us.service_provider.headline : 'Need Help With A <span class=\'text-brand-primary\'>Service Provider?</span>'"></h2>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+                    
+                    <div>
+                        <p class="text-gray-700 mb-6 font-medium" x-text="pageData.contact_us.service_provider ? pageData.contact_us.service_provider.desc1 : 'Some PYF plans include services delivered by licensed professionals through third-party partner networks.'"></p>
+                        <p class="text-gray-700 mb-4 font-medium" x-text="pageData.contact_us.service_provider ? pageData.contact_us.service_provider.desc2 : 'If you need assistance with:'"></p>
+                        
+                        <ul class="space-y-3 mb-8">
+                            <template x-for="item in (pageData.contact_us.service_provider ? pageData.contact_us.service_provider.list : ['Finding a participating provider', 'Scheduling an appointment', 'Provider-specific questions', 'Service quality concerns'])">
+                                <li class="flex items-center text-gray-900 font-bold">
+                                    <i class="fas fa-circle text-[#1c4a00] text-[10px] mr-3"></i> <span x-text="item"></span>
+                                </li>
+                            </template>
+                        </ul>
+
+                        <p class="text-gray-700 mb-8 font-medium" x-text="pageData.contact_us.service_provider ? pageData.contact_us.service_provider.desc3 : 'Please contact us using the form above, and we\'ll help coordinate with the appropriate provider network.'"></p>
+
+                        <a :href="pageData.contact_us.service_provider ? pageData.contact_us.service_provider.cta_link : '#form'" class="bg-[#66b510] hover:bg-[#4a8a0a] text-white font-bold py-3 px-8 rounded shadow text-xs uppercase inline-block transition" x-text="pageData.contact_us.service_provider ? pageData.contact_us.service_provider.cta_text : 'Go To Form'">
+                            Go To Form
+                        </a>
+                    </div>
+
+                    <div class="h-full min-h-[400px]">
+                        <img x-show="imageReady.serviceProvider" x-cloak :src="getCacheBustedImageUrl(pageData.contact_us.service_provider ? pageData.contact_us.service_provider.image : 'Contact-us/Contact Us_Need help with a service provider.jpg')" alt="Service Provider Help" class="rounded-[2rem] shadow-xl w-full h-full object-cover transition-opacity duration-200" :class="isCmsLoading ? 'opacity-0' : 'opacity-100'">
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="relative bg-white">
+            
+            <div class="relative h-[400px] w-full">
+                <img x-show="imageReady.map" x-cloak :src="getCacheBustedImageUrl((pageData.contact_us.map_image && pageData.contact_us.map_image.image) ? pageData.contact_us.map_image.image : 'Contact-us/Contact Us_Mailing Address.jpg')" 
+                     alt="Map Background" 
+                     class="w-full h-full object-cover grayscale opacity-60 transition-opacity duration-200"
+                     :class="isCmsLoading ? 'opacity-0' : 'opacity-60'">
+                
+                <div class="absolute inset-0 bg-[#064e3b] mix-blend-multiply opacity-90"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#1c4a00] to-transparent opacity-80"></div>
+
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
+                    <i class="fas fa-map-marker-alt text-yellow-400 text-6xl mb-4 drop-shadow-lg animate-bounce"></i>
+                    <h2 class="text-3xl font-extrabold uppercase mb-4 tracking-wide" x-text="(pageData.contact_us.map_image && pageData.contact_us.map_image.heading) ? pageData.contact_us.map_image.heading : 'Mailing Address'"></h2>
+                    <p class="text-lg font-medium leading-relaxed whitespace-pre-line" x-html="pageData.contact_us.info ? pageData.contact_us.info.address : 'Pay Yourself First<br>107 S. West Street, Suite 557<br>Alexandria, VA 22314<br>Correspondence Only'"></p>
+                </div>
+            </div>
+
+            <div class="container mx-auto px-4 py-16 md:py-24">
+                
+                <div class="text-center max-w-5xl mx-auto mb-16">
+                    <h2 class="text-2xl font-bold text-brand-dark leading-relaxed" x-text="pageData.contact_us.bottom_text || 'We’re committed to making your experience with Pay Yourself First as smooth and supportive as possible. If you need help, don’t hesitate to reach out.'"></h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <template x-for="(notice, index) in (pageData.contact_us.bottom_notices || [{icon: 'fa-user-clock', text: 'Please Allow 1-2 Business Days For A Response'}, {icon: 'fa-stop', text: 'PYF Cannot and Does Not Provide Tax, Legal, or Medical Advice'}, {icon: 'fa-flag-usa', text: 'Provider Availability Varies By State'}])" :key="index">
+                        <div class="bg-[#F2FFEB] p-8 rounded-lg flex flex-col items-center text-center h-full">
+                            <div class="w-16 h-16 bg-[#1c4a00] rounded-full flex items-center justify-center mb-6 text-white text-2xl">
+                                <i class="fas" :class="notice.icon"></i>
+                            </div>
+                            <p class="text-sm font-bold text-gray-800" x-text="notice.text"></p>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    </template>
+
+
+
+
+
+
+     <div data-pyf-footer-root></div>
+
+
+
+
+
+    <script>
+        const contactPageSupabaseUrl = 'https://nqwggnereuhphwmkqove.supabase.co';
+        const contactPageSupabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xd2dnbmVyZXVocGh3bWtxb3ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDUxMjAsImV4cCI6MjA5MTM4MTEyMH0.1OM-fLTth5FcMKUPHgepeM3BdJMydHiK1coD0vw0o0M';
+        const contactPageSupabaseClient = window.supabase.createClient(contactPageSupabaseUrl, contactPageSupabaseKey);
+
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Sticky Header Logic
+        let lastScrollTop = 0;
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) { header.classList.add('header-hidden'); } 
+            else { header.classList.remove('header-hidden'); }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+    </script>
+
+    <button id="backToTopBtn" 
+            onclick="scrollToTop()" 
+            class="fixed bottom-8 right-8 z-50 bg-brand-primary hover:bg-[#2d7a00] text-white w-12 h-12 rounded-full shadow-lg transition-all duration-300 transform translate-y-20 opacity-0 flex items-center justify-center focus:outline-none">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        // Show/Hide logic based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show after scrolling down 300px
+                backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
+            } else {
+                backToTopBtn.classList.add('translate-y-20', 'opacity-0');
+            }
+        });
+
+        // Smooth scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('pageData', () => ({
+                isCmsLoading: true,
+                contentVersion: '',
+                imageReady: {
+                    hero: false,
+                    serviceProvider: false,
+                    map: false
+                },
+                pageData: {
+                    contact_us: {
+                        hero: {
+                            headline: "Get In Touch With Us",
+                            desc: "Whether you have questions about our services, need support, or want to\nexplore business partnerships, we're here to help.",
+                            image: "Contact-us/Contact Us_Hero.jpg"
+                        },
+                        form: {
+                            heading: 'Contact <span class="text-brand-primary">Us</span>',
+                            name_label: 'Name',
+                            first_name_placeholder: 'First Name',
+                            last_name_placeholder: 'Last Name',
+                            email_label: 'Email',
+                            email_placeholder: 'Enter your email address',
+                            phone_label: 'Phone',
+                            phone_placeholder: 'Phone Number',
+                            reason_label: 'Reason For Contact',
+                            reason_placeholder: '-Select-',
+                            reason_options: [
+                                'Billing Question',
+                                'Technical Question',
+                                'Product Question',
+                                'Affiliate Question',
+                                'Referral Fee Question',
+                                'Business Inquiry',
+                                'General Inquiry'
+                            ],
+                            message_label: 'Message Box',
+                            message_placeholder: 'How can we help you?',
+                            hear_about_label: 'How Did You Hear About Us?',
+                            hear_about_placeholder: '-Select-',
+                            hear_about_options: [
+                                'Friend/Family',
+                                'Pay Yourself First Affiliate',
+                                'Online Ad',
+                                'Social Media',
+                                'Search Engine',
+                                'Flyer'
+                            ],
+                            consent_label: 'Please Check',
+                            consent_text: 'I consent to receive responses to my inquiry via email and, if I provided my phone number, by phone. I can opt out of promotional communications at any time.',
+                            submit_text: 'Submit Message'
+                        },
+                        info: {
+                            email: "service@payyourselffirst.com",
+                            phone: "1-800-123-4567",
+                            address: "Pay Yourself First\n107 S. West Street, Suite 557\nAlexandria, VA 22314\nCorrespondence Only",
+                            response_time: "1-2 business days",
+                            support_hours: "9am - 5pm ET"
+                        },
+                        portals: {
+                            customer: 'https://payyourselffirst.benefithub.com/welcome/',
+                            affiliate: 'https://backoffice.pyfaffiliates.com/merchants/login.php#login'
+                        },
+                        support_section: {
+                            heading: 'PYF <span class="text-brand-primary">Support</span> Email',
+                            email_label: 'Email address:',
+                            response_label: 'Expected response time:',
+                            hours_label: 'Support hours:',
+                            email_icon: 'fa-at',
+                            response_icon: 'fa-clock',
+                            hours_icon: 'fa-business-time',
+                            customer_portal_text: 'Customer Portal Login',
+                            affiliate_portal_text: 'Affiliate Portal Login'
+                        },
+                        service_provider: {
+                            headline: 'Need Help With A <span class="text-brand-primary">Service Provider?</span>',
+                            desc1: 'Some PYF plans include services delivered by licensed professionals through third-party partner networks.',
+                            desc2: 'If you need assistance with:',
+                            list: [
+                                'Finding a participating provider',
+                                'Scheduling an appointment',
+                                'Provider-specific questions',
+                                'Service quality concerns'
+                            ],
+                            desc3: 'Please contact us using the form above, and we\'ll help coordinate with the appropriate provider network.',
+                            image: 'Contact-us/Contact Us_Need help with a service provider.jpg',
+                            cta_text: 'Go To Form',
+                            cta_link: '#form'
+                        },
+                        bottom_text: 'We’re committed to making your experience with Pay Yourself First as smooth and supportive as possible. If you need help, don’t hesitate to reach out.',
+                        bottom_notices: [
+                            {icon: 'fa-user-clock', text: 'Please Allow 1-2 Business Days For A Response'},
+                            {icon: 'fa-stop', text: 'PYF Cannot and Does Not Provide Tax, Legal, or Medical Advice'},
+                            {icon: 'fa-flag-usa', text: 'Provider Availability Varies By State'}
+                        ],
+                        map_image: {
+                            image: 'Contact-us/Contact Us_Mailing Address.jpg',
+                            heading: 'Mailing Address'
+                        },
+                        service_links: {
+                            heading: 'Helpful <span class="text-brand-primary">Service Links</span>',
+                            link_prefix: 'Link to',
+                            faq_icon: 'fa-globe',
+                            faq_link: 'support.html', faq_text: 'Support / FAQ Page',
+                            package_icon: 'fa-globe',
+                            package_link: 'packages.html', package_text: 'Package Overview',
+                            affiliate_icon: 'fa-globe',
+                            affiliate_link: 'affiliate-page.html', affiliate_text: 'Affiliate Support Section'
+                        },
+                        form_action: 'https://forms.zohopublic.com/payyourselffirst1/form/PYFMainSiteContactUs/formperma/c6Fb3hI5V4Qrp9CMD5OPrutVAxOgF5v8wy10YwxFd8A/htmlRecords/submit'
+        
+                    }
+                },
+                buildCacheBustedUrl(url, version = '') {
+                    if (!url) return url;
+                    const cacheToken = version || this.contentVersion;
+                    if (!cacheToken) return url;
+                    const separator = url.includes('?') ? '&' : '?';
+                    return `${url}${separator}v=${encodeURIComponent(cacheToken)}`;
+                },
+                getCacheBustedImageUrl(url) {
+                    return this.buildCacheBustedUrl(url);
+                },
+                scrollToContactTarget(target) {
+                    const normalizedTarget = target === '#form' ? '#contact-form' : (target || '#contact-form');
+                    if (!normalizedTarget.startsWith('#')) {
+                        window.location.href = normalizedTarget;
+                        return;
+                    }
+
+                    const element = this.$refs.contactFormSection || document.querySelector(normalizedTarget) || document.getElementById(normalizedTarget.slice(1));
+                    if (!element) return;
+
+                    const fixedHeader = document.querySelector('nav.fixed');
+                    const headerOffset = fixedHeader ? fixedHeader.offsetHeight + 24 : 24;
+                    const top = Math.max(element.getBoundingClientRect().top + window.scrollY - headerOffset, 0);
+
+                    if (window.history && typeof window.history.replaceState === 'function') {
+                        window.history.replaceState(null, '', normalizedTarget);
+                    } else {
+                        window.location.hash = normalizedTarget;
+                    }
+
+                    element.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+
+                    window.setTimeout(() => {
+                        window.scrollTo({
+                            top,
+                            behavior: 'smooth'
+                        });
+                    }, 60);
+                },
+                syncContactHashTarget() {
+                    if (window.location.hash === '#form' || window.location.hash === '#contact-form') {
+                        window.setTimeout(() => this.scrollToContactTarget(window.location.hash), 60);
+                    }
+                },
+                preloadImage(url) {
+                    return new Promise((resolve) => {
+                        if (!url) {
+                            resolve();
+                            return;
+                        }
+                        const img = new Image();
+                        img.onload = () => resolve();
+                        img.onerror = () => resolve();
+                        img.src = url;
+                    });
+                },
+                async preloadContactImages(content, version) {
+                    const imageMap = {
+                        hero: content?.hero?.image,
+                        serviceProvider: content?.service_provider?.image,
+                        map: content?.map_image?.image
+                    };
+
+                    this.imageReady = {
+                        hero: false,
+                        serviceProvider: false,
+                        map: false
+                    };
+
+                    await Promise.all(Object.entries(imageMap).map(async ([key, url]) => {
+                        if (!url) {
+                            this.imageReady[key] = true;
+                            return;
+                        }
+                        await this.preloadImage(this.buildCacheBustedUrl(url, version));
+                        this.imageReady[key] = true;
+                    }));
+                },
+                normalizeContactUsData(contactData = {}) {
+                    const defaultReasonOptions = [
+                        'Billing Question',
+                        'Technical Question',
+                        'Product Question',
+                        'Affiliate Question',
+                        'Referral Fee Question',
+                        'Business Inquiry',
+                        'General Inquiry'
+                    ];
+                    const defaultHearAboutOptions = [
+                        'Friend/Family',
+                        'Pay Yourself First Affiliate',
+                        'Online Ad',
+                        'Social Media',
+                        'Search Engine',
+                        'Flyer'
+                    ];
+                    const defaultServiceProviderList = [
+                        'Finding a participating provider',
+                        'Scheduling an appointment',
+                        'Provider-specific questions',
+                        'Service quality concerns'
+                    ];
+                    const defaultBottomNotices = [
+                        { icon: 'fa-user-clock', text: 'Please Allow 1-2 Business Days For A Response' },
+                        { icon: 'fa-stop', text: 'PYF Cannot and Does Not Provide Tax, Legal, or Medical Advice' },
+                        { icon: 'fa-flag-usa', text: 'Provider Availability Varies By State' }
+                    ];
+
+                    const normalized = {
+                        ...contactData,
+                        hero: {
+                            headline: 'Get In Touch With Us',
+                            desc: "Whether you have questions about our services, need support, or want to\nexplore business partnerships, we're here to help.",
+                            image: 'Contact-us/Contact Us_Hero.jpg',
+                            ...(contactData.hero || {})
+                        },
+                        form: {
+                            heading: 'Contact <span class="text-brand-primary">Us</span>',
+                            name_label: 'Name',
+                            first_name_placeholder: 'First Name',
+                            last_name_placeholder: 'Last Name',
+                            email_label: 'Email',
+                            email_placeholder: 'Enter your email address',
+                            phone_label: 'Phone',
+                            phone_placeholder: 'Phone Number',
+                            reason_label: 'Reason For Contact',
+                            reason_placeholder: '-Select-',
+                            reason_options: defaultReasonOptions,
+                            message_label: 'Message Box',
+                            message_placeholder: 'How can we help you?',
+                            hear_about_label: 'How Did You Hear About Us?',
+                            hear_about_placeholder: '-Select-',
+                            hear_about_options: defaultHearAboutOptions,
+                            consent_label: 'Please Check',
+                            consent_text: 'I consent to receive responses to my inquiry via email and, if I provided my phone number, by phone. I can opt out of promotional communications at any time.',
+                            submit_text: 'Submit Message',
+                            ...(contactData.form || {})
+                        },
+                        info: {
+                            email: 'service@payyourselffirst.com',
+                            phone: '1-800-123-4567',
+                            address: 'Pay Yourself First\n107 S. West Street, Suite 557\nAlexandria, VA 22314\nCorrespondence Only',
+                            response_time: '1-2 business days',
+                            support_hours: '9am - 5pm ET',
+                            ...(contactData.info || {})
+                        },
+                        portals: {
+                            customer: 'https://payyourselffirst.benefithub.com/welcome/',
+                            affiliate: 'https://backoffice.pyfaffiliates.com/merchants/login.php#login',
+                            ...(contactData.portals || {})
+                        },
+                        support_section: {
+                            heading: 'PYF <span class="text-brand-primary">Support</span> Email',
+                            email_label: 'Email address:',
+                            response_label: 'Expected response time:',
+                            hours_label: 'Support hours:',
+                            email_icon: 'fa-at',
+                            response_icon: 'fa-clock',
+                            hours_icon: 'fa-business-time',
+                            customer_portal_text: 'Customer Portal Login',
+                            affiliate_portal_text: 'Affiliate Portal Login',
+                            ...(contactData.support_section || {})
+                        },
+                        service_provider: {
+                            headline: 'Need Help With A <span class="text-brand-primary">Service Provider?</span>',
+                            desc1: 'Some PYF plans include services delivered by licensed professionals through third-party partner networks.',
+                            desc2: 'If you need assistance with:',
+                            list: defaultServiceProviderList,
+                            desc3: 'Please contact us using the form above, and we\'ll help coordinate with the appropriate provider network.',
+                            image: 'Contact-us/Contact Us_Need help with a service provider.jpg',
+                            cta_text: 'Go To Form',
+                            cta_link: '#form',
+                            ...(contactData.service_provider || {})
+                        },
+                        map_image: {
+                            image: 'Contact-us/Contact Us_Mailing Address.jpg',
+                            heading: 'Mailing Address',
+                            ...(contactData.map_image || {})
+                        },
+                        service_links: {
+                            heading: 'Helpful <span class="text-brand-primary">Service Links</span>',
+                            link_prefix: 'Link to',
+                            faq_icon: 'fa-globe',
+                            faq_link: 'support.html',
+                            faq_text: 'Support / FAQ Page',
+                            package_icon: 'fa-globe',
+                            package_link: 'packages.html',
+                            package_text: 'Package Overview',
+                            affiliate_icon: 'fa-globe',
+                            affiliate_link: 'affiliate-page.html',
+                            affiliate_text: 'Affiliate Support Section',
+                            ...(contactData.service_links || {})
+                        }
+                    };
+
+                    normalized.form.reason_options = Array.isArray(normalized.form.reason_options) && normalized.form.reason_options.length
+                        ? normalized.form.reason_options
+                        : [...defaultReasonOptions];
+                    normalized.form.hear_about_options = Array.isArray(normalized.form.hear_about_options) && normalized.form.hear_about_options.length
+                        ? normalized.form.hear_about_options
+                        : [...defaultHearAboutOptions];
+                    normalized.service_provider.list = Array.isArray(normalized.service_provider.list) && normalized.service_provider.list.length
+                        ? normalized.service_provider.list
+                        : [...defaultServiceProviderList];
+                    normalized.bottom_notices = Array.isArray(contactData.bottom_notices) && contactData.bottom_notices.length
+                        ? contactData.bottom_notices
+                        : defaultBottomNotices.map(notice => ({ ...notice }));
+                    normalized.bottom_text = contactData.bottom_text || 'Weâ€™re committed to making your experience with Pay Yourself First as smooth and supportive as possible. If you need help, donâ€™t hesitate to reach out.';
+                    normalized.form_action = contactData.form_action || 'https://forms.zohopublic.com/payyourselffirst1/form/PYFMainSiteContactUs/formperma/c6Fb3hI5V4Qrp9CMD5OPrutVAxOgF5v8wy10YwxFd8A/htmlRecords/submit';
+
+                    return normalized;
+                },
+                normalizeContactHelpfulLinks(items, fallbackItems = []) {
+                    const source = Array.isArray(items) && items.length ? items : fallbackItems;
+                    return source.map((item, index) => ({
+                        id: item?.id || `contact-link-${index + 1}`,
+                        icon: item?.icon || 'fa-globe',
+                        text: item?.text || `Helpful Link ${index + 1}`,
+                        link: item?.link || '#'
+                    }));
+                },
+                normalizeContactPortalButtons(items, fallbackItems = []) {
+                    const source = Array.isArray(items) && items.length ? items : fallbackItems;
+                    return source.map((item, index) => ({
+                        id: item?.id || `contact-portal-${index + 1}`,
+                        text: item?.text || `Portal Button ${index + 1}`,
+                        link: item?.link || '#'
+                    }));
+                },
+                normalizeContactSupportCards(items, fallbackItems = []) {
+                    const source = Array.isArray(items) && items.length ? items : fallbackItems;
+                    return source.map((item, index) => ({
+                        id: item?.id || `contact-card-${index + 1}`,
+                        icon: item?.icon || 'fa-circle-info',
+                        label: item?.label || `Label ${index + 1}:`,
+                        text: item?.text || '',
+                        link: item?.link || ''
+                    }));
+                },
+                getDefaultContactUsSections(source = {}) {
+                    const defaultReasonOptions = ['Billing Question','Technical Question','Product Question','Affiliate Question','Referral Fee Question','Business Inquiry','General Inquiry'];
+                    const defaultHearAboutOptions = ['Friend/Family','Pay Yourself First Affiliate','Online Ad','Social Media','Search Engine','Flyer'];
+                    const defaultServiceProviderList = ['Finding a participating provider','Scheduling an appointment','Provider-specific questions','Service quality concerns'];
+                    const defaultBottomNotices = [
+                        { icon: 'fa-user-clock', text: 'Please Allow 1-2 Business Days For A Response' },
+                        { icon: 'fa-stop', text: 'PYF Cannot and Does Not Provide Tax, Legal, or Medical Advice' },
+                        { icon: 'fa-flag-usa', text: 'Provider Availability Varies By State' }
+                    ];
+                    const hero = { headline: 'Get In Touch With Us', desc: "Whether you have questions about our services, need support, or want to\nexplore business partnerships, we're here to help.", image: 'Contact-us/Contact Us_Hero.jpg', ...(source.hero || {}) };
+                    const form = {
+                        heading: 'Contact <span class="text-brand-primary">Us</span>',
+                        name_label: 'Name',
+                        first_name_placeholder: 'First Name',
+                        last_name_placeholder: 'Last Name',
+                        email_label: 'Email',
+                        email_placeholder: 'Enter your email address',
+                        phone_label: 'Phone',
+                        phone_placeholder: 'Phone Number',
+                        reason_label: 'Reason For Contact',
+                        reason_placeholder: '-Select-',
+                        reason_options: defaultReasonOptions,
+                        message_label: 'Message Box',
+                        message_placeholder: 'How can we help you?',
+                        hear_about_label: 'How Did You Hear About Us?',
+                        hear_about_placeholder: '-Select-',
+                        hear_about_options: defaultHearAboutOptions,
+                        consent_label: 'Please Check',
+                        consent_text: 'I consent to receive responses to my inquiry via email and, if I provided my phone number, by phone. I can opt out of promotional communications at any time.',
+                        submit_text: 'Submit Message',
+                        ...(source.form || {})
+                    };
+                    const info = { email: 'service@payyourselffirst.com', phone: '1-800-123-4567', address: 'Pay Yourself First\n107 S. West Street, Suite 557\nAlexandria, VA 22314\nCorrespondence Only', response_time: '1-2 business days', support_hours: '9am - 5pm ET', ...(source.info || {}) };
+                    const portals = { customer: 'https://payyourselffirst.benefithub.com/welcome/', affiliate: 'https://backoffice.pyfaffiliates.com/merchants/login.php#login', ...(source.portals || {}) };
+                    const supportSection = { heading: 'PYF <span class="text-brand-primary">Support</span> Email', email_label: 'Email address:', response_label: 'Expected response time:', hours_label: 'Support hours:', email_icon: 'fa-at', response_icon: 'fa-clock', hours_icon: 'fa-business-time', customer_portal_text: 'Customer Portal Login', affiliate_portal_text: 'Affiliate Portal Login', ...(source.support_section || {}) };
+                    const serviceProvider = { headline: 'Need Help With A <span class="text-brand-primary">Service Provider?</span>', desc1: 'Some PYF plans include services delivered by licensed professionals through third-party partner networks.', desc2: 'If you need assistance with:', list: defaultServiceProviderList, desc3: "Please contact us using the form above, and we'll help coordinate with the appropriate provider network.", image: 'Contact-us/Contact Us_Need help with a service provider.jpg', cta_text: 'Go To Form', cta_link: '#form', ...(source.service_provider || {}) };
+                    const mapImage = { image: 'Contact-us/Contact Us_Mailing Address.jpg', heading: 'Mailing Address', ...(source.map_image || {}) };
+                    const serviceLinks = { heading: 'Helpful <span class="text-brand-primary">Service Links</span>', link_prefix: 'Link to', faq_icon: 'fa-globe', faq_link: 'support.html', faq_text: 'Support / FAQ Page', package_icon: 'fa-globe', package_link: 'packages.html', package_text: 'Package Overview', affiliate_icon: 'fa-globe', affiliate_link: 'affiliate-page.html', affiliate_text: 'Affiliate Support Section', ...(source.service_links || {}) };
+                    const helpfulLinks = this.normalizeContactHelpfulLinks(source.helpful_links, [
+                        { id: 'faq', icon: serviceLinks.faq_icon, text: serviceLinks.faq_text, link: serviceLinks.faq_link },
+                        { id: 'packages', icon: serviceLinks.package_icon, text: serviceLinks.package_text, link: serviceLinks.package_link },
+                        { id: 'affiliate', icon: serviceLinks.affiliate_icon, text: serviceLinks.affiliate_text, link: serviceLinks.affiliate_link }
+                    ]);
+                    const portalButtons = this.normalizeContactPortalButtons(source.portal_buttons, [
+                        { id: 'customer', text: supportSection.customer_portal_text, link: portals.customer },
+                        { id: 'affiliate', text: supportSection.affiliate_portal_text, link: portals.affiliate }
+                    ]);
+                    const supportCards = this.normalizeContactSupportCards(source.support_cards, [
+                        { id: 'email', icon: supportSection.email_icon, label: supportSection.email_label, text: info.email, link: info.email ? `mailto:${info.email}` : '' },
+                        { id: 'response', icon: supportSection.response_icon, label: supportSection.response_label, text: info.response_time, link: '' },
+                        { id: 'hours', icon: supportSection.hours_icon, label: supportSection.hours_label, text: info.support_hours, link: '' }
+                    ]);
+                    const notices = Array.isArray(source.bottom_notices) && source.bottom_notices.length ? source.bottom_notices : defaultBottomNotices;
+                    return [
+                        { id: 'hero', type: 'hero', label: 'Contact Hero', headline: hero.headline, desc: hero.desc, image: hero.image },
+                        { id: 'form', type: 'form', label: 'Contact Form', form_action: source.form_action || 'https://forms.zohopublic.com/payyourselffirst1/form/PYFMainSiteContactUs/formperma/c6Fb3hI5V4Qrp9CMD5OPrutVAxOgF5v8wy10YwxFd8A/htmlRecords/submit', heading: form.heading, name_label: form.name_label, first_name_placeholder: form.first_name_placeholder, last_name_placeholder: form.last_name_placeholder, email_label: form.email_label, email_placeholder: form.email_placeholder, phone_label: form.phone_label, phone_placeholder: form.phone_placeholder, reason_label: form.reason_label, reason_placeholder: form.reason_placeholder, reason_options: Array.isArray(form.reason_options) && form.reason_options.length ? form.reason_options : [...defaultReasonOptions], message_label: form.message_label, message_placeholder: form.message_placeholder, hear_about_label: form.hear_about_label, hear_about_placeholder: form.hear_about_placeholder, hear_about_options: Array.isArray(form.hear_about_options) && form.hear_about_options.length ? form.hear_about_options : [...defaultHearAboutOptions], consent_label: form.consent_label, consent_text: form.consent_text, submit_text: form.submit_text },
+                        { id: 'support-hub', type: 'support_hub', label: 'Support Hub', support_heading: supportSection.heading, helpful_links_heading: serviceLinks.heading, link_prefix: serviceLinks.link_prefix, phone: info.phone, cards: supportCards, helpful_links: helpfulLinks, portal_buttons: portalButtons },
+                        { id: 'service-provider', type: 'service_provider', label: 'Service Provider Help', headline: serviceProvider.headline, desc1: serviceProvider.desc1, desc2: serviceProvider.desc2, list: Array.isArray(serviceProvider.list) && serviceProvider.list.length ? serviceProvider.list : [...defaultServiceProviderList], desc3: serviceProvider.desc3, image: serviceProvider.image, cta_text: serviceProvider.cta_text, cta_link: serviceProvider.cta_link },
+                        { id: 'mailing-address', type: 'mailing_address', label: 'Mailing Address', heading: mapImage.heading, image: mapImage.image, address: info.address },
+                        { id: 'bottom-notices', type: 'bottom_notices', label: 'Bottom Notices', bottom_text: source.bottom_text || "We're committed to making your experience with Pay Yourself First as smooth and supportive as possible. If you need help, don't hesitate to reach out.", notices: notices.map((notice, index) => ({ id: notice?.id || `contact-notice-${index + 1}`, icon: notice?.icon || 'fa-check', text: notice?.text || '' })) }
+                    ];
+                },
+                normalizeContactUsSections(sections, source = {}) {
+                    const defaults = this.getDefaultContactUsSections(source);
+                    if (!Array.isArray(sections)) return defaults;
+                    return sections.map((section, index) => {
+                        const type = section?.type || section?.id;
+                        const fallback = defaults.find(item => item.type === type || item.id === type);
+                        if (!fallback) return null;
+                        const normalized = { ...fallback, ...section, id: section?.id || `${fallback.id}-${index + 1}`, type: fallback.type, label: section?.label || fallback.label };
+                        if (normalized.type === 'form') {
+                            normalized.reason_options = Array.isArray(section?.reason_options) && section.reason_options.length ? section.reason_options : fallback.reason_options;
+                            normalized.hear_about_options = Array.isArray(section?.hear_about_options) && section.hear_about_options.length ? section.hear_about_options : fallback.hear_about_options;
+                        }
+                        if (normalized.type === 'support_hub') {
+                            normalized.cards = this.normalizeContactSupportCards(section?.cards, fallback.cards);
+                            normalized.helpful_links = this.normalizeContactHelpfulLinks(section?.helpful_links, fallback.helpful_links);
+                            normalized.portal_buttons = this.normalizeContactPortalButtons(section?.portal_buttons, fallback.portal_buttons);
+                        }
+                        if (normalized.type === 'service_provider') {
+                            normalized.list = Array.isArray(section?.list) && section.list.length ? section.list : fallback.list;
+                        }
+                        if (normalized.type === 'bottom_notices') {
+                            normalized.notices = Array.isArray(section?.notices) && section.notices.length ? section.notices.map((notice, index) => ({ id: notice?.id || `contact-notice-${index + 1}`, icon: notice?.icon || 'fa-check', text: notice?.text || '' })) : fallback.notices;
+                        }
+                        return normalized;
+                    }).filter(Boolean);
+                },
+                normalizeContactUsData(contactData = {}) {
+                    const base = this.pageData.contact_us || {};
+                    const merged = { ...base, ...contactData, hero: { ...(base.hero || {}), ...(contactData.hero || {}) }, form: { ...(base.form || {}), ...(contactData.form || {}) }, info: { ...(base.info || {}), ...(contactData.info || {}) }, portals: { ...(base.portals || {}), ...(contactData.portals || {}) }, support_section: { ...(base.support_section || {}), ...(contactData.support_section || {}) }, service_provider: { ...(base.service_provider || {}), ...(contactData.service_provider || {}) }, map_image: { ...(base.map_image || {}), ...(contactData.map_image || {}) }, service_links: { ...(base.service_links || {}), ...(contactData.service_links || {}) } };
+                    const sectionDefaults = this.getDefaultContactUsSections(merged);
+                    const sections = this.normalizeContactUsSections(contactData.sections ?? base.sections, merged);
+                    const heroSection = sections.find(section => section.type === 'hero') || sectionDefaults[0];
+                    const formSection = sections.find(section => section.type === 'form') || sectionDefaults[1];
+                    const supportHubSection = sections.find(section => section.type === 'support_hub') || sectionDefaults[2];
+                    const serviceProviderSection = sections.find(section => section.type === 'service_provider') || sectionDefaults[3];
+                    const mailingSection = sections.find(section => section.type === 'mailing_address') || sectionDefaults[4];
+                    const bottomSection = sections.find(section => section.type === 'bottom_notices') || sectionDefaults[5];
+                    const supportCards = this.normalizeContactSupportCards(supportHubSection.cards, sectionDefaults[2].cards);
+                    const helpfulLinks = this.normalizeContactHelpfulLinks(supportHubSection.helpful_links, sectionDefaults[2].helpful_links);
+                    const portalButtons = this.normalizeContactPortalButtons(supportHubSection.portal_buttons, sectionDefaults[2].portal_buttons);
+                    const emailCard = supportCards[0] || sectionDefaults[2].cards[0];
+                    const responseCard = supportCards[1] || sectionDefaults[2].cards[1];
+                    const hoursCard = supportCards[2] || sectionDefaults[2].cards[2];
+                    return {
+                        ...merged,
+                        hero: { headline: heroSection.headline || sectionDefaults[0].headline, desc: heroSection.desc || sectionDefaults[0].desc, image: heroSection.image || sectionDefaults[0].image },
+                        form_action: formSection.form_action || sectionDefaults[1].form_action,
+                        form: { ...(merged.form || {}), ...(formSection || {}) },
+                        info: {
+                            email: emailCard?.text || 'service@payyourselffirst.com',
+                            phone: supportHubSection.phone || merged.info?.phone || '1-800-123-4567',
+                            address: mailingSection.address || 'Pay Yourself First\n107 S. West Street, Suite 557\nAlexandria, VA 22314\nCorrespondence Only',
+                            response_time: responseCard?.text || '1-2 business days',
+                            support_hours: hoursCard?.text || '9am - 5pm ET'
+                        },
+                        support_cards: supportCards,
+                        helpful_links: helpfulLinks,
+                        portal_buttons: portalButtons,
+                        portals: {
+                            customer: portalButtons[0]?.link || 'https://payyourselffirst.benefithub.com/welcome/',
+                            affiliate: portalButtons[1]?.link || 'https://backoffice.pyfaffiliates.com/merchants/login.php#login'
+                        },
+                        support_section: {
+                            heading: supportHubSection.support_heading || 'PYF <span class="text-brand-primary">Support</span> Email',
+                            email_label: emailCard?.label || 'Email address:',
+                            response_label: responseCard?.label || 'Expected response time:',
+                            hours_label: hoursCard?.label || 'Support hours:',
+                            email_icon: emailCard?.icon || 'fa-at',
+                            response_icon: responseCard?.icon || 'fa-clock',
+                            hours_icon: hoursCard?.icon || 'fa-business-time',
+                            customer_portal_text: portalButtons[0]?.text || 'Customer Portal Login',
+                            affiliate_portal_text: portalButtons[1]?.text || 'Affiliate Portal Login'
+                        },
+                        service_links: {
+                            heading: supportHubSection.helpful_links_heading || 'Helpful <span class="text-brand-primary">Service Links</span>',
+                            link_prefix: supportHubSection.link_prefix || 'Link to',
+                            faq_icon: helpfulLinks[0]?.icon || 'fa-globe',
+                            faq_link: helpfulLinks[0]?.link || 'support.html',
+                            faq_text: helpfulLinks[0]?.text || 'Support / FAQ Page',
+                            package_icon: helpfulLinks[1]?.icon || 'fa-globe',
+                            package_link: helpfulLinks[1]?.link || 'packages.html',
+                            package_text: helpfulLinks[1]?.text || 'Package Overview',
+                            affiliate_icon: helpfulLinks[2]?.icon || 'fa-globe',
+                            affiliate_link: helpfulLinks[2]?.link || 'affiliate-page.html',
+                            affiliate_text: helpfulLinks[2]?.text || 'Affiliate Support Section'
+                        },
+                        service_provider: { ...(merged.service_provider || {}), ...(serviceProviderSection || {}) },
+                        map_image: { heading: mailingSection.heading || sectionDefaults[4].heading, image: mailingSection.image || sectionDefaults[4].image },
+                        bottom_text: bottomSection.bottom_text || "We're committed to making your experience with Pay Yourself First as smooth and supportive as possible. If you need help, don't hesitate to reach out.",
+                        bottom_notices: Array.isArray(bottomSection.notices) ? bottomSection.notices : [],
+                        sections
+                    };
+                },
+                async init() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const isPreviewMode = urlParams.get('mode') === 'preview';
+                    
+                    try {
+                        let nextContent = this.normalizeContactUsData(this.pageData.contact_us);
+                        let nextVersion = Date.now().toString();
+
+                        if (typeof contactPageSupabaseClient !== 'undefined' && contactPageSupabaseClient) {
+                            let { data, error } = await contactPageSupabaseClient.from('site_content').select('*').eq('page_id', 'contact_us').single();
+                            if (error) throw error;
+                            if (data) {
+                                const loadedContent = isPreviewMode ? data.draft_content : data.live_content;
+                                if (loadedContent) {
+                                    nextContent = this.normalizeContactUsData({
+                                        ...nextContent,
+                                        ...loadedContent
+                                    });
+                                }
+                                if (data.updated_at) {
+                                    nextVersion = data.updated_at;
+                                }
+                            }
+                        }
+
+                        await this.preloadContactImages(nextContent, nextVersion);
+                        this.contentVersion = nextVersion;
+                        this.pageData.contact_us = nextContent;
+                        this.$nextTick(() => this.syncContactHashTarget());
+                    } catch (e) {
+                        console.error("Failed to load CMS data", e);
+                    } finally {
+                        this.isCmsLoading = false;
+                    }
+                }
+            }));
+        });
+    </script>
+    <script src="js/site-nav.js"></script>
+    <script src="js/site-footer.js"></script>
+</body>
+</html>

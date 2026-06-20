@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Yourself First - Business Support Package</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-primary': '#389400',
+                        'brand-dark': '#1c1c1c',
+                        'footer-bg': '#1f2022',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdn.pagesense.io/js/payyourselffirst/c2e5673c7d15457d8a0925080101f545.js"></script>
+
+    <style>
+        .sticky-header { transition: transform 0.3s ease-in-out; }
+        .header-hidden { transform: translateY(-100%); }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-white text-gray-800 font-sans antialiased flex flex-col min-h-screen">
+    <div id="main-header" class="fixed top-0 left-0 w-full z-50 sticky-header shadow-md">
+        <div class="bg-brand-dark text-white py-6 text-xs font-semibold">
+            <div class="container mx-auto px-4 flex justify-end items-center space-x-6">
+                <a href="https://payyourselffirst.benefithub.com/Welcome" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas fa-dollar-sign"></i></div> DISCOUNT PORTAL
+                </a>
+                <a href="https://backoffice.pyfaffiliates.com/merchants/login.php#login" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <i class="fas fa-user text-brand-primary mr-2"></i> AFFILIATE LOGIN
+                </a>
+            </div>
+        </div>
+        <nav class="bg-white py-4">
+            <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
+                <a href="index.html"><img src="pyf-logo.svg" alt="Pay Yourself First Logo" class="h-12 object-contain"></a>
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl text-brand-dark focus:outline-none"><i class="fas fa-bars"></i></button>
+                <div data-site-nav-desktop class="hidden lg:flex items-center space-x-5 text-xs xl:text-sm font-bold text-gray-700 uppercase"></div>
+            </div>
+            <div id="mobile-menu" data-site-nav-mobile class="hidden lg:hidden text-sm bg-white border-t mt-4 p-4 flex flex-col space-y-4 font-bold text-gray-700 uppercase"></div>
+        </nav>
+    </div>
+
+    <div x-data="businessSupportPage()" x-init="init()" class="flex flex-col min-h-screen">
+        <main class="flex-grow pt-40 md:pt-44" x-cloak>
+            <div data-business-sections-root x-show="isContentReady">
+                <section data-business-section="hero" x-show="hasSection('hero')" class="container mx-auto px-4 mb-16 mt-8">
+                    <div class="relative rounded-[2rem] overflow-hidden min-h-[500px] md:h-[600px] shadow-2xl group">
+                        <img :src="pageData.hero.image" alt="Business Support Hero" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/20"></div>
+                        <div class="relative z-10 h-full flex flex-col justify-center px-6 py-20 md:px-20 md:py-0 max-w-6xl">
+                            <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-6 uppercase leading-tight drop-shadow-md" x-html="pageData.hero.headline"></h1>
+                            <p class="text-base md:text-xl text-gray-100 mb-10 font-medium leading-relaxed max-w-4xl" x-text="pageData.hero.desc"></p>
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <template x-for="(button, index) in pageData.hero.buttons" :key="JSON.stringify(button)">
+                                    <a :href="button.link || '#'" :target="button.link && button.link.startsWith('http') ? '_blank' : null" :class="getBusinessButtonClass(button, index, 'hero')" class="text-center" x-text="button.text"></a>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-business-section="intro" x-show="hasSection('intro')" class="py-16 md:py-24 bg-white">
+                    <div class="container mx-auto px-4">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-7xl mx-auto">
+                            <div>
+                                <h2 class="text-2xl md:text-3xl font-extrabold text-brand-dark mb-6 leading-tight" x-html="pageData.intro.headline"></h2>
+                                <p class="text-gray-700 mb-6 leading-relaxed" x-text="pageData.intro.desc1"></p>
+                                <p class="text-brand-primary font-bold text-lg mb-8" x-html="pageData.intro.did_you_know"></p>
+                                <p class="text-gray-700 mb-6 leading-relaxed" x-text="pageData.intro.desc2"></p>
+                                <template x-if="pageData.intro.list_headline">
+                                    <h3 class="text-xl font-bold text-brand-dark mb-6" x-text="pageData.intro.list_headline"></h3>
+                                </template>
+                                <ul class="space-y-3 mb-8">
+                                    <template x-for="(item, index) in pageData.intro.list" :key="`intro-item-${index}`">
+                                        <li class="flex items-start">
+                                            <i class="fas fa-exclamation-triangle text-[#C0392B] mt-1 mr-3"></i>
+                                            <span class="text-gray-700 font-medium" x-text="item"></span>
+                                        </li>
+                                    </template>
+                                </ul>
+                                <template x-if="pageData.intro.button && (pageData.intro.button.text || pageData.intro.button.link)">
+                                    <a :href="pageData.intro.button.link || '#'" :target="pageData.intro.button.link && pageData.intro.button.link.startsWith('http') ? '_blank' : null" class="inline-flex items-center bg-[#4a8a0a] text-white font-bold py-4 px-8 rounded shadow hover:bg-[#389400] transition uppercase text-sm tracking-wide" x-text="pageData.intro.button.text"></a>
+                                </template>
+                            </div>
+                            <div class="h-full min-h-[500px]">
+                                <img :src="pageData.intro.image" alt="Tax Deductions" class="rounded-[2rem] shadow-xl w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-business-section="ideal_for" x-show="hasSection('ideal_for')" class="py-16 md:py-24 bg-gray-50">
+                    <div class="container mx-auto px-4 max-w-7xl">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                            <div class="h-[400px] lg:h-[480px] order-2 lg:order-1">
+                                <img :src="pageData.ideal_for.image" alt="Ideal For" class="rounded-[2rem] shadow-xl w-full h-full object-cover">
+                            </div>
+                            <div class="order-1 lg:order-2">
+                                <h2 class="text-3xl font-extrabold text-brand-dark uppercase mb-6" x-html="pageData.ideal_for.headline"></h2>
+                                <p class="text-gray-700 mb-8 leading-relaxed" x-text="pageData.ideal_for.desc"></p>
+                                <template x-if="pageData.ideal_for.list_headline">
+                                    <h4 class="text-lg font-bold text-brand-dark mb-4" x-text="pageData.ideal_for.list_headline"></h4>
+                                </template>
+                                <ul class="space-y-4">
+                                    <template x-for="(item, index) in pageData.ideal_for.list" :key="`ideal-item-${index}`">
+                                        <li class="flex items-start">
+                                            <i class="fas fa-check-circle text-brand-primary text-xl mr-3 mt-0.5"></i>
+                                            <span class="text-gray-700" x-text="item"></span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-business-section="features" x-show="hasSection('features')" class="py-16 md:py-24 bg-white">
+                    <div class="container mx-auto px-4 max-w-7xl">
+                        <template x-if="pageData.features.headline">
+                            <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-14 text-center" x-html="pageData.features.headline"></h2>
+                        </template>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                            <div class="space-y-5">
+                                <template x-for="(card, index) in pageData.features.cards" :key="`feature-card-${index}`">
+                                    <div class="flex items-start rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+                                        <div class="w-12 h-12 rounded-full bg-brand-primary text-white flex items-center justify-center mr-4 shrink-0 text-lg">
+                                            <i :class="`fas ${card.icon || 'fa-check'}`"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-bold text-gray-800 text-lg" x-text="card.title"></h3>
+                                            <template x-if="card.desc">
+                                                <p class="text-gray-600 mt-2 leading-relaxed" x-text="card.desc"></p>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="h-[400px] lg:h-[500px]">
+                                <img :src="pageData.features.image" alt="Features" class="rounded-[2rem] shadow-xl w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-business-section="advantages" x-show="hasSection('advantages')" class="py-16 md:py-24 bg-gray-50">
+                    <div class="container mx-auto px-4 text-center">
+                        <h2 class="text-3xl font-extrabold text-brand-dark uppercase mb-16" x-html="pageData.advantages.headline"></h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                            <template x-for="(card, index) in pageData.advantages.cards" :key="`advantage-card-${index}`">
+                                <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 flex flex-col text-left">
+                                    <img :src="card.image" :alt="card.title || `Advantage ${index + 1}`" class="h-48 w-full object-cover">
+                                    <div class="p-8 flex-grow">
+                                        <h3 class="text-lg font-bold text-brand-primary mb-4" x-text="card.title"></h3>
+                                        <template x-if="card.desc">
+                                            <p class="text-sm text-gray-600 mb-6" x-text="card.desc"></p>
+                                        </template>
+                                        <ul class="space-y-3 text-sm text-gray-700">
+                                            <template x-for="(item, itemIndex) in card.list" :key="`advantage-item-${index}-${itemIndex}`">
+                                                <li class="flex items-start">
+                                                    <i class="fas fa-check-square text-brand-primary mt-1 mr-2"></i>
+                                                    <span x-text="item"></span>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                        <template x-if="card.footer">
+                                            <p class="text-[10px] text-gray-400 italic mt-6" x-text="card.footer"></p>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-business-section="value_section" x-show="hasSection('value_section')" class="py-16 md:py-24 bg-white">
+                    <div class="container mx-auto px-4 max-w-7xl">
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-12 text-center" x-html="pageData.value_section.headline"></h2>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                            <div>
+                                <div class="overflow-hidden rounded-lg shadow-lg border border-gray-200 bg-white mb-8">
+                                    <table class="w-full text-left text-sm">
+                                        <thead class="bg-[#0f766e] text-white">
+                                            <tr>
+                                                <th class="p-4 font-bold">Service / Benefit</th>
+                                                <th class="p-4 font-bold">Typical Monthly Market</th>
+                                                <th class="p-4 font-bold">Included with PYF</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-gray-100">
+                                            <template x-for="(row, index) in pageData.value_section.table" :key="`value-row-${index}`">
+                                                <tr :class="index % 2 === 1 ? 'bg-gray-50' : ''">
+                                                    <td class="p-4" x-text="row.service"></td>
+                                                    <td class="p-4 text-gray-600" x-text="row.market"></td>
+                                                    <td class="p-4 font-bold" :class="row.included && row.included.toLowerCase().includes('savings') ? 'text-brand-primary' : 'text-brand-dark'" x-text="row.included"></td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p class="text-brand-primary font-bold text-lg mb-2" x-text="pageData.value_section.total_value"></p>
+                                <p class="text-brand-dark font-black text-xl mb-6" x-text="pageData.value_section.investment"></p>
+                                <p class="text-gray-700 text-sm leading-relaxed mb-6 font-medium" x-text="pageData.value_section.bottom_line"></p>
+                                <p class="text-gray-500 text-xs italic" x-text="pageData.value_section.disclaimer"></p>
+                            </div>
+                            <div class="h-full min-h-[500px]">
+                                <img :src="pageData.value_section.image" alt="Value" class="rounded-[2rem] shadow-xl w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-business-section="testimonials" x-show="hasSection('testimonials')" class="py-20 bg-white">
+                    <div class="container mx-auto px-4">
+                        <div class="max-w-5xl mx-auto text-center mb-12">
+                            <h2 class="text-3xl md:text-4xl font-extrabold uppercase mb-6 text-brand-dark tracking-wide" x-text="pageData.testimonials.headline"></h2>
+                            <p class="text-base md:text-lg text-gray-600 leading-relaxed" x-text="pageData.testimonials.desc"></p>
+                        </div>
+                        <div :class="getBusinessVideoGridClass()" class="mx-auto">
+                            <template x-for="(video, index) in getBusinessVideos()" :key="JSON.stringify(video)">
+                                <div :class="getBusinessVideoFrameClass()" class="relative overflow-hidden bg-black">
+                                    <iframe class="absolute inset-0 w-full h-full" :src="resolveBusinessVideoUrl(video.url)" :title="video.title || `Business Support video ${index + 1}`" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-business-section="investment_card" x-show="hasSection('investment_card')" class="pb-16 md:pb-24 bg-white">
+                    <div class="container mx-auto px-4 max-w-6xl">
+                        <h2 class="text-3xl font-extrabold text-brand-dark uppercase mb-16 text-center" x-text="pageData.investment_card.headline"></h2>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                            <div class="bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden">
+                                <div class="bg-[#E0FFCC] p-6 text-center border-b border-[#bbf7d0] mr-8 ml-8 mt-8 rounded-md">
+                                    <h3 class="text-brand-dark font-black uppercase text-sm md:text-2xl leading-snug" x-html="pageData.investment_card.price_title"></h3>
+                                </div>
+                                <div class="p-8">
+                                    <template x-if="pageData.investment_card.desc">
+                                        <p class="text-gray-700 text-sm leading-relaxed mb-6" x-text="pageData.investment_card.desc"></p>
+                                    </template>
+                                    <h4 class="font-bold text-gray-900 text-sm mb-6 uppercase" x-text="pageData.investment_card.includes_title"></h4>
+                                    <ul class="space-y-4 mb-8">
+                                        <template x-for="(item, index) in pageData.investment_card.list" :key="`investment-item-${index}`">
+                                            <li class="flex items-center">
+                                                <i class="fas fa-check-circle text-brand-primary text-xl mr-3"></i>
+                                                <span class="text-gray-700 font-bold text-sm" x-text="item"></span>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                    <p class="text-md font-bold text-gray-900 mb-6" x-text="pageData.investment_card.guarantee"></p>
+                                    <template x-if="pageData.investment_card.button && (pageData.investment_card.button.text || pageData.investment_card.button.link)">
+                                        <a :href="pageData.investment_card.button.link || '#'" :target="pageData.investment_card.button.link && pageData.investment_card.button.link.startsWith('http') ? '_blank' : null" class="block w-full bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-4 rounded shadow transition text-center text-sm uppercase tracking-wide" x-text="pageData.investment_card.button.text"></a>
+                                    </template>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="rounded-xl overflow-hidden shadow-lg mb-6 h-[400px]">
+                                    <img :src="pageData.investment_card.image" alt="Investment Value" class="w-full h-full object-cover">
+                                </div>
+                                <template x-if="pageData.investment_card.image_caption">
+                                    <div class="bg-[#dcfce7] p-4 rounded-lg text-center border border-[#bbf7d0]">
+                                        <p class="text-xs md:text-xs font-bold text-gray-800" x-text="pageData.investment_card.image_caption"></p>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-business-section="faq" x-show="hasSection('faq')" class="py-16 bg-gray-50">
+                    <div class="container mx-auto px-4 max-w-4xl">
+                        <h2 class="text-3xl font-extrabold text-center text-brand-dark uppercase mb-12" x-html="pageData.faq.headline"></h2>
+                        <div class="space-y-4">
+                            <template x-for="(faq, index) in pageData.faq.questions" :key="`faq-${index}`">
+                                <div class="border border-gray-200 rounded-lg overflow-hidden bg-white">
+                                    <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-gray-50 transition focus:outline-none">
+                                        <span class="font-bold text-gray-900 text-left pr-4" x-text="faq.q"></span>
+                                        <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                                    </button>
+                                    <div class="faq-content hidden p-6 border-t border-gray-100 text-gray-600 text-sm leading-relaxed" x-text="faq.a"></div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </section>
+
+                <section data-business-section="bottom_cta" x-show="hasSection('bottom_cta')" class="py-20 bg-[#F2FFEB]">
+                    <div class="container mx-auto px-4 text-center max-w-5xl">
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-brand-dark uppercase mb-6" x-html="pageData.bottom_cta.headline"></h2>
+                        <template x-if="pageData.bottom_cta.desc">
+                            <p class="text-gray-700 text-base md:text-lg leading-relaxed mb-10" x-text="pageData.bottom_cta.desc"></p>
+                        </template>
+                        <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6">
+                            <template x-for="(button, index) in pageData.bottom_cta.buttons" :key="JSON.stringify(button)">
+                                <a :href="button.link || '#'" :target="button.link && button.link.startsWith('http') ? '_blank' : null" :class="getBusinessButtonClass(button, index, 'bottom')" x-text="button.text"></a>
+                            </template>
+                        </div>
+                        <template x-if="pageData.bottom_cta.badges.length">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10 text-left">
+                                <template x-for="(badge, index) in pageData.bottom_cta.badges" :key="`badge-${index}`">
+                                    <div class="flex items-center rounded-xl border border-[#bbf7d0] bg-white/80 px-5 py-4 shadow-sm">
+                                        <i :class="`fas ${badge.icon || 'fa-check-circle'} text-brand-primary mr-3`"></i>
+                                        <span class="font-semibold text-gray-800" x-text="badge.text"></span>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+                </section>
+
+                <section data-business-section="disclaimer_section" x-show="hasSection('disclaimer_section')" class="py-12 bg-white">
+                    <div class="container mx-auto px-4 max-w-5xl text-center">
+                        <h3 class="text-2xl font-bold text-brand-dark uppercase mb-8 pb-4 border-b border-gray-200 inline-block px-12" x-text="pageData.disclaimer_section.headline"></h3>
+                        <div class="space-y-6 text-sm text-gray-500 leading-relaxed max-w-5xl mx-auto">
+                            <template x-for="(block, index) in pageData.disclaimer_section.blocks" :key="`disclaimer-${index}`">
+                                <div>
+                                    <strong class="text-brand-dark block mb-1" x-text="block.title"></strong>
+                                    <p x-text="block.text"></p>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <footer class="relative bg-footer-bg text-white pt-16 pb-6 border-t-4 border-brand-primary">
+        <div class="absolute inset-0 overflow-hidden opacity-5 pointer-events-none">
+            <img src="Homepage/Footer_general.jpg" class="w-full h-full object-cover grayscale" alt="">
+        </div>
+        <div class="relative container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                <div>
+                    <h3 class="text-xl font-bold mb-6 pb-2 border-b border-gray-600 inline-block w-full">Find Us</h3>
+                    <ul class="space-y-6">
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt text-brand-primary text-xl mr-4 w-6"></i>
+                            <span class="text-gray-300 text-sm">+1 (855) 793-2582</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-brand-primary text-xl mr-4 w-6"></i>
+                            <a href="mailto:Service@PayYourselfFirst.com" class="text-gray-300 text-sm hover:text-brand-primary transition">info@payyourselffirst.com</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-6 pb-2 border-b border-gray-600 inline-block w-full">Legal</h3>
+                    <ul class="space-y-4 text-sm text-gray-300">
+                        <li><a href="terms.html" class="hover:text-brand-primary transition" target="_blank">Terms &amp; Conditions</a></li>
+                        <li><a href="privacy.html" class="hover:text-brand-primary transition" target="_blank">Privacy Policy</a></li>
+                        <li><a href="cookie.html" class="hover:text-brand-primary transition" target="_blank">Cookie Policy</a></li>
+                        <li><a href="disclaimer.html" class="hover:text-brand-primary transition" target="_blank">Disclaimer</a></li>
+                        <li><a href="use-policy.html" class="hover:text-brand-primary transition" target="_blank">Acceptable Use Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-6 pb-2 border-b border-gray-600 inline-block w-full">Quick Links</h3>
+                    <ul class="space-y-4 text-sm text-gray-300 mb-8">
+                        <li><a href="https://backoffice.pyfaffiliates.com/affiliates/signup.php#SignupForm" class="hover:text-brand-primary transition" target="_blank">Become an Affiliate</a></li>
+                        <li><a href="packages.html" class="hover:text-brand-primary transition" target="_blank">Join Now</a></li>
+                        <li><a href="contact-us.html" class="hover:text-brand-primary transition" target="_blank">Contact Us</a></li>
+                    </ul>
+                    <div class="flex space-x-3">
+                        <a href="https://www.facebook.com/share/1SgQW8W1qQ/?mibextid=wwXIfr" class="w-10 h-10 rounded-full bg-brand-primary hover:bg-white text-brand-dark hover:text-brand-primary flex items-center justify-center transition shadow-lg" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/pyfinc" target="_blank" class="w-10 h-10 rounded-full bg-brand-primary hover:bg-white text-brand-dark hover:text-brand-primary flex items-center justify-center transition shadow-lg"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/pay_yourself_first_inc" target="_blank" class="w-10 h-10 rounded-full bg-brand-primary hover:bg-white text-brand-dark hover:text-brand-primary flex items-center justify-center transition shadow-lg"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/company/pay-yourself-first-inc/about/?viewAsMember=true" target="_blank" class="w-10 h-10 rounded-full bg-brand-primary hover:bg-white text-brand-dark hover:text-brand-primary flex items-center justify-center transition shadow-lg"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
+                <p class="mb-2 md:mb-0">Copyright © 2025 - <span class="text-brand-primary">Pay Yourself First</span>. All Rights Reserved.</p>
+                <p>Powered By <span class="text-brand-primary">SapphireLead</span> © 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <button id="backToTopBtn" onclick="scrollToTop()" class="fixed bottom-8 right-8 z-50 bg-brand-primary hover:bg-[#2d7a00] text-white w-12 h-12 rounded-full shadow-lg transition-all duration-300 transform translate-y-20 opacity-0 flex items-center justify-center focus:outline-none">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const supabaseUrl = 'https://nqwggnereuhphwmkqove.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xd2dnbmVyZXVocGh3bWtxb3ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDUxMjAsImV4cCI6MjA5MTM4MTEyMH0.1OM-fLTth5FcMKUPHgepeM3BdJMydHiK1coD0vw0o0M';
+
+        document.addEventListener('alpine:init', () => {
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            const BUSINESS_SUPPORT_PAGE_ID = 'business-support-package';
+
+            Alpine.data('businessSupportPage', () => ({
+                isContentReady: false,
+                pageData: {
+                    hero: {
+                        headline: 'Increase Your Cash Flow. <br> Improve Your Quality of Life. <br> Gain Your Freedom.',
+                        desc: 'Join those who\'ve discovered how to access legitimate tax deductions and expert professional support to improve their financial life without quitting their day job.',
+                        btn1_text: 'Get Business Support Package',
+                        btn1_link: 'https://buy.stripe.com/8x2aEQe300Gjgyg19CcIE03',
+                        btn2_text: 'Watch This Video',
+                        btn2_link: '#',
+                        buttons: [
+                            { text: 'Get Business Support Package', link: 'https://buy.stripe.com/8x2aEQe300Gjgyg19CcIE03', style: 'primary' },
+                            { text: 'Watch This Video', link: '#', style: 'secondary' }
+                        ],
+                        image: 'Business-Support-Page/IPP_Hero.jpg'
+                    },
+                    intro: {
+                        headline: 'Most People Don\'t Understand Enough About Business Tax Deductions. Even those who own businesses. Why would they? The United States tax code is over 70,000 pages long!',
+                        desc1: 'Business owners have access to over 400 tax deductions that W-2 employees rarely use. Not because the system is unfair—but because most people simply don\'t know these deductions exist, whether they qualify, or how to document them properly.',
+                        did_you_know: 'Did you know? <span class="text-gray-700 font-medium">W-2 employees can take advantage of these deductions as well.</span>',
+                        desc2: 'The tax code rewards business activity. When you understand how the rules work, you can legally reduce your tax burden and bring more money back into your household.',
+                        list_headline: 'If any of these sound familiar, you\'re not alone.',
+                        list: [
+                            'Are taxes taking too much of your income?',
+                            'Are rising prices creating stress and financial pressure?',
+                            'Are stagnant wages making it hard to get ahead?'
+                        ],
+                        button: { text: '', link: '', style: 'primary' },
+                        image: 'Business-Support-Page/IPP_70,000 Pages.jpg'
+                    },
+                    ideal_for: {
+                        headline: 'Business <span class="text-brand-primary">Support</span> Package',
+                        desc: 'Business Support Package is available to anyone and is especially beneficial to business owners or those who are considering operating a business. Business Support Package gives you the expert tax, legal, and business support you need to reduce your taxes to the legal minimum, and improve your financial position.',
+                        list_headline: 'Business Support Package is ideal for:',
+                        list: [
+                            'Individuals who want expert tax and financial support',
+                            'People who want to stop overpaying taxes',
+                            'Business owners who want guidance on deductions',
+                            'Business owners who want expert tax, legal, and business support'
+                        ],
+                        image: 'Business-Support-Page/IPP_Income Power Pro_1.jpg'
+                    },
+                    features: {
+                        headline: '',
+                        cards: [
+                            { icon: 'fa-check', title: 'Access to 400+ legitimate tax deductions (where applicable)', desc: '' },
+                            { icon: 'fa-check', title: 'Expert and professional guidance from licensed tax and legal professionals', desc: '' },
+                            { icon: 'fa-check', title: 'Professional CPA support included', desc: '' },
+                            { icon: 'fa-check', title: 'Millions of products and services at discounted prices', desc: '' },
+                            { icon: 'fa-check', title: 'Build monthly recurring referral income (As a PYF Affiliate)', desc: '' },
+                            { icon: 'fa-check', title: 'Education and tools to help you organize and manage your financial life', desc: '' }
+                        ],
+                        list: [
+                            'Access to 400+ legitimate tax deductions (where applicable)',
+                            'Expert and professional guidance from licensed tax and legal professionals',
+                            'Professional CPA support included',
+                            'Millions of products and services at discounted prices',
+                            'Build monthly recurring referral income (As a PYF Affiliate)',
+                            'Education and tools to help you organize and manage your financial life'
+                        ],
+                        image: 'Business-Support-Page/IPP_Income Power Pro_2.jpg'
+                    },
+                    advantages: {
+                        headline: 'Core <span class="text-brand-primary">Advantages</span>',
+                        card1: {
+                            image: 'Business-Support-Page/IPP_Core Advantages_Tax Support.jpg',
+                            title: 'Tax Support You Can Use Right Away',
+                            desc: 'Put more money back into your pocket with professional guidance.',
+                            list: [
+                                'Learn which deductions apply',
+                                'Reduce taxable income legally',
+                                'Receive guidance on proper documentation',
+                                'Adjust W-2 withholdings when appropriate'
+                            ],
+                            footer: '*Tax savings vary based on individual circumstances.'
+                        },
+                        card2: {
+                            image: 'Business-Support-Page/IPP_Core Advantages_Business Education.jpg',
+                            title: 'Business Education & Financial Literacy',
+                            desc: '',
+                            list: [
+                                'Financial Planning For Entrepreneurs',
+                                'Discounted Business Support Services',
+                                'Multi-Millionaire Business Success Coach',
+                                'Access to wealth-building strategies'
+                            ],
+                            footer: ''
+                        },
+                        card3: {
+                            image: 'Business-Support-Page/IPP_Core Advantages_PYF Support System.jpg',
+                            title: 'PYF SUPPORT SYSTEM',
+                            desc: 'What\'s Included with Business Support Package:',
+                            list: [
+                                'Expert Business Guidance',
+                                'Expert Tax Support',
+                                'Personal Legal Support',
+                                'Business Legal Support',
+                                'Home Based/Small Business Education'
+                            ],
+                            footer: ''
+                        },
+                        cards: []
+                    },
+                    value_section: {
+                        headline: 'Business Support<span class="text-brand-primary">Package Value</span>',
+                        table: [
+                            { service: 'Tax Savings (Typical Range)', market: '$250 – $833', included: 'Savings Potential*' },
+                            { service: 'Consumer Discount Savings', market: '$50 – $208', included: 'Included Savings Potential*' },
+                            { service: 'Business Training & Coaching', market: '$1,500 – $4,500', included: 'Included' },
+                            { service: 'CPA Support', market: '$239', included: 'Included' },
+                            { service: 'Business Legal Services', market: '$169', included: 'Included' },
+                            { service: 'Discount Platform Access', market: '$50', included: 'Included' },
+                            { service: 'Community Access', market: '$100 – $300', included: 'Included' }
+                        ],
+                        total_value: 'Total Monthly Market Value + Savings: $2,358–$6,299 per month',
+                        investment: 'Your Investment: $150 per month',
+                        bottom_line: 'Bottom line: You\'re accessing over $6,000 per month in combined market value and potential savings for $150/month—a powerful value proposition backed by professional support.',
+                        disclaimer: '*Savings vary based on individual spending habits, use of the platform, and legitimate qualification for deductible expenses.',
+                        image: 'Business-Support-Page/IPP_Income Power Pro Value.jpg',
+                        price_title: 'Your Investment: $150/Month<br><span class="text-xs md:text-sm font-bold text-gray-600">(Tax-Deductible For Business Owners)</span>'
+                    },
+                    testimonials: {
+                        headline: 'Testimonials',
+                        desc: 'Since 2011 Pay Yourself First has helped W-2 employees, independent contractors, and entrepreneurs legally reduce tax liability and build compliant home-based businesses. Our affiliates range from teachers and government employees to corporate professionals — all learning to leverage the tax code the way business owners do.',
+                        video_url: 'https://www.youtube-nocookie.com/embed/tw-MUhF0-g0?si=YXHjdcaqmfZ83-BB&rel=0',
+                        videos: [
+                            { url: 'https://www.youtube-nocookie.com/embed/tw-MUhF0-g0?si=YXHjdcaqmfZ83-BB&rel=0', title: 'Business Support Package Testimonial' }
+                        ]
+                    },
+                    investment_card: {
+                        headline: 'Value',
+                        price_title: 'Your Investment: $150/Month<br><span class="text-xs md:text-sm font-bold text-gray-600">(Tax-Deductible For Business Owners)</span>',
+                        desc: '',
+                        includes_title: 'Includes:',
+                        list: [
+                            'Tax guidance',
+                            'Legal support',
+                            'Business training',
+                            'Consumer discount platform',
+                            'Entrepreneurship resources',
+                            'Community support',
+                            'Optional affiliate enrollment at no additional cost'
+                        ],
+                        guarantee: 'Protected by our 30-Day Money-Back Guarantee',
+                        btn_text: 'Get Business Support Package',
+                        btn_link: 'https://buy.stripe.com/8x2aEQe300Gjgyg19CcIE03',
+                        button: { text: 'Get Business Support Package', link: 'https://buy.stripe.com/8x2aEQe300Gjgyg19CcIE03', style: 'primary' },
+                        image: 'Business-Support-Page/IPP_Value.jpg',
+                        image_caption: 'That’s $5 per day to unlock $3,000-$10,000 annually in potential tax savings.'
+                    },
+                    faq: {
+                        headline: 'Common <span class="text-brand-primary">Questions</span>',
+                        questions: [
+                            { q: 'Can I use Business Support Package without starting a business?', a: 'Yes. Many services apply whether or not you operate a business. However, certain tax benefits require legitimate business activity. You should consult a tax professional for guidance specific to your situation.' },
+                            { q: 'Do I need to enroll as an affiliate?', a: 'No. You may purchase Business Support Package standalone with no affiliate enrollment.' },
+                            { q: 'Does enrolling as an affiliate cost anything?', a: 'No. Affiliate enrollment is optional. If you choose to enroll, it is provided at no additional cost.' },
+                            { q: 'What do affiliates earn?', a: 'Affiliates may receive referral fees when others purchase PYF products through their referral. Referral fee details are described in the affiliate materials you receive after enrollment.' },
+                            { q: 'Are earnings guaranteed?', a: 'No. Referral fees depend solely on your personal activity and results vary.' },
+                            { q: 'Is the Business Support Package a business opportunity?', a: 'No. Business Support Package is a service product. Affiliate enrollment is optional. It is provided for those who choose to share PYF services and earn referral fees.' }
+                        ]
+                    },
+                    bottom_cta: {
+                        headline: 'Take Control of Your Taxes. Strengthen Your Finances. Move Forward with Confidence.',
+                        desc: '',
+                        btn1_text: 'BECOME AN AFFILIATE',
+                        btn1_link: 'affiliate-plan.html',
+                        btn2_text: 'View Service Packages',
+                        btn2_link: 'packages.html',
+                        buttons: [
+                            { text: 'BECOME AN AFFILIATE', link: 'affiliate-plan.html', style: 'primary' },
+                            { text: 'View Service Packages', link: 'packages.html', style: 'primary' }
+                        ],
+                        badges: [
+                            { icon: 'fa-check-circle', text: 'Tax Guidance Included' },
+                            { icon: 'fa-check-circle', text: 'Legal Support Access' },
+                            { icon: 'fa-check-circle', text: 'Business Training Tools' },
+                            { icon: 'fa-check-circle', text: '30-Day Money-Back Guarantee' }
+                        ]
+                    },
+                    disclaimer_section: {
+                        headline: 'Disclaimer',
+                        blocks: [
+                            { title: 'Service Provider Disclosure', text: 'Pay Yourself First (PYF) is the administrator of the Income Power Pro program. PYF does not directly provide tax, legal, financial, or discount services. All services included with Income Power Pro are delivered by independent third-party providers. Access to these services is subject to the terms, conditions, and availability of each provider.' },
+                            { title: 'Earnings Disclaimer', text: 'Referral fee earnings are not guaranteed and vary based on individual effort and market conditions. Past results do not guarantee future performance.' }
+                        ]
+                    },
+                    sections: [
+                        { id: 'business-hero', type: 'hero', label: 'Hero Banner' },
+                        { id: 'business-intro', type: 'intro', label: 'Intro' },
+                        { id: 'business-ideal', type: 'ideal_for', label: 'Ideal For' },
+                        { id: 'business-features', type: 'features', label: 'Features' },
+                        { id: 'business-advantages', type: 'advantages', label: 'Advantages' },
+                        { id: 'business-value', type: 'value_section', label: 'Value Section' },
+                        { id: 'business-testimonials', type: 'testimonials', label: 'Testimonials' },
+                        { id: 'business-investment', type: 'investment_card', label: 'Affiliate / Investment' },
+                        { id: 'business-faq', type: 'faq', label: 'FAQ' },
+                        { id: 'business-bottom-cta', type: 'bottom_cta', label: 'Bottom CTA' },
+                        { id: 'business-disclaimer', type: 'disclaimer_section', label: 'Disclaimer' }
+                    ]
+                },
+
+                createBusinessButton(button = {}) {
+                    return {
+                        text: button?.text || '',
+                        link: button?.link || '',
+                        style: button?.style === 'secondary' ? 'secondary' : 'primary'
+                    };
+                },
+
+                createBusinessFeatureCard(card = {}, index = 0) {
+                    const fallbackIcons = ['fa-receipt', 'fa-calculator', 'fa-gavel', 'fa-briefcase', 'fa-percent', 'fa-network-wired', 'fa-comments-dollar', 'fa-user-shield', 'fa-circle-check'];
+                    return {
+                        title: card?.title || '',
+                        desc: card?.desc || '',
+                        icon: card?.icon || fallbackIcons[index % fallbackIcons.length]
+                    };
+                },
+
+                createBusinessAdvantageCard(card = {}, index = 0) {
+                    return {
+                        image: card?.image || '',
+                        title: card?.title || `Advantage Card ${index + 1}`,
+                        desc: card?.desc || '',
+                        list: Array.isArray(card?.list) ? card.list : [],
+                        footer: card?.footer || ''
+                    };
+                },
+
+                createBusinessValueRow(row = {}) {
+                    return {
+                        service: row?.service || '',
+                        market: row?.market || '',
+                        included: row?.included || ''
+                    };
+                },
+
+                createBusinessFaqItem(item = {}) {
+                    return {
+                        q: item?.q || '',
+                        a: item?.a || ''
+                    };
+                },
+
+                createBusinessDisclaimerBlock(block = {}) {
+                    return {
+                        title: block?.title || '',
+                        text: block?.text || ''
+                    };
+                },
+
+                createBusinessBadge(item = {}) {
+                    return {
+                        icon: item?.icon || 'fa-check-circle',
+                        text: item?.text || ''
+                    };
+                },
+
+                createBusinessVideo(item = {}) {
+                    return {
+                        url: item?.url || '',
+                        title: item?.title || ''
+                    };
+                },
+
+                hydratePageData(content = {}) {
+                    const cloned = JSON.parse(JSON.stringify(content || {}));
+                    const orderedSections = this.getOrderedSections(cloned.sections);
+                    const getSection = (type) => orderedSections.find(section => section?.type === type) || null;
+
+                    const heroSection = getSection('hero');
+                    const introSection = getSection('intro');
+                    const idealSection = getSection('ideal_for');
+                    const featuresSection = getSection('features');
+                    const advantagesSection = getSection('advantages');
+                    const valueSection = getSection('value_section');
+                    const testimonialsSection = getSection('testimonials');
+                    const investmentSection = getSection('investment_card');
+                    const faqSection = getSection('faq');
+                    const bottomCtaSection = getSection('bottom_cta');
+                    const disclaimerSection = getSection('disclaimer_section');
+
+                    const heroButtons = Array.isArray(heroSection?.buttons) ? heroSection.buttons : (Array.isArray(cloned.hero?.buttons) ? cloned.hero.buttons : []);
+                    const introButton = introSection?.button || cloned.intro?.button || null;
+                    const featureCards = Array.isArray(featuresSection?.cards) ? featuresSection.cards : (Array.isArray(cloned.features?.cards) ? cloned.features.cards : []);
+                    const advantageCards = Array.isArray(advantagesSection?.cards) ? advantagesSection.cards : (Array.isArray(cloned.advantages?.cards) ? cloned.advantages.cards : []);
+                    const testimonialVideos = Array.isArray(testimonialsSection?.videos) ? testimonialsSection.videos : (Array.isArray(cloned.testimonials?.videos) ? cloned.testimonials.videos : []);
+                    const investmentButton = investmentSection?.button || cloned.investment_card?.button || null;
+                    const bottomButtons = Array.isArray(bottomCtaSection?.buttons) ? bottomCtaSection.buttons : (Array.isArray(cloned.bottom_cta?.buttons) ? cloned.bottom_cta.buttons : []);
+                    const bottomBadges = Array.isArray(bottomCtaSection?.badges) ? bottomCtaSection.badges : (Array.isArray(cloned.bottom_cta?.badges) ? cloned.bottom_cta.badges : []);
+
+                    return {
+                        ...cloned,
+                        sections: orderedSections,
+                        hero: {
+                            ...(cloned.hero || {}),
+                            ...(heroSection || {}),
+                            buttons: heroButtons.map(button => this.createBusinessButton(button))
+                        },
+                        intro: {
+                            ...(cloned.intro || {}),
+                            ...(introSection || {}),
+                            button: this.createBusinessButton(introButton || cloned.intro?.button || {})
+                        },
+                        ideal_for: {
+                            ...(cloned.ideal_for || {}),
+                            ...(idealSection || {})
+                        },
+                        features: {
+                            ...(cloned.features || {}),
+                            ...(featuresSection || {}),
+                            cards: featureCards.map((card, index) => this.createBusinessFeatureCard(card, index))
+                        },
+                        advantages: {
+                            ...(cloned.advantages || {}),
+                            ...(advantagesSection || {}),
+                            cards: advantageCards.map((card, index) => this.createBusinessAdvantageCard(card, index))
+                        },
+                        value_section: {
+                            ...(cloned.value_section || {}),
+                            ...(valueSection || {}),
+                            table: (Array.isArray(valueSection?.table) ? valueSection.table : (Array.isArray(cloned.value_section?.table) ? cloned.value_section.table : [])).map(row => this.createBusinessValueRow(row))
+                        },
+                        testimonials: {
+                            ...(cloned.testimonials || {}),
+                            ...(testimonialsSection || {}),
+                            videos: testimonialVideos.map(video => this.createBusinessVideo(video))
+                        },
+                        investment_card: {
+                            ...(cloned.investment_card || {}),
+                            ...(investmentSection || {}),
+                            button: this.createBusinessButton(investmentButton || cloned.investment_card?.button || {})
+                        },
+                        faq: {
+                            ...(cloned.faq || {}),
+                            ...(faqSection || {}),
+                            questions: (Array.isArray(faqSection?.questions) ? faqSection.questions : (Array.isArray(cloned.faq?.questions) ? cloned.faq.questions : [])).map(item => this.createBusinessFaqItem(item))
+                        },
+                        bottom_cta: {
+                            ...(cloned.bottom_cta || {}),
+                            ...(bottomCtaSection || {}),
+                            buttons: bottomButtons.map(button => this.createBusinessButton(button)),
+                            badges: bottomBadges.map(item => this.createBusinessBadge(item))
+                        },
+                        disclaimer_section: {
+                            ...(cloned.disclaimer_section || {}),
+                            ...(disclaimerSection || {}),
+                            blocks: (Array.isArray(disclaimerSection?.blocks) ? disclaimerSection.blocks : (Array.isArray(cloned.disclaimer_section?.blocks) ? cloned.disclaimer_section.blocks : [])).map(block => this.createBusinessDisclaimerBlock(block))
+                        }
+                    };
+                },
+
+                getDefaultSections(source = {}) {
+                    const hero = source.hero || {};
+                    const intro = source.intro || {};
+                    const idealFor = source.ideal_for || {};
+                    const features = source.features || {};
+                    const advantages = source.advantages || {};
+                    const valueSection = source.value_section || {};
+                    const testimonials = source.testimonials || {};
+                    const investmentCard = source.investment_card || {};
+                    const faq = source.faq || {};
+                    const bottomCta = source.bottom_cta || {};
+                    const disclaimerSection = source.disclaimer_section || {};
+
+                    const heroButtons = Array.isArray(hero.buttons) && hero.buttons.length
+                        ? hero.buttons
+                        : [
+                            { text: hero.btn1_text || '', link: hero.btn1_link || '', style: 'primary' },
+                            { text: hero.btn2_text || '', link: hero.btn2_link || '', style: 'secondary' }
+                        ].filter(button => button.text || button.link);
+
+                    const introButton = intro.button || {
+                        text: intro.btn_text || '',
+                        link: intro.btn_link || '',
+                        style: 'primary'
+                    };
+
+                    const featureCards = Array.isArray(features.cards) && features.cards.length
+                        ? features.cards
+                        : (Array.isArray(features.list) ? features.list : []).map((item, index) => ({
+                            title: typeof item === 'string' ? item : (item?.title || ''),
+                            desc: typeof item === 'string' ? '' : (item?.desc || ''),
+                            icon: typeof item === 'string' ? '' : (item?.icon || ''),
+                        }));
+
+                    const advantageCards = Array.isArray(advantages.cards) && advantages.cards.length
+                        ? advantages.cards
+                        : [advantages.card1, advantages.card2, advantages.card3].filter(Boolean);
+
+                    const testimonialVideos = Array.isArray(testimonials.videos) && testimonials.videos.length
+                        ? testimonials.videos
+                        : (testimonials.video_url ? [{ url: testimonials.video_url, title: testimonials.headline || 'Business Support Testimonial' }] : []);
+
+                    const investmentButton = investmentCard.button || {
+                        text: investmentCard.btn_text || '',
+                        link: investmentCard.btn_link || '',
+                        style: 'primary'
+                    };
+
+                    const ctaButtons = Array.isArray(bottomCta.buttons) && bottomCta.buttons.length
+                        ? bottomCta.buttons
+                        : [
+                            { text: bottomCta.btn1_text || '', link: bottomCta.btn1_link || '', style: 'primary' },
+                            { text: bottomCta.btn2_text || '', link: bottomCta.btn2_link || '', style: 'primary' }
+                        ].filter(button => button.text || button.link);
+
+                    const ctaBadges = Array.isArray(bottomCta.badges) && bottomCta.badges.length
+                        ? bottomCta.badges
+                        : [
+                            { icon: 'fa-check-circle', text: 'Tax Guidance Included' },
+                            { icon: 'fa-check-circle', text: 'Legal Support Access' },
+                            { icon: 'fa-check-circle', text: 'Business Training Tools' },
+                            { icon: 'fa-check-circle', text: '30-Day Money-Back Guarantee' }
+                        ];
+
+                    return [
+                        {
+                            id: 'business-hero',
+                            type: 'hero',
+                            label: 'Hero Banner',
+                            headline: hero.headline || '',
+                            desc: hero.desc || '',
+                            buttons: heroButtons.map(button => this.createBusinessButton(button)),
+                            image: hero.image || 'Business-Support-Page/IPP_Hero.jpg'
+                        },
+                        {
+                            id: 'business-intro',
+                            type: 'intro',
+                            label: 'Intro',
+                            headline: intro.headline || '',
+                            desc1: intro.desc1 || '',
+                            did_you_know: intro.did_you_know || '',
+                            desc2: intro.desc2 || '',
+                            list_headline: intro.list_headline || '',
+                            list: Array.isArray(intro.list) ? intro.list : [],
+                            button: this.createBusinessButton(introButton),
+                            image: intro.image || 'Business-Support-Page/IPP_70,000 Pages.jpg'
+                        },
+                        {
+                            id: 'business-ideal',
+                            type: 'ideal_for',
+                            label: 'Ideal For',
+                            headline: idealFor.headline || '',
+                            desc: idealFor.desc || '',
+                            list_headline: idealFor.list_headline || '',
+                            list: Array.isArray(idealFor.list) ? idealFor.list : [],
+                            image: idealFor.image || 'Business-Support-Page/IPP_Income Power Pro_1.jpg'
+                        },
+                        {
+                            id: 'business-features',
+                            type: 'features',
+                            label: 'Features',
+                            headline: features.headline || '',
+                            image: features.image || 'Business-Support-Page/IPP_Income Power Pro_2.jpg',
+                            cards: featureCards.map((card, index) => this.createBusinessFeatureCard(card, index))
+                        },
+                        {
+                            id: 'business-advantages',
+                            type: 'advantages',
+                            label: 'Advantages',
+                            headline: advantages.headline || '',
+                            cards: advantageCards.map((card, index) => this.createBusinessAdvantageCard(card, index))
+                        },
+                        {
+                            id: 'business-value',
+                            type: 'value_section',
+                            label: 'Value Section',
+                            headline: valueSection.headline || '',
+                            table: (Array.isArray(valueSection.table) ? valueSection.table : []).map(row => this.createBusinessValueRow(row)),
+                            total_value: valueSection.total_value || '',
+                            investment: valueSection.investment || '',
+                            bottom_line: valueSection.bottom_line || '',
+                            disclaimer: valueSection.disclaimer || '',
+                            image: valueSection.image || 'Business-Support-Page/IPP_Income Power Pro Value.jpg',
+                            price_title: valueSection.price_title || source.investment_card?.price_title || ''
+                        },
+                        {
+                            id: 'business-testimonials',
+                            type: 'testimonials',
+                            label: 'Testimonials',
+                            headline: testimonials.headline || '',
+                            desc: testimonials.desc || '',
+                            videos: testimonialVideos.map(video => this.createBusinessVideo(video))
+                        },
+                        {
+                            id: 'business-investment',
+                            type: 'investment_card',
+                            label: 'Affiliate / Investment',
+                            headline: investmentCard.headline || '',
+                            desc: investmentCard.desc || '',
+                            includes_title: investmentCard.includes_title || '',
+                            list: Array.isArray(investmentCard.list) ? investmentCard.list : [],
+                            guarantee: investmentCard.guarantee || '',
+                            button: this.createBusinessButton(investmentButton),
+                            image: investmentCard.image || 'Business-Support-Page/IPP_Value.jpg',
+                            image_caption: investmentCard.image_caption || ''
+                        },
+                        {
+                            id: 'business-faq',
+                            type: 'faq',
+                            label: 'FAQ',
+                            headline: faq.headline || '',
+                            questions: (Array.isArray(faq.questions) ? faq.questions : []).map(item => this.createBusinessFaqItem(item))
+                        },
+                        {
+                            id: 'business-bottom-cta',
+                            type: 'bottom_cta',
+                            label: 'Bottom CTA',
+                            headline: bottomCta.headline || '',
+                            desc: bottomCta.desc || '',
+                            buttons: ctaButtons.map(button => this.createBusinessButton(button)),
+                            badges: ctaBadges.map(item => this.createBusinessBadge(item))
+                        },
+                        {
+                            id: 'business-disclaimer',
+                            type: 'disclaimer_section',
+                            label: 'Disclaimer',
+                            headline: disclaimerSection.headline || '',
+                            blocks: (Array.isArray(disclaimerSection.blocks) ? disclaimerSection.blocks : []).map(block => this.createBusinessDisclaimerBlock(block))
+                        }
+                    ];
+                },
+
+                normalizeSections(sections, source = {}) {
+                    const defaults = this.getDefaultSections(source);
+                    if (!Array.isArray(sections)) return defaults;
+
+                    return sections
+                        .map((section, index) => {
+                            const type = section?.type || section?.id;
+                            const fallback = defaults.find(item => item.type === type || item.id === type);
+                            if (!fallback) return null;
+
+                            const baseSection = {
+                                id: section?.id || `${fallback.id}-${index + 1}`,
+                                type: fallback.type,
+                                label: section?.label || fallback.label
+                            };
+
+                            if (fallback.type === 'hero' || fallback.type === 'bottom_cta') {
+                                return {
+                                    ...baseSection,
+                                    headline: section?.headline ?? fallback.headline,
+                                    desc: section?.desc ?? fallback.desc,
+                                    buttons: (Array.isArray(section?.buttons) ? section.buttons : fallback.buttons).map(button => this.createBusinessButton(button)),
+                                    ...(fallback.type === 'hero'
+                                        ? { image: section?.image || fallback.image }
+                                        : { badges: (Array.isArray(section?.badges) ? section.badges : fallback.badges).map(item => this.createBusinessBadge(item)) })
+                                };
+                            }
+
+                            if (fallback.type === 'intro') {
+                                return {
+                                    ...baseSection,
+                                    headline: section?.headline ?? fallback.headline,
+                                    desc1: section?.desc1 ?? fallback.desc1,
+                                    did_you_know: section?.did_you_know ?? fallback.did_you_know,
+                                    desc2: section?.desc2 ?? fallback.desc2,
+                                    list_headline: section?.list_headline ?? fallback.list_headline,
+                                    list: Array.isArray(section?.list) ? section.list : fallback.list,
+                                    button: this.createBusinessButton(section?.button || fallback.button),
+                                    image: section?.image || fallback.image
+                                };
+                            }
+
+                            if (fallback.type === 'ideal_for') {
+                                return {
+                                    ...baseSection,
+                                    headline: section?.headline ?? fallback.headline,
+                                    desc: section?.desc ?? fallback.desc,
+                                    list_headline: section?.list_headline ?? fallback.list_headline,
+                                    list: Array.isArray(section?.list) ? section.list : fallback.list,
+                                    image: section?.image || fallback.image
+                                };
+                            }
+
+                            if (fallback.type === 'features') {
+                                return {
+                                    ...baseSection,
+                                    headline: section?.headline ?? fallback.headline,
+                                    image: section?.image || fallback.image,
+                                    cards: (Array.isArray(section?.cards) ? section.cards : fallback.cards).map((card, cardIndex) => this.createBusinessFeatureCard(card, cardIndex))
+                                };
+                            }
+
+                            if (fallback.type === 'advantages') {
+                                return {
+                                    ...baseSection,
+                                    headline: section?.headline ?? fallback.headline,
+                                    cards: (Array.isArray(section?.cards) ? section.cards : fallback.cards).map((card, cardIndex) => this.createBusinessAdvantageCard(card, cardIndex))
+                                };
+                            }
+
+                            if (fallback.type === 'value_section') {
+                                return {
+                                    ...baseSection,
+                                    headline: section?.headline ?? fallback.headline,
+                                    table: (Array.isArray(section?.table) ? section.table : fallback.table).map(row => this.createBusinessValueRow(row)),
+                                    total_value: section?.total_value ?? fallback.total_value,
+                                    investment: section?.investment ?? fallback.investment,
+                                    bottom_line: section?.bottom_line ?? fallback.bottom_line,
+                                    disclaimer: section?.disclaimer ?? fallback.disclaimer,
+                                    image: section?.image || fallback.image,
+                                    price_title: section?.price_title ?? fallback.price_title
+                                };
+                            }
+
+                            if (fallback.type === 'testimonials') {
+                                return {
+                                    ...baseSection,
+                                    headline: section?.headline ?? fallback.headline,
+                                    desc: section?.desc ?? fallback.desc,
+                                    videos: (Array.isArray(section?.videos) ? section.videos : fallback.videos).map(video => this.createBusinessVideo(video))
+                                };
+                            }
+
+                            if (fallback.type === 'investment_card') {
+                                return {
+                                    ...baseSection,
+                                    headline: section?.headline ?? fallback.headline,
+                                    desc: section?.desc ?? fallback.desc,
+                                    includes_title: section?.includes_title ?? fallback.includes_title,
+                                    list: Array.isArray(section?.list) ? section.list : fallback.list,
+                                    guarantee: section?.guarantee ?? fallback.guarantee,
+                                    button: this.createBusinessButton(section?.button || fallback.button),
+                                    image: section?.image || fallback.image,
+                                    image_caption: section?.image_caption ?? fallback.image_caption
+                                };
+                            }
+
+                            if (fallback.type === 'faq') {
+                                return {
+                                    ...baseSection,
+                                    headline: section?.headline ?? fallback.headline,
+                                    questions: (Array.isArray(section?.questions) ? section.questions : fallback.questions).map(item => this.createBusinessFaqItem(item))
+                                };
+                            }
+
+                            return {
+                                ...baseSection,
+                                headline: section?.headline ?? fallback.headline,
+                                blocks: (Array.isArray(section?.blocks) ? section.blocks : fallback.blocks).map(block => this.createBusinessDisclaimerBlock(block))
+                            };
+                        })
+                        .filter(Boolean);
+                },
+
+                normalizePageData(pageData = {}) {
+                    const base = this.pageData || {};
+                    const merged = {
+                        ...base,
+                        ...pageData,
+                        hero: { ...(base.hero || {}), ...(pageData.hero || {}) },
+                        intro: { ...(base.intro || {}), ...(pageData.intro || {}) },
+                        ideal_for: { ...(base.ideal_for || {}), ...(pageData.ideal_for || {}) },
+                        features: { ...(base.features || {}), ...(pageData.features || {}) },
+                        advantages: { ...(base.advantages || {}), ...(pageData.advantages || {}) },
+                        value_section: { ...(base.value_section || {}), ...(pageData.value_section || {}) },
+                        testimonials: { ...(base.testimonials || {}), ...(pageData.testimonials || {}) },
+                        investment_card: { ...(base.investment_card || {}), ...(pageData.investment_card || {}) },
+                        faq: { ...(base.faq || {}), ...(pageData.faq || {}) },
+                        bottom_cta: { ...(base.bottom_cta || {}), ...(pageData.bottom_cta || {}) },
+                        disclaimer_section: { ...(base.disclaimer_section || {}), ...(pageData.disclaimer_section || {}) }
+                    };
+
+                    const sections = this.normalizeSections(pageData.sections ?? merged.sections, merged);
+                    const getSection = (type) => sections.find(section => section.type === type) || {};
+                    const heroSection = getSection('hero');
+                    const introSection = getSection('intro');
+                    const idealSection = getSection('ideal_for');
+                    const featuresSection = getSection('features');
+                    const advantagesSection = getSection('advantages');
+                    const valueSection = getSection('value_section');
+                    const testimonialsSection = getSection('testimonials');
+                    const investmentSection = getSection('investment_card');
+                    const faqSection = getSection('faq');
+                    const ctaSection = getSection('bottom_cta');
+                    const disclaimerSection = getSection('disclaimer_section');
+
+                    const heroButtons = Array.isArray(heroSection.buttons) ? heroSection.buttons : [];
+                    const introButton = introSection.button || this.createBusinessButton();
+                    const featureCards = Array.isArray(featuresSection.cards) ? featuresSection.cards : [];
+                    const advantageCards = Array.isArray(advantagesSection.cards) ? advantagesSection.cards : [];
+                    const testimonialVideos = Array.isArray(testimonialsSection.videos) ? testimonialsSection.videos : [];
+                    const investmentButton = investmentSection.button || this.createBusinessButton();
+                    const ctaButtons = Array.isArray(ctaSection.buttons) ? ctaSection.buttons : [];
+
+                    return {
+                        ...merged,
+                        hero: {
+                            ...(merged.hero || {}),
+                            headline: heroSection.headline || '',
+                            desc: heroSection.desc || '',
+                            buttons: heroButtons.map(button => this.createBusinessButton(button)),
+                            btn1_text: heroButtons[0]?.text || '',
+                            btn1_link: heroButtons[0]?.link || '',
+                            btn2_text: heroButtons[1]?.text || '',
+                            btn2_link: heroButtons[1]?.link || '',
+                            image: heroSection.image || 'Business-Support-Page/IPP_Hero.jpg'
+                        },
+                        intro: {
+                            ...(merged.intro || {}),
+                            headline: introSection.headline || '',
+                            desc1: introSection.desc1 || '',
+                            did_you_know: introSection.did_you_know || '',
+                            desc2: introSection.desc2 || '',
+                            list_headline: introSection.list_headline || '',
+                            list: Array.isArray(introSection.list) ? introSection.list : [],
+                            button: this.createBusinessButton(introButton),
+                            btn_text: introButton.text || '',
+                            btn_link: introButton.link || '',
+                            image: introSection.image || 'Business-Support-Page/IPP_70,000 Pages.jpg'
+                        },
+                        ideal_for: {
+                            ...(merged.ideal_for || {}),
+                            headline: idealSection.headline || '',
+                            desc: idealSection.desc || '',
+                            list_headline: idealSection.list_headline || '',
+                            list: Array.isArray(idealSection.list) ? idealSection.list : [],
+                            image: idealSection.image || 'Business-Support-Page/IPP_Income Power Pro_1.jpg'
+                        },
+                        features: {
+                            ...(merged.features || {}),
+                            headline: featuresSection.headline || '',
+                            image: featuresSection.image || 'Business-Support-Page/IPP_Income Power Pro_2.jpg',
+                            cards: featureCards.map((card, index) => this.createBusinessFeatureCard(card, index)),
+                            list: featureCards.map(card => card.title).filter(Boolean)
+                        },
+                        advantages: {
+                            ...(merged.advantages || {}),
+                            headline: advantagesSection.headline || '',
+                            cards: advantageCards.map((card, index) => this.createBusinessAdvantageCard(card, index)),
+                            card1: this.createBusinessAdvantageCard(advantageCards[0] || {}, 0),
+                            card2: this.createBusinessAdvantageCard(advantageCards[1] || {}, 1),
+                            card3: this.createBusinessAdvantageCard(advantageCards[2] || {}, 2)
+                        },
+                        value_section: {
+                            ...(merged.value_section || {}),
+                            headline: valueSection.headline || '',
+                            table: (Array.isArray(valueSection.table) ? valueSection.table : []).map(row => this.createBusinessValueRow(row)),
+                            total_value: valueSection.total_value || '',
+                            investment: valueSection.investment || '',
+                            bottom_line: valueSection.bottom_line || '',
+                            disclaimer: valueSection.disclaimer || '',
+                            image: valueSection.image || 'Business-Support-Page/IPP_Income Power Pro Value.jpg',
+                            price_title: valueSection.price_title || ''
+                        },
+                        testimonials: {
+                            ...(merged.testimonials || {}),
+                            headline: testimonialsSection.headline || '',
+                            desc: testimonialsSection.desc || '',
+                            videos: testimonialVideos.map(video => this.createBusinessVideo(video)),
+                            video_url: testimonialVideos[0]?.url || ''
+                        },
+                        investment_card: {
+                            ...(merged.investment_card || {}),
+                            headline: investmentSection.headline || '',
+                            price_title: valueSection.price_title || merged.investment_card?.price_title || '',
+                            desc: investmentSection.desc || '',
+                            includes_title: investmentSection.includes_title || '',
+                            list: Array.isArray(investmentSection.list) ? investmentSection.list : [],
+                            guarantee: investmentSection.guarantee || '',
+                            button: this.createBusinessButton(investmentButton),
+                            btn_text: investmentButton.text || '',
+                            btn_link: investmentButton.link || '',
+                            image: investmentSection.image || 'Business-Support-Page/IPP_Value.jpg',
+                            image_caption: investmentSection.image_caption || ''
+                        },
+                        faq: {
+                            ...(merged.faq || {}),
+                            headline: faqSection.headline || '',
+                            questions: (Array.isArray(faqSection.questions) ? faqSection.questions : []).map(item => this.createBusinessFaqItem(item))
+                        },
+                        bottom_cta: {
+                            ...(merged.bottom_cta || {}),
+                            headline: ctaSection.headline || '',
+                            desc: ctaSection.desc || '',
+                            buttons: ctaButtons.map(button => this.createBusinessButton(button)),
+                            btn1_text: ctaButtons[0]?.text || '',
+                            btn1_link: ctaButtons[0]?.link || '',
+                            btn2_text: ctaButtons[1]?.text || '',
+                            btn2_link: ctaButtons[1]?.link || '',
+                            badges: (Array.isArray(ctaSection.badges) ? ctaSection.badges : []).map(item => this.createBusinessBadge(item))
+                        },
+                        disclaimer_section: {
+                            ...(merged.disclaimer_section || {}),
+                            headline: disclaimerSection.headline || '',
+                            blocks: (Array.isArray(disclaimerSection.blocks) ? disclaimerSection.blocks : []).map(block => this.createBusinessDisclaimerBlock(block))
+                        },
+                        sections
+                    };
+                },
+
+                getOrderedSections(sections = this.pageData.sections || []) {
+                    if (!Array.isArray(sections)) return [];
+
+                    return sections
+                        .slice()
+                        .sort((a, b) => Number(a?.order ?? 0) - Number(b?.order ?? 0));
+                },
+
+                hasSection(type) {
+                    return (this.pageData.sections || []).some(section => section.type === type);
+                },
+
+                getBusinessVideos() {
+                    if (Array.isArray(this.pageData.testimonials?.videos) && this.pageData.testimonials.videos.length) {
+                        return this.pageData.testimonials.videos.filter(video => video && video.url);
+                    }
+
+                    if (this.pageData.testimonials?.video_url) {
+                        return [{ url: this.pageData.testimonials.video_url, title: this.pageData.testimonials.headline || 'Business Support Testimonial' }];
+                    }
+
+                    return [];
+                },
+
+                getBusinessVideoGridClass() {
+                    const videoCount = this.getBusinessVideos().length;
+                    if (videoCount <= 1) {
+                        return 'max-w-[980px]';
+                    }
+
+                    return 'grid grid-cols-1 xl:grid-cols-2 gap-8 max-w-6xl';
+                },
+
+                getBusinessVideoFrameClass() {
+                    const videoCount = this.getBusinessVideos().length;
+                    if (videoCount <= 1) {
+                        return 'rounded-[2rem] shadow-[0_18px_50px_rgba(0,0,0,0.18)] aspect-[16/9]';
+                    }
+
+                    return 'rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] aspect-video';
+                },
+
+                resolveBusinessVideoUrl(url) {
+                    if (!url) return '';
+                    if (url.includes('youtube-nocookie.com/embed/') || url.includes('youtube.com/embed/')) return url;
+
+                    try {
+                        const parsed = new URL(url, window.location.origin);
+                        const host = parsed.hostname.replace(/^www\./, '');
+                        let videoId = '';
+
+                        if (host === 'youtu.be') {
+                            videoId = parsed.pathname.replace('/', '');
+                        } else if (host.includes('youtube.com')) {
+                            videoId = parsed.searchParams.get('v') || parsed.pathname.split('/').filter(Boolean).pop();
+                        }
+
+                        if (!videoId) return url;
+                        return `https://www.youtube-nocookie.com/embed/${videoId}?rel=0`;
+                    } catch (error) {
+                        return url;
+                    }
+                },
+
+                getBusinessButtonClass(button, index, context = 'hero') {
+                    const style = button?.style || (index === 0 ? 'primary' : 'secondary');
+                    const base = 'w-full md:w-auto font-bold py-4 px-8 rounded shadow transition uppercase text-sm tracking-wide';
+                    if (context === 'bottom') {
+                        return `${base} bg-gradient-to-r from-[#389400] to-[#75C400] text-white hover:shadow-lg hover:opacity-95`;
+                    }
+
+                    return style === 'secondary'
+                        ? `${base} bg-[#dcfce7] text-brand-primary hover:bg-white`
+                        : `${base} bg-[#4a8a0a] text-white hover:bg-[#389400]`;
+                },
+
+                syncSectionLayout() {
+                    const root = document.querySelector('[data-business-sections-root]');
+                    if (!root) return;
+
+                    const nodesByType = new Map(
+                        Array.from(root.querySelectorAll('[data-business-section]')).map(node => [node.dataset.businessSection, node])
+                    );
+
+                    this.getOrderedSections().forEach(section => {
+                        const node = nodesByType.get(section.type);
+                        if (node) root.appendChild(node);
+                    });
+                },
+
+                async init() {
+                    const mode = new URLSearchParams(window.location.search).get('mode');
+
+                    console.log('EXPECTED page_id:', BUSINESS_SUPPORT_PAGE_ID);
+
+                    try {
+                        const { data, error } = await supabase
+                            .from('site_content')
+                            .select('*')
+                            .in('page_id', [BUSINESS_SUPPORT_PAGE_ID, 'business']);
+
+                        if (error) {
+                            console.error('CMS FETCH ERROR:', error);
+                            return;
+                        }
+
+                        if (!Array.isArray(data) || !data.length) {
+                            console.error('NO CMS DATA FOUND');
+                            return;
+                        }
+
+                        const rows = data
+                            .slice()
+                            .sort((a, b) => new Date(b.updated_at || 0).getTime() - new Date(a.updated_at || 0).getTime());
+
+                        console.log('FETCHED ROWS:', rows);
+
+                        const resolvedRow = rows.find((row) => {
+                            const rowContent = mode === 'preview'
+                                ? row.draft_content
+                                : (row.published_content ?? row.live_content);
+                            return !!rowContent;
+                        });
+
+                        if (!resolvedRow) {
+                            console.error('NO CMS ROW WITH USABLE CONTENT');
+                            return;
+                        }
+
+                        console.log('RESOLVED ROW:', resolvedRow);
+                        console.log('DRAFT:', resolvedRow.draft_content);
+                        console.log('PUBLISHED:', resolvedRow.published_content);
+
+                        const content = mode === 'preview'
+                            ? resolvedRow.draft_content
+                            : (resolvedRow.published_content ?? resolvedRow.live_content);
+
+                        if (!content) {
+                            console.error('NO CMS CONTENT FOUND FOR MODE:', mode === 'preview' ? 'draft_content' : 'published_content');
+                            return;
+                        }
+
+                        this.pageData = this.hydratePageData(content);
+                        console.log('RESOLVED ROW page_id:', resolvedRow.page_id);
+                        console.log('FINAL pageData:', this.pageData);
+                        await this.$nextTick();
+                        this.syncSectionLayout();
+                        this.isContentReady = true;
+                    } catch (error) {
+                        console.error('CMS FETCH ERROR:', error);
+                    }
+                }
+            }));
+        });
+
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        let lastScrollTop = 0;
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (header) {
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    header.classList.add('header-hidden');
+                } else {
+                    header.classList.remove('header-hidden');
+                }
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (!backToTopBtn) return;
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
+            } else {
+                backToTopBtn.classList.add('translate-y-20', 'opacity-0');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        document.addEventListener('click', (event) => {
+            const button = event.target.closest('.faq-btn');
+            if (!button) return;
+            const content = button.nextElementSibling;
+            if (!content) return;
+            content.classList.toggle('hidden');
+            const icon = button.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('rotate-180');
+            }
+        });
+    </script>
+
+    <script src="js/site-nav.js"></script>
+    <script type="text/javascript" id="pap_x2s6df8d" src="https://payyourselffirst.postaffiliatepro.com/scripts/ojyfma"></script>
+    <script type="text/javascript">
+        try {
+            PostAffTracker.setAccountId('default1');
+            PostAffTracker.executeOnResponseFinished.push(function() {
+                var visitorId = PostAffTracker.getVisitorId();
+                document.querySelectorAll("a[href*='buy.stripe.com']").forEach(function(element) {
+                    if (!element.href.includes('client_reference_id=')) {
+                        element.href += (element.href.includes('?') ? '&' : '?') + 'client_reference_id=default1' + visitorId;
+                    }
+                });
+            });
+            PostAffTracker.track();
+        } catch (err) {}
+    </script>
+</body>
+</html>

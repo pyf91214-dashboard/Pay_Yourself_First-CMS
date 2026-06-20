@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Page...</title>
+    <style>
+        :root {
+            color-scheme: light;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(180deg, #f7faf7 0%, #eef4ea 100%);
+            color: #1f2937;
+        }
+
+        .shell-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .shell-loading[hidden] {
+            display: none;
+        }
+
+        .shell-spinner {
+            width: 44px;
+            height: 44px;
+            border-radius: 999px;
+            border: 4px solid rgba(56, 148, 0, 0.18);
+            border-top-color: #389400;
+            animation: shell-spin 0.8s linear infinite;
+        }
+
+        .shell-card {
+            width: min(92vw, 720px);
+            border: 1px solid #d1d5db;
+            border-radius: 18px;
+            background: #ffffff;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.08);
+            padding: 32px;
+        }
+
+        .shell-card[hidden] {
+            display: none;
+        }
+
+        .shell-kicker {
+            margin: 0 0 10px;
+            color: #389400;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .shell-title {
+            margin: 0 0 12px;
+            font-size: 28px;
+            line-height: 1.2;
+        }
+
+        .shell-message,
+        .shell-detail {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #4b5563;
+        }
+
+        .shell-detail {
+            margin-top: 16px;
+            font-family: Consolas, monospace;
+            font-size: 13px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 12px 14px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        @keyframes shell-spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="shell-loading" id="shell-loading" aria-label="Loading duplicated page">
+        <div class="shell-spinner" aria-hidden="true"></div>
+    </div>
+
+    <main class="shell-card" id="shell-card" hidden>
+        <p class="shell-kicker" id="shell-kicker">Duplicate Route</p>
+        <h1 class="shell-title" id="shell-title">Duplicate Page</h1>
+        <p class="shell-message" id="shell-message">The requested duplicate page could not be loaded.</p>
+        <pre class="shell-detail" id="shell-detail" hidden></pre>
+    </main>
+
+    <script type="module">
+        const SUPABASE_URL = 'https://nqwggnereuhphwmkqove.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xd2dnbmVyZXVocGh3bWtxb3ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDUxMjAsImV4cCI6MjA5MTM4MTEyMH0.1OM-fLTth5FcMKUPHgepeM3BdJMydHiK1coD0vw0o0M';
+        const PAGE_BUILDER_REGISTRY_PAGE_ID = 'page_builder_registry';
+        const TEMPLATE_MODULES = {
+            home: '/js/duplicate-loaders/home.js',
+            how_we_help_you: '/js/duplicate-loaders/how-we-help-you.js',
+            packages: '/js/duplicate-loaders/packages.js',
+            tax: '/js/duplicate-loaders/tax.js',
+            support: '/js/duplicate-loaders/support.js',
+            about_us: '/js/duplicate-loaders/about-us.js',
+            'purchase-power': '/js/duplicate-loaders/purchase-power.js',
+            'dental-power': '/js/duplicate-loaders/dental-power.js',
+            'doctor-power': '/js/duplicate-loaders/doctor-power.js',
+            affiliate: '/js/duplicate-loaders/affiliate.js',
+            contact_us: '/js/duplicate-loaders/contact-us.js',
+            business: '/js/duplicate-loaders/business.js'
+        };
+
+        const loadingNode = document.getElementById('shell-loading');
+        const cardNode = document.getElementById('shell-card');
+        const titleNode = document.getElementById('shell-title');
+        const messageNode = document.getElementById('shell-message');
+        const detailNode = document.getElementById('shell-detail');
+
+        function setShellState(title, message, detail) {
+            document.title = title;
+            loadingNode.hidden = true;
+            cardNode.hidden = false;
+            titleNode.textContent = title;
+            messageNode.textContent = message;
+
+            if (detail) {
+                detailNode.hidden = false;
+                detailNode.textContent = detail;
+            } else {
+                detailNode.hidden = true;
+                detailNode.textContent = '';
+            }
+        }
+
+        function normalizePageBuilderId(value) {
+            return String(value || '')
+                .trim()
+                .toLowerCase()
+                .replace(/[\s/]+/g, '-')
+                .replace(/[^a-z0-9_-]/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^[-_]+|[-_]+$/g, '');
+        }
+
+        function getRequestedRoute() {
+            const pathname = window.location.pathname || '/';
+            const segment = decodeURIComponent(pathname.split('/').filter(Boolean).pop() || '');
+            const routePath = segment || '';
+            const routeSlug = segment.replace(/\.html$/i, '');
+            return {
+                routePath,
+                routeSlug: normalizePageBuilderId(routeSlug)
+            };
+        }
+
+        function normalizeRegistryPages(content = {}) {
+            const pages = Array.isArray(content?.pages) ? content.pages : [];
+            return pages
+                .map((page) => {
+                    const pageId = normalizePageBuilderId(page?.page_id);
+                    const fileName = String(page?.file_name || '').trim();
+                    const routePath = String(page?.route_path || fileName || (pageId ? `${pageId}.html` : '')).trim();
+                    const routeSlug = normalizePageBuilderId(page?.route_slug || routePath.replace(/\.html$/i, '') || pageId);
+                    return {
+                        page_id: pageId,
+                        page_name: String(page?.page_name || '').trim(),
+                        template_page_id: String(page?.template_page_id || '').trim(),
+                        file_name: fileName || routePath,
+                        route_path: routePath,
+                        route_slug: routeSlug,
+                        page_title: String(page?.page_title || page?.page_name || '').trim()
+                    };
+                })
+                .filter((page) => page.page_id && page.template_page_id && page.route_path);
+        }
+
+        async function fetchRegistryRecord() {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/site_content?select=*&page_id=eq.${encodeURIComponent(PAGE_BUILDER_REGISTRY_PAGE_ID)}`, {
+                method: 'GET',
+                headers: {
+                    apikey: SUPABASE_KEY,
+                    Authorization: `Bearer ${SUPABASE_KEY}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(await response.text());
+            }
+
+            const rows = await response.json();
+            return Array.isArray(rows) && rows.length ? rows[0] : null;
+        }
+
+        function getRegistryContent(record) {
+            if (!record) return null;
+            const isPreviewMode = new URLSearchParams(window.location.search).get('mode') === 'preview';
+            return isPreviewMode
+                ? (record.draft_content || record.live_content || null)
+                : (record.published_content ?? record.live_content ?? record.draft_content ?? null);
+        }
+
+        async function mountDuplicateRoute() {
+            const { routePath, routeSlug } = getRequestedRoute();
+
+            if (!routeSlug || routeSlug === 'duplicate-page-shell') {
+                setShellState(
+                    'Duplicate Page Not Found',
+                    'This route does not correspond to a duplicated CMS page.',
+                    `pathname=${window.location.pathname}`
+                );
+                return;
+            }
+
+            try {
+                const registryRecord = await fetchRegistryRecord();
+                const registryContent = getRegistryContent(registryRecord);
+                const pages = normalizeRegistryPages(registryContent || {});
+                const duplicatePage = pages.find((page) => {
+                    return page.route_slug === routeSlug
+                        || page.route_path.toLowerCase() === routePath.toLowerCase()
+                        || page.file_name.toLowerCase() === routePath.toLowerCase();
+                });
+
+                if (!duplicatePage) {
+                    setShellState(
+                        'Duplicate Page Not Found',
+                        'The requested duplicate route is not registered in the Page Builder registry.',
+                        `route_slug=${routeSlug}\nroute_path=${routePath}`
+                    );
+                    return;
+                }
+
+                const modulePath = TEMPLATE_MODULES[duplicatePage.template_page_id];
+                if (!modulePath) {
+                    setShellState(
+                        'Unsupported Duplicate Template',
+                        'This duplicate route points to a template family that does not have a loader yet.',
+                        `template_page_id=${duplicatePage.template_page_id}`
+                    );
+                    return;
+                }
+
+                const loaderModule = await import(modulePath);
+                if (typeof loaderModule.mountDuplicatePage !== 'function') {
+                    throw new Error(`Loader at ${modulePath} does not export mountDuplicatePage().`);
+                }
+
+                await loaderModule.mountDuplicatePage({
+                    pageId: duplicatePage.page_id,
+                    pageName: duplicatePage.page_name,
+                    pageTitle: duplicatePage.page_title,
+                    routePath: duplicatePage.route_path,
+                    routeSlug: duplicatePage.route_slug,
+                    templatePageId: duplicatePage.template_page_id,
+                    mode: new URLSearchParams(window.location.search).get('mode') === 'preview' ? 'preview' : 'live'
+                });
+            } catch (error) {
+                console.error('Failed to mount duplicate route', error);
+                setShellState(
+                    'Duplicate Page Failed To Load',
+                    'The duplicate shell could not load the requested page template.',
+                    error.message || String(error)
+                );
+            }
+        }
+
+        mountDuplicateRoute();
+    </script>
+</body>
+</html>

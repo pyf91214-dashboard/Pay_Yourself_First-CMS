@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Yourself First - Purchase Power</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Roboto Flex", 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-primary': '#389400',
+                        'brand-dark': '#1c1c1c',
+                        'footer-bg': '#1f2022',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdn.pagesense.io/js/payyourselffirst/c2e5673c7d15457d8a0925080101f545.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        .sticky-header { transition: transform 0.3s ease-in-out; }
+        .header-hidden { transform: translateY(-100%); }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+
+<body class="bg-white text-gray-800 font-sans antialiased flex flex-col min-h-screen" x-data="purchasePowerPage()" x-init="init()" x-cloak>
+    <div id="main-header" class="fixed top-0 left-0 w-full z-50 sticky-header shadow-md">
+        <div class="bg-brand-dark text-white py-6 text-xs font-semibold">
+            <div class="container mx-auto px-4 flex justify-end items-center space-x-6">
+                <a href="https://payyourselffirst.benefithub.com/Welcome" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas fa-dollar-sign"></i></div> DISCOUNT PORTAL
+                </a>
+                <a href="https://backoffice.pyfaffiliates.com/merchants/login.php#login" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <i class="fas fa-user text-brand-primary mr-2"></i> AFFILIATE LOGIN
+                </a>
+            </div>
+        </div>
+        <nav class="bg-white py-4">
+            <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
+                <a href="index.html"><img src="pyf-logo.svg" alt="Pay Yourself First Logo" class="h-12 object-contain"></a>
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl text-brand-dark focus:outline-none"><i class="fas fa-bars"></i></button>
+                <div data-site-nav-desktop class="hidden lg:flex items-center space-x-5 text-xs xl:text-sm font-bold text-gray-700 uppercase"></div>
+            </div>
+            <div id="mobile-menu" data-site-nav-mobile class="hidden lg:hidden text-sm bg-white border-t mt-4 p-4 flex flex-col space-y-4 font-bold text-gray-700 uppercase"></div>
+        </nav>
+    </div>
+
+    <main class="flex-grow pt-40 md:pt-44">
+        <div data-purchase-sections-root x-show="isContentReady">
+            <header data-purchase-section="hero" x-show="hasSection('hero')" class="container mx-auto px-4 mb-16 mt-8">
+                <div class="relative rounded-[2rem] overflow-hidden min-h-[500px] md:h-[600px] shadow-2xl group">
+                    <img :src="getSectionContent('hero').image || ''" alt="Purchase Power Hero" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/40"></div>
+                    <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 py-20 md:px-20 md:py-0">
+                        <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-6 uppercase leading-tight drop-shadow-md max-w-5xl" x-html="getSectionContent('hero').headline"></h1>
+                        <h2 class="text-lg md:text-2xl font-bold text-white mb-4 uppercase max-w-5xl" x-html="getSectionContent('hero').subheadline"></h2>
+                        <p class="text-base md:text-lg text-gray-100 mb-8 font-medium leading-relaxed max-w-4xl" x-html="getSectionContent('hero').desc"></p>
+                        <div class="inline-block border-2 border-white rounded px-6 py-2 text-white font-bold text-lg mb-8 bg-white/10 backdrop-blur-sm max-w-md" x-text="getSectionContent('hero').price_text"></div>
+                        <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                            <template x-for="(button, index) in (getSectionContent('hero').buttons || [])" :key="`hero-btn-${index}`">
+                                <a :href="button.link || '#'" :target="button.link && button.link.startsWith('http') ? '_blank' : null" class="bg-[#4a8a0a] text-white font-bold py-4 px-10 rounded shadow hover:bg-[#389400] transition uppercase text-sm tracking-wide text-center" x-text="button.text"></a>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <section data-purchase-section="steps" x-show="hasSection('steps')" class="py-16 bg-white">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-center text-brand-dark uppercase mb-16" x-html="getSectionContent('steps').headline"></h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        <template x-for="(card, index) in (getSectionContent('steps').cards || [])" :key="`step-${index}`">
+                            <div :class="card.accent ? 'bg-[#4a8a0a] text-white shadow-xl transform md:scale-105' : 'bg-[#F2FFEB] text-brand-dark hover:shadow-lg'" class="rounded-xl p-8 text-center h-full flex flex-col items-center transition">
+                                <div :class="card.accent ? 'bg-white text-brand-primary' : 'bg-[#4a8a0a] text-white'" class="w-20 h-20 rounded-full flex items-center justify-center text-3xl mb-6 shadow-md">
+                                    <i :class="card.icon"></i>
+                                </div>
+                                <h3 :class="card.accent ? 'text-white' : 'text-brand-dark'" class="font-bold text-lg mb-2" x-text="card.title"></h3>
+                                <p :class="card.accent ? 'text-white opacity-90' : 'text-gray-600'" class="text-sm" x-html="card.desc"></p>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <section data-purchase-section="savings_categories" x-show="hasSection('savings_categories')" class="py-16 md:py-24 bg-white">
+                <div class="container mx-auto px-4">
+                    <div class="text-center max-w-4xl mx-auto mb-16">
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-6" x-html="getSectionContent('savings_categories').headline"></h2>
+                        <p class="text-gray-600 font-medium" x-html="getSectionContent('savings_categories').desc"></p>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-7xl mx-auto">
+                        <template x-for="(card, index) in (getSectionContent('savings_categories').cards || [])" :key="`category-${index}`">
+                            <div class="bg-gray-50 hover:bg-white hover:shadow-xl rounded-xl p-6 text-center border border-gray-100 transition group h-full">
+                                <div class="w-12 h-12 bg-[#00695c] rounded-full flex items-center justify-center text-white mx-auto mb-4 group-hover:bg-brand-primary transition">
+                                    <i :class="card.icon"></i>
+                                </div>
+                                <h3 class="font-bold text-brand-dark uppercase text-sm mb-2" x-text="card.title"></h3>
+                                <p class="text-xs text-gray-500" x-html="card.desc"></p>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <section data-purchase-section="popular_savings" x-show="hasSection('popular_savings')" class="py-16 bg-white">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-center text-brand-dark uppercase mb-16" x-html="getSectionContent('popular_savings').headline"></h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-20">
+                        <template x-for="(card, index) in (getSectionContent('popular_savings').cards || [])" :key="`popular-${index}`">
+                            <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-8 flex flex-col md:flex-row items-start md:items-center text-left">
+                                <div class="w-full md:w-1/3 mb-6 md:mb-0 md:mr-8 flex-shrink-0">
+                                    <img :src="card.image || ''" :alt="card.title || `Popular saving ${index + 1}`" class="rounded-lg w-full h-32 object-cover">
+                                </div>
+                                <div>
+                                    <div class="flex items-center mb-3">
+                                        <i :class="`${card.icon} text-brand-primary text-xl mr-3`"></i>
+                                        <h3 class="font-bold text-brand-dark text-lg" x-text="card.title"></h3>
+                                    </div>
+                                    <p class="text-sm text-gray-600 leading-relaxed" x-html="card.desc"></p>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <section data-purchase-section="value_prop" x-show="hasSection('value_prop')" class="py-16 md:py-24 bg-[#F2FFEB]">
+                <div class="container mx-auto px-4 text-center max-w-4xl">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-8" x-html="getSectionContent('value_prop').headline"></h2>
+                    <p class="text-lg text-gray-800 font-medium leading-relaxed mb-8" x-html="getSectionContent('value_prop').body"></p>
+                    <p class="text-sm text-gray-600 italic font-bold" x-html="getSectionContent('value_prop').note"></p>
+                </div>
+            </section>
+
+            <section data-purchase-section="faq" x-show="hasSection('faq')" class="py-16 bg-white">
+                <div class="container mx-auto px-4 max-w-4xl">
+                    <h2 class="text-3xl font-extrabold text-center text-brand-dark uppercase mb-12" x-html="getSectionContent('faq').headline"></h2>
+                    <div class="space-y-4">
+                        <template x-for="(faq, index) in (getSectionContent('faq').questions || [])" :key="`faq-${index}`">
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-white">
+                                <button @click="toggleFaq(index)" class="w-full flex justify-between items-center p-6 hover:bg-gray-50 transition focus:outline-none">
+                                    <span class="font-bold text-gray-900 text-left pr-4" x-text="faq.q"></span>
+                                    <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300" :class="openFaqs[index] ? 'rotate-180' : ''"></i>
+                                </button>
+                                <div x-show="openFaqs[index]" class="p-6 border-t border-gray-100 text-gray-600 text-sm leading-relaxed" x-html="faq.a"></div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <section data-purchase-section="bottom_cta" x-show="hasSection('bottom_cta')" class="py-20 bg-[#F2FFEB]">
+                <div class="container mx-auto px-4 text-center">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-10" x-html="getSectionContent('bottom_cta').headline"></h2>
+                    <div class="mb-16">
+                        <a :href="getSectionContent('bottom_cta').button_link || '#'" :target="getSectionContent('bottom_cta').button_link && getSectionContent('bottom_cta').button_link.startsWith('http') ? '_blank' : null" class="bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-5 px-10 md:px-16 rounded shadow-lg transition uppercase text-sm tracking-widest inline-block transform hover:-translate-y-1 hover:shadow-xl" x-text="getSectionContent('bottom_cta').button_text"></a>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                        <template x-for="(badge, index) in (getSectionContent('bottom_cta').badges || [])" :key="`badge-${index}`">
+                            <div class="bg-white/50 backdrop-blur-sm rounded-xl p-4 flex items-center justify-center space-x-3 shadow-sm border border-[#dcfce7]">
+                                <i :class="`${badge.icon || 'fas fa-check-circle'} text-brand-primary text-xl`"></i>
+                                <span class="font-bold text-brand-dark text-xs md:text-sm" x-text="badge.text || badge"></span>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <section data-purchase-section="disclaimer_section" x-show="hasSection('disclaimer_section')" class="py-12 bg-white">
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <h3 class="text-2xl font-bold text-brand-dark uppercase mb-8 text-center" x-text="getSectionContent('disclaimer_section').headline"></h3>
+                    <div class="text-sm text-gray-600 leading-relaxed text-justify space-y-4 border-t border-gray-200 pt-8" x-html="getSectionContent('disclaimer_section').body"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div data-pyf-footer-root></div>
+
+    <button id="backToTopBtn"
+            onclick="scrollToTop()"
+            class="fixed bottom-8 right-8 z-50 bg-brand-primary hover:bg-[#2d7a00] text-white w-12 h-12 rounded-full shadow-lg transition-all duration-300 transform translate-y-20 opacity-0 flex items-center justify-center focus:outline-none">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const supabaseUrl = 'https://nqwggnereuhphwmkqove.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xd2dnbmVyZXVocGh3bWtxb3ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDUxMjAsImV4cCI6MjA5MTM4MTEyMH0.1OM-fLTth5FcMKUPHgepeM3BdJMydHiK1coD0vw0o0M';
+
+        document.addEventListener('alpine:init', () => {
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+            Alpine.data('purchasePowerPage', () => ({
+                isContentReady: false,
+                pageData: { sections: [] },
+                openFaqs: {},
+
+                getDefaultPageData() {
+                    return {
+                        sections: [
+                            {
+                                id: 'purchase-hero',
+                                type: 'hero',
+                                enabled: true,
+                                order: 1,
+                                content: {
+                                    headline: 'Cut Costs. Not Your Lifestyle.',
+                                    subheadline: 'Save On What You Already Buy. From Groceries To Getaways. <br> Without Sacrificing Quality.',
+                                    desc: 'Spending is unavoidable. Overpaying isn\'t. Purchase Power gives you exclusive discounts on the brands and services you use every day. Keep your lifestyle, lower your bills.',
+                                    price_text: 'PRICE: $9.95/month',
+                                    image: 'Purchase Power/Purchase Power_Hero.jpg',
+                                    buttons: [{ text: 'Get Purchase Power', link: 'https://buy.stripe.com/6oU9AM2kidt5dm43hKcIE06' }]
+                                }
+                            },
+                            {
+                                id: 'purchase-steps',
+                                type: 'steps',
+                                enabled: true,
+                                order: 2,
+                                content: {
+                                    headline: 'Save In 3 Simple <span class="text-brand-primary">Steps</span>',
+                                    cards: [
+                                        { icon: 'fas fa-laptop', title: 'Step 1: Browse Deals', desc: 'Access millions of discounts on brands you already love, no hunting required.', accent: false },
+                                        { icon: 'fas fa-shopping-cart', title: 'Step 2: Shop & Save', desc: 'Use your deals online or in-store. Discounts apply instantly at checkout.', accent: false },
+                                        { icon: 'fas fa-chart-line', title: 'Step 3: Watch Savings Grow', desc: 'Earn cash back on select purchases. Many users save $1,000-$3,000+ per year.', accent: true }
+                                    ]
+                                }
+                            },
+                            {
+                                id: 'purchase-categories',
+                                type: 'savings_categories',
+                                enabled: true,
+                                order: 3,
+                                content: {
+                                    headline: 'Real <span class="text-brand-primary">Savings</span> For Real <span class="text-brand-primary">Life</span>',
+                                    desc: 'Discounts are everywhere, the problem is finding them. Purchase Power gives you instant access to savings on everything you buy regularly. Shop with confidence knowing you\'re getting great prices, every time.',
+                                    cards: [
+                                        { icon: 'fas fa-utensils', title: 'Dining', desc: 'Popular restaurant chains, fine dining, desserts, special order food & gifts' },
+                                        { icon: 'fas fa-shopping-basket', title: 'Groceries', desc: 'Groceries, coffee, tea, gourmet foods, wine & beverages, food delivery' },
+                                        { icon: 'fas fa-shopping-bag', title: 'Shopping', desc: 'Apparel, shoes, jewelry, toys, gifts, magazines, home & garden, department stores, office supplies, sports gear' },
+                                        { icon: 'fas fa-plane', title: 'Travel', desc: 'Flights, hotels & resorts, vacation packages, cruises, car rentals, RV rentals, transportation, travel insurance' },
+                                        { icon: 'fas fa-hotel', title: 'Hotels & Resorts', desc: 'Exclusive hotel and vacation rental deals with cash back at top destinations worldwide' },
+                                        { icon: 'fas fa-car', title: 'Car Rentals', desc: 'Save 5% to 35% on car and moving truck rentals at most national rental companies' },
+                                        { icon: 'fas fa-chart-pie', title: 'Financial Wellness', desc: 'Banking, loans & credit, life insurance, investing, retirement planning, estate planning, warranty services' },
+                                        { icon: 'fas fa-heartbeat', title: 'Life Essentials', desc: 'Medical services, auto insurance, ID protection, child & elder care, home buying & selling' },
+                                        { icon: 'fas fa-car-side', title: 'Automotive', desc: 'Auto body & paint, service & repair, oil changes, warranties, refinancing, car buying discounts' },
+                                        { icon: 'fas fa-spa', title: 'Health & Beauty', desc: 'Medical, nutrition, weight loss, health clubs, virtual fitness, fitness equipment, hair & beauty, skin care' },
+                                        { icon: 'fas fa-home', title: 'Home & Family', desc: 'Furniture, kitchen, bed & bath, appliances, home improvement, tools, moving & storage, babies & kids, pet insurance, pet supplies & services' },
+                                        { icon: 'fas fa-film', title: 'Recreation', desc: 'Movies & music, books, magazines, golf, sporting events, concerts, theme parks, tours, outdoor adventures, ski & snowboarding' },
+                                        { icon: 'fas fa-tv', title: 'Electronics', desc: 'Cell phones, computers, tablets, TV & home theater, appliances, printers, internet services, video games, photo services' },
+                                        { icon: 'fas fa-paw', title: 'Pets', desc: 'Pet insurance, pet supplies & services' },
+                                        { icon: 'fas fa-ship', title: 'Cruises', desc: 'Discounts and cash back on popular cruise lines you know and love' },
+                                        { icon: 'fas fa-graduation-cap', title: 'Education & Learning', desc: 'Early learning, K-12, higher education, virtual learning, school supplies, student loans' }
+                                    ]
+                                }
+                            },
+                            {
+                                id: 'purchase-popular',
+                                type: 'popular_savings',
+                                enabled: true,
+                                order: 4,
+                                content: {
+                                    headline: 'Popular Ways Users <span class="text-brand-primary">Save</span>',
+                                    cards: [
+                                        { image: 'Purchase Power/Purchase Power_Popular Ways Users Save_Grocery Savings.jpg', icon: 'fas fa-shopping-basket', title: 'Grocery Savings', desc: 'Save on your weekly grocery bill with discounts at major chains plus cash back on everyday essentials.' },
+                                        { image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', icon: 'fas fa-suitcase', title: 'Travel Deals', desc: 'Book your next vacation for less. Save on hotels, flights, rental cars, and cruises, with cash back.' },
+                                        { image: 'Purchase Power/Purchase Power_Popular Ways Users Save_Dining Discounts.jpg', icon: 'fas fa-utensils', title: 'Dining Discounts', desc: 'Eat out without the financial guilt. Get deals at your favorite restaurants, from fast casual to fine dining.' },
+                                        { image: 'Purchase Power/Purchase Power_Popular Ways Users Save_Auto Savings.jpg', icon: 'fas fa-car', title: 'Auto Savings', desc: 'From car purchases to oil changes, save on every aspect of vehicle ownership and maintenance.' }
+                                    ]
+                                }
+                            },
+                            {
+                                id: 'purchase-value',
+                                type: 'value_prop',
+                                enabled: true,
+                                order: 5,
+                                content: {
+                                    headline: 'Purchase Power <span class="text-brand-primary">Pays For Itself</span>',
+                                    body: 'At just $9.95/month, Purchase Power costs $119.40 per year. Most users save $1,000 to $3,000+ annually. That\'s 8x to 25x return on investment.',
+                                    note: 'Savings vary based on usage and available offers'
+                                }
+                            },
+                            {
+                                id: 'purchase-faq',
+                                type: 'faq',
+                                enabled: true,
+                                order: 6,
+                                content: {
+                                    headline: 'Common <span class="text-brand-primary">Questions</span>',
+                                    questions: [
+                                        { q: 'Can I get Purchase Power without joining as an affiliate?', a: 'Yes.' },
+                                        { q: 'What does "affiliate enrollment" mean?', a: 'PYF\'s affiliate program is free and allows you to receive referral fees when you refer others to PYF products. You can enroll as an affiliate with any PYF product at no additional cost, or enroll as an affiliate with no product purchase required. <a href="affiliate-page.html" class="text-brand-primary underline">Learn more</a>' },
+                                        { q: 'What types of stores are included?', a: 'Everything from national chains to local favorites, groceries, electronics, travel, dining, automotive, health & beauty, and more.' },
+                                        { q: 'Can I use these discounts with other coupons?', a: 'In many cases, yes! You can often stack our deals with store sales or loyalty programs for even bigger savings.' },
+                                        { q: 'Does Purchase Power offer cash back on purchases?', a: 'Yes. For select offers, you\'ll earn dollar-for-dollar cash back, putting real money back in your pocket.' },
+                                        { q: 'How quickly can I start using the discounts?', a: 'Immediately. As soon as you join, you\'ll have instant access to all available deals.' },
+                                        { q: 'Are there any restrictions or blackout dates?', a: 'Each merchant sets their own terms, but most deals are available year-round with no blackout dates.' },
+                                        { q: 'Do I need to print coupons?', a: 'No. Most discounts are applied digitally at checkout, online or via the app. Some in-store offers may require showing your phone.' },
+                                        { q: 'Is there a limit to how many times I can use a discount?', a: 'No. Use your favorite discounts as often as you like throughout the year.' },
+                                        { q: 'Is Purchase Power available through my employer or organization?', a: 'Yes. Purchase Power is available to groups/employers with 3+ members/employees. Contact us to learn more about group enrollment options.' }
+                                    ]
+                                }
+                            },
+                            {
+                                id: 'purchase-cta',
+                                type: 'bottom_cta',
+                                enabled: true,
+                                order: 7,
+                                content: {
+                                    headline: 'Ready To <span class="text-brand-primary">Join</span> The Smart Shoppers?',
+                                    button_text: 'Get Purchase Power',
+                                    button_link: 'https://buy.stripe.com/6oU9AM2kidt5dm43hKcIE06',
+                                    badges: [
+                                        { icon: 'fas fa-check-circle', text: '30-Day Money-Back Guarantee' },
+                                        { icon: 'fas fa-check-circle', text: 'No Long-Term Contract' },
+                                        { icon: 'fas fa-check-circle', text: 'Providing service since 2011' },
+                                        { icon: 'fas fa-check-circle', text: 'Instant access to Deals' }
+                                    ]
+                                }
+                            },
+                            {
+                                id: 'purchase-disclaimer',
+                                type: 'disclaimer_section',
+                                enabled: true,
+                                order: 8,
+                                content: {
+                                    headline: 'Disclaimer',
+                                    body: '<p>Purchase Power is a discount shopping program, not insurance. Savings and cash back offers vary by merchant, location, and time. The range of discounts will depend on the retailer, product, and service selected. Purchase Power does not make payments directly to merchants. Users are responsible for all purchase costs but will receive discounts from participating retailers who have contracted with the program.</p><p>Merchant participation, available offers, and discount amounts are subject to change without notice. Specific savings amounts cannot be guaranteed and will vary based on individual shopping habits and merchant availability in your area. Cash back offers are subject to merchant-specific terms and conditions and may require additional steps to claim.</p><p>You have the right to cancel within the first 30 days and receive a full refund, less a nominal processing fee. For customer service or to verify participating merchants, call (855) PYF-CLUB or visit our website.</p><p>Purchase Power is administered by Benefits Hub, LLC. The program and its administrators have no liability for the quality of goods or services provided by participating merchants. All merchant transactions are between the user and the merchant.</p>'
+                                }
+                            }
+                        ]
+                    };
+                },
+
+                createFaqItem(item = {}) {
+                    return {
+                        q: item.q || '',
+                        a: item.a || ''
+                    };
+                },
+
+                createStepCard(card = {}) {
+                    return {
+                        icon: card.icon || 'fas fa-star',
+                        title: card.title || '',
+                        desc: card.desc || '',
+                        accent: Boolean(card.accent)
+                    };
+                },
+
+                createCategoryCard(card = {}) {
+                    return {
+                        icon: card.icon || 'fas fa-tag',
+                        title: card.title || '',
+                        desc: card.desc || ''
+                    };
+                },
+
+                createPopularCard(card = {}) {
+                    return {
+                        image: card.image || '',
+                        icon: card.icon || 'fas fa-star',
+                        title: card.title || '',
+                        desc: card.desc || ''
+                    };
+                },
+
+                createBadge(badge = {}) {
+                    if (typeof badge === 'string') {
+                        return { icon: 'fas fa-check-circle', text: badge };
+                    }
+
+                    return {
+                        icon: badge.icon || 'fas fa-check-circle',
+                        text: badge.text || ''
+                    };
+                },
+
+                normalizeSection(section = {}, fallback = {}, index = 0) {
+                    return {
+                        id: section.id || fallback.id || `purchase-section-${index + 1}`,
+                        type: section.type || fallback.type || `section-${index + 1}`,
+                        enabled: typeof section.enabled === 'boolean' ? section.enabled : (typeof fallback.enabled === 'boolean' ? fallback.enabled : true),
+                        order: Number(section.order ?? fallback.order ?? index + 1),
+                        content: JSON.parse(JSON.stringify(section.content || fallback.content || {}))
+                    };
+                },
+
+                hydratePageData(content = {}) {
+                    const defaults = this.getDefaultPageData();
+                    const defaultSections = defaults.sections || [];
+                    const incomingSections = Array.isArray(content.sections) ? content.sections : [];
+                    const sections = incomingSections.length
+                        ? incomingSections.map((section, index) => {
+                            const fallback = defaultSections.find((item) => item.type === section.type) || {};
+                            const normalized = this.normalizeSection(section, fallback, index);
+                            const sectionContent = normalized.content || {};
+
+                            if (normalized.type === 'steps') {
+                                sectionContent.cards = Array.isArray(sectionContent.cards)
+                                    ? sectionContent.cards.map((card) => this.createStepCard(card))
+                                    : [];
+                            } else if (normalized.type === 'savings_categories') {
+                                sectionContent.cards = Array.isArray(sectionContent.cards)
+                                    ? sectionContent.cards.map((card) => this.createCategoryCard(card))
+                                    : [];
+                            } else if (normalized.type === 'popular_savings') {
+                                sectionContent.cards = Array.isArray(sectionContent.cards)
+                                    ? sectionContent.cards.map((card) => this.createPopularCard(card))
+                                    : [];
+                            } else if (normalized.type === 'faq') {
+                                sectionContent.questions = Array.isArray(sectionContent.questions)
+                                    ? sectionContent.questions.map((item) => this.createFaqItem(item))
+                                    : [];
+                            } else if (normalized.type === 'bottom_cta') {
+                                sectionContent.badges = Array.isArray(sectionContent.badges)
+                                    ? sectionContent.badges.map((badge) => this.createBadge(badge))
+                                    : [];
+                            } else if (normalized.type === 'hero') {
+                                sectionContent.buttons = Array.isArray(sectionContent.buttons)
+                                    ? sectionContent.buttons.map((button) => ({ text: button.text || '', link: button.link || '' }))
+                                    : [];
+                            }
+
+                            normalized.content = sectionContent;
+                            return normalized;
+                        })
+                        : defaultSections.map((section, index) => this.normalizeSection(section, section, index));
+
+                    return { sections };
+                },
+
+                hasSection(type) {
+                    return (this.pageData.sections || []).some((section) => section.type === type && section.enabled !== false);
+                },
+
+                getSection(type) {
+                    return (this.pageData.sections || []).find((section) => section.type === type) || null;
+                },
+
+                getSectionContent(type) {
+                    return this.getSection(type)?.content || {};
+                },
+
+                toggleFaq(index) {
+                    this.openFaqs[index] = !this.openFaqs[index];
+                },
+
+                syncSectionLayout() {
+                    const root = document.querySelector('[data-purchase-sections-root]');
+                    if (!root) return;
+
+                    const nodesByType = new Map(
+                        Array.from(root.querySelectorAll('[data-purchase-section]')).map((node) => [node.dataset.purchaseSection, node])
+                    );
+
+                    (this.pageData.sections || [])
+                        .sort((a, b) => a.order - b.order)
+                        .forEach((section) => {
+                            const node = nodesByType.get(section.type);
+                            if (node) root.appendChild(node);
+                        });
+                },
+
+                async init() {
+                    const mode = new URLSearchParams(window.location.search).get('mode');
+                    this.pageData = this.hydratePageData(this.getDefaultPageData());
+                    this.isContentReady = true;
+
+                    try {
+                        const { data, error } = await supabase
+                            .from('site_content')
+                            .select('*')
+                            .eq('page_id', 'purchase-power')
+                            .single();
+
+                        if (error || !data) {
+                            console.error('Purchase Power CMS load failed', error);
+                            await this.$nextTick();
+                            this.syncSectionLayout();
+                            return;
+                        }
+
+                        const content = mode === 'preview'
+                            ? data.draft_content
+                            : (data.published_content ?? data.live_content);
+
+                        if (!content) {
+                            console.error('Purchase Power CMS content missing for mode', mode);
+                            await this.$nextTick();
+                            this.syncSectionLayout();
+                            return;
+                        }
+
+                        this.pageData = JSON.parse(JSON.stringify(content));
+                        this.pageData = this.hydratePageData(this.pageData);
+
+                        console.log('Purchase page_id:', 'purchase-power');
+                        console.log('Fetched:', data);
+                        console.log('Final pageData:', this.pageData);
+
+                        await this.$nextTick();
+                        this.syncSectionLayout();
+                        this.isContentReady = true;
+                    } catch (error) {
+                        console.error('Purchase Power CMS load failed', error);
+                        await this.$nextTick();
+                        this.syncSectionLayout();
+                    }
+                }
+            }));
+        });
+
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        let lastScrollTop = 0;
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (header) {
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    header.classList.add('header-hidden');
+                } else {
+                    header.classList.remove('header-hidden');
+                }
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (!backToTopBtn) return;
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
+            } else {
+                backToTopBtn.classList.add('translate-y-20', 'opacity-0');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+    <script src="js/site-nav.js"></script>
+    <script src="js/site-footer.js"></script>
+</body>
+</html>

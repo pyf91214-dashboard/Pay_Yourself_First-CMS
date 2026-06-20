@@ -1,0 +1,657 @@
+{
+    "value":  [
+                  {
+                      "live_content":  {
+                                           "faq":  {
+                                                       "headline":  "Common \u003cspan class=\"text-brand-primary\"\u003eQuestions\u003c/span\u003e",
+                                                       "questions":  [
+                                                                         {
+                                                                             "a":  "Yes. Many services apply whether or not you operate a business. However, certain tax benefits require legitimate business activity. You should consult a tax professional for guidance specific to your situation.",
+                                                                             "q":  "Can I use Business Support Package without starting a business?"
+                                                                         },
+                                                                         {
+                                                                             "a":  "No. You may purchase Business Support Package standalone with no affiliate enrollment.",
+                                                                             "q":  "Do I need to enroll as an affiliate?"
+                                                                         },
+                                                                         {
+                                                                             "a":  "No. Affiliate enrollment is optional. If you choose to enroll, it is provided at no additional cost.",
+                                                                             "q":  "Does enrolling as an affiliate cost anything?"
+                                                                         },
+                                                                         {
+                                                                             "a":  "Affiliates may receive referral fees when others purchase PYF products through their referral. Referral fee details are described in the affiliate materials you receive after enrollment.",
+                                                                             "q":  "What do affiliates earn?"
+                                                                         },
+                                                                         {
+                                                                             "a":  "No. Referral fees depend solely on your personal activity and results vary.",
+                                                                             "q":  "Are earnings guaranteed?"
+                                                                         },
+                                                                         {
+                                                                             "a":  "No. Business Support Package is a service product. Affiliate enrollment is optional and provided for customers who choose to share PYF services.",
+                                                                             "q":  "Is Business Support Package a business opportunity?"
+                                                                         },
+                                                                         {
+                                                                             "a":  "Both have access to the same affiliate program and can receive the same referral fees. However, Business Support Package members who are also affiliates have access to professional tax support, legal services, business training, and a discount platform—tools that help them build an affiliate business more effectively.",
+                                                                             "q":  "What\u0027s the difference between a standalone Affiliate and an IPP member who enrolls as an affiliate?"
+                                                                         }
+                                                                     ]
+                                                   },
+                                           "hero":  {
+                                                        "desc":  "Join those who\u0027ve discovered how to access legitimate tax deductions and expert professional support to improve their financial life without quitting their day job.",
+                                                        "image":  "Business-Support-Page/IPP_Hero.jpg",
+                                                        "buttons":  [
+                                                                        {
+                                                                            "link":  "https://buy.stripe.com/8x2aEQe300Gjgyg19CcIE03",
+                                                                            "text":  "Get Business Support Package",
+                                                                            "style":  "primary"
+                                                                        },
+                                                                        {
+                                                                            "link":  "#",
+                                                                            "text":  "Watch This Video",
+                                                                            "style":  "secondary"
+                                                                        }
+                                                                    ],
+                                                        "headline":  "Increase Your Cash Flow. \u003cbr\u003e Improve Your Quality of Life. \u003cbr\u003e Gain Your Freedom.",
+                                                        "btn1_link":  "https://buy.stripe.com/8x2aEQe300Gjgyg19CcIE03",
+                                                        "btn1_text":  "Get Business Support Package",
+                                                        "btn2_link":  "#",
+                                                        "btn2_text":  "Watch This Video"
+                                                    },
+                                           "intro":  {
+                                                         "list":  [
+                                                                      "Are taxes taking too much of your income?",
+                                                                      "Are rising prices creating stress and financial pressure?",
+                                                                      "Are stagnant wages making it hard to get ahead?"
+                                                                  ],
+                                                         "desc1":  "Business owners have access to over 400 tax deductions that W-2 employees rarely use. Not because the system is unfair—but because most people simply don\u0027t know these deductions exist, whether they qualify, or how to document them properly.",
+                                                         "desc2":  "The tax code rewards business activity. When you understand how the rules work, you can legally reduce your tax burden and bring more money back into your household.",
+                                                         "image":  "Business-Support-Page/IPP_70,000 Pages.jpg",
+                                                         "button":  {
+                                                                        "link":  "https://buy.stripe.com/8x2aEQe300Gjgyg19CcIE03",
+                                                                        "text":  "Get Business Support Package",
+                                                                        "style":  "primary"
+                                                                    },
+                                                         "btn_link":  "https://buy.stripe.com/8x2aEQe300Gjgyg19CcIE03",
+                                                         "btn_text":  "Get Business Support Package",
+                                                         "headline":  "Most People Don\u0027t Understand Enough About Business Tax Deductions. Even those who own businesses. Why would they? The United States tax code is over 70,000 pages long!",
+                                                         "did_you_know":  "Did you know? \u003cspan class=\"text-gray-700 font-medium\"\u003eW-2 employees can take advantage of these deductions as well.\u003c/span\u003e",
+                                                         "list_headline":  "If any of these sound familiar, you\u0027re not alone."
+                                                     },
+                                           "features":  {
+                                                            "list":  [
+                                                                         "Access to 400+ legitimate tax deductions (where applicable)",
+                                                                         "Expert and professional guidance from licensed tax and legal professionals",
+                                                                         "Professional CPA support included",
+                                                                         "Millions of products and services at discounted prices",
+                                                                         "Build monthly recurring referral income (As a PYF Affiliate)",
+                                                                         "Education and tools to help you organize and manage your financial life"
+                                                                     ],
+                                                            "cards":  [
+                                                                          {
+                                                                              "desc":  "",
+                                                                              "icon":  "fa-receipt",
+                                                                              "title":  "Access to 400+ legitimate tax deductions (where applicable)"
+                                                                          },
+                                                                          {
+                                                                              "desc":  "",
+                                                                              "icon":  "fa-calculator",
+                                                                              "title":  "Expert and professional guidance from licensed tax and legal professionals"
+                                                                          },
+                                                                          {
+                                                                              "desc":  "",
+                                                                              "icon":  "fa-gavel",
+                                                                              "title":  "Professional CPA support included"
+                                                                          },
+                                                                          {
+                                                                              "desc":  "",
+                                                                              "icon":  "fa-briefcase",
+                                                                              "title":  "Millions of products and services at discounted prices"
+                                                                          },
+                                                                          {
+                                                                              "desc":  "",
+                                                                              "icon":  "fa-percent",
+                                                                              "title":  "Build monthly recurring referral income (As a PYF Affiliate)"
+                                                                          },
+                                                                          {
+                                                                              "desc":  "",
+                                                                              "icon":  "fa-network-wired",
+                                                                              "title":  "Education and tools to help you organize and manage your financial life"
+                                                                          }
+                                                                      ],
+                                                            "image":  "Business-Support-Page/IPP_Income Power Pro_2.jpg",
+                                                            "headline":  ""
+                                                        },
+                                           "sections":  [
+                                                            {
+                                                                "id":  "business-hero",
+                                                                "desc":  "Join those who\u0027ve discovered how to access legitimate tax deductions and expert professional support to improve their financial life without quitting their day job.",
+                                                                "type":  "hero",
+                                                                "image":  "Business-Support-Page/IPP_Hero.jpg",
+                                                                "label":  "Hero Banner",
+                                                                "buttons":  [
+                                                                                {
+                                                                                    "link":  "https://buy.stripe.com/8x2aEQe300Gjgyg19CcIE03",
+                                                                                    "text":  "Get Business Support Package",
+                                                                                    "style":  "primary"
+                                                                                },
+                                                                                {
+                                                                                    "link":  "#",
+                                                                                    "text":  "Watch This Video",
+                                                                                    "style":  "secondary"
+                                                                                }
+                                                                            ],
+                                                                "headline":  "Increase Your Cash Flow. \u003cbr\u003e Improve Your Quality of Life. \u003cbr\u003e Gain Your Freedom."
+                                                            },
+                                                            {
+                                                                "id":  "business-intro",
+                                                                "list":  [
+                                                                             "Are taxes taking too much of your income?",
+                                                                             "Are rising prices creating stress and financial pressure?",
+                                                                             "Are stagnant wages making it hard to get ahead?"
+                                                                         ],
+                                                                "type":  "intro",
+                                                                "desc1":  "Business owners have access to over 400 tax deductions that W-2 employees rarely use. Not because the system is unfair—but because most people simply don\u0027t know these deductions exist, whether they qualify, or how to document them properly.",
+                                                                "desc2":  "The tax code rewards business activity. When you understand how the rules work, you can legally reduce your tax burden and bring more money back into your household.",
+                                                                "image":  "Business-Support-Page/IPP_70,000 Pages.jpg",
+                                                                "label":  "Intro",
+                                                                "button":  {
+                                                                               "link":  "https://buy.stripe.com/8x2aEQe300Gjgyg19CcIE03",
+                                                                               "text":  "Get Business Support Package",
+                                                                               "style":  "primary"
+                                                                           },
+                                                                "headline":  "Most People Don\u0027t Understand Enough About Business Tax Deductions. Even those who own businesses. Why would they? The United States tax code is over 70,000 pages long!",
+                                                                "did_you_know":  "Did you know? \u003cspan class=\"text-gray-700 font-medium\"\u003eW-2 employees can take advantage of these deductions as well.\u003c/span\u003e",
+                                                                "list_headline":  "If any of these sound familiar, you\u0027re not alone."
+                                                            },
+                                                            {
+                                                                "id":  "business-features",
+                                                                "type":  "features",
+                                                                "cards":  [
+                                                                              {
+                                                                                  "desc":  "",
+                                                                                  "icon":  "fa-receipt",
+                                                                                  "title":  "Access to 400+ legitimate tax deductions (where applicable)"
+                                                                              },
+                                                                              {
+                                                                                  "desc":  "",
+                                                                                  "icon":  "fa-calculator",
+                                                                                  "title":  "Expert and professional guidance from licensed tax and legal professionals"
+                                                                              },
+                                                                              {
+                                                                                  "desc":  "",
+                                                                                  "icon":  "fa-gavel",
+                                                                                  "title":  "Professional CPA support included"
+                                                                              },
+                                                                              {
+                                                                                  "desc":  "",
+                                                                                  "icon":  "fa-briefcase",
+                                                                                  "title":  "Millions of products and services at discounted prices"
+                                                                              },
+                                                                              {
+                                                                                  "desc":  "",
+                                                                                  "icon":  "fa-percent",
+                                                                                  "title":  "Build monthly recurring referral income (As a PYF Affiliate)"
+                                                                              },
+                                                                              {
+                                                                                  "desc":  "",
+                                                                                  "icon":  "fa-network-wired",
+                                                                                  "title":  "Education and tools to help you organize and manage your financial life"
+                                                                              }
+                                                                          ],
+                                                                "image":  "Business-Support-Page/IPP_Income Power Pro_2.jpg",
+                                                                "label":  "Features",
+                                                                "headline":  ""
+                                                            },
+                                                            {
+                                                                "id":  "business-advantages",
+                                                                "type":  "advantages",
+                                                                "cards":  [
+                                                                              {
+                                                                                  "desc":  "Put more money back into your pocket with professional guidance.",
+                                                                                  "list":  [
+                                                                                               "Learn which deductions apply",
+                                                                                               "Reduce taxable income legally",
+                                                                                               "Receive guidance on proper documentation",
+                                                                                               "Adjust W-2 withholdings when appropriate"
+                                                                                           ],
+                                                                                  "image":  "Business-Support-Page/IPP_Core Advantages_Tax Support.jpg",
+                                                                                  "title":  "Tax Support You Can Use Right Away",
+                                                                                  "footer":  "*Tax savings vary based on individual circumstances."
+                                                                              },
+                                                                              {
+                                                                                  "desc":  "",
+                                                                                  "list":  [
+                                                                                               "Financial Planning For Entrepreneurs",
+                                                                                               "Discounted Business Support Services",
+                                                                                               "Multi-Millionaire Business Success Coach",
+                                                                                               "Access to wealth-building strategies"
+                                                                                           ],
+                                                                                  "image":  "Business-Support-Page/IPP_Core Advantages_Business Education.jpg",
+                                                                                  "title":  "Business Education \u0026 Financial Literacy",
+                                                                                  "footer":  ""
+                                                                              },
+                                                                              {
+                                                                                  "desc":  "What\u0027s Included with Business Support Package:",
+                                                                                  "list":  [
+                                                                                               "Expert Business Guidance",
+                                                                                               "Expert Tax Support",
+                                                                                               "Personal Legal Support",
+                                                                                               "Business Legal Support",
+                                                                                               "Home Based/Small Business Education"
+                                                                                           ],
+                                                                                  "image":  "Business-Support-Page/IPP_Core Advantages_PYF Support System.jpg",
+                                                                                  "title":  "PYF SUPPORT SYSTEM",
+                                                                                  "footer":  ""
+                                                                              }
+                                                                          ],
+                                                                "label":  "Advantages",
+                                                                "headline":  "Core \u003cspan class=\"text-brand-primary\"\u003eAdvantages\u003c/span\u003e"
+                                                            },
+                                                            {
+                                                                "id":  "business-ideal",
+                                                                "desc":  "Business Support Package is available to anyone and is especially beneficial to business owners or those who are considering operating a business. IPP gives you the expert tax, legal, and business support you need to reduce your taxes to the legal minimum, and improve your financial position.",
+                                                                "list":  [
+                                                                             "Individuals who want expert tax and financial support",
+                                                                             "People who want to stop overpaying taxes",
+                                                                             "Business owners who want guidance on deductions",
+                                                                             "Business owners who want expert tax, legal, and business support"
+                                                                         ],
+                                                                "type":  "ideal_for",
+                                                                "image":  "Business-Support-Page/IPP_Income Power Pro_1.jpg",
+                                                                "label":  "Ideal For",
+                                                                "headline":  "Business \u003cspan class=\"text-brand-primary\"\u003eSupport\u003c/span\u003e Package",
+                                                                "list_headline":  "Business Support Package is ideal for:"
+                                                            },
+                                                            {
+                                                                "id":  "business-value",
+                                                                "type":  "value_section",
+                                                                "label":  "Value Section",
+                                                                "table":  [
+                                                                              {
+                                                                                  "market":  "$250 – $833",
+                                                                                  "service":  "Tax Savings (Typical Range)",
+                                                                                  "included":  "Savings Potential*"
+                                                                              },
+                                                                              {
+                                                                                  "market":  "$50 – $208",
+                                                                                  "service":  "Consumer Discount Savings",
+                                                                                  "included":  "Included Savings Potential*"
+                                                                              },
+                                                                              {
+                                                                                  "market":  "$1,500 – $4,500",
+                                                                                  "service":  "Business Training \u0026 Coaching",
+                                                                                  "included":  "Included"
+                                                                              },
+                                                                              {
+                                                                                  "market":  "$239",
+                                                                                  "service":  "CPA Support",
+                                                                                  "included":  "Included"
+                                                                              },
+                                                                              {
+                                                                                  "market":  "$169",
+                                                                                  "service":  "Business Legal Services",
+                                                                                  "included":  "Included"
+                                                                              },
+                                                                              {
+                                                                                  "market":  "$50",
+                                                                                  "service":  "Discount Platform Access",
+                                                                                  "included":  "Included"
+                                                                              },
+                                                                              {
+                                                                                  "market":  "$100 – $300",
+                                                                                  "service":  "Community Access",
+                                                                                  "included":  "Included"
+                                                                              }
+                                                                          ],
+                                                                "headline":  "Business Support\u003cspan class=\"text-brand-primary\"\u003ePackage Value\u003c/span\u003e",
+                                                                "disclaimer":  "*Savings vary based on individual spending habits, use of the platform, and legitimate qualification for deductible expenses.",
+                                                                "investment":  "Your Investment: $150 per month",
+                                                                "bottom_line":  "Bottom line: You\u0027re accessing over $6,000 per month in combined market value and potential savings for $150/month—a powerful value proposition backed by professional support.",
+                                                                "price_title":  "Your Investment: $150/Month\u003cbr\u003e\u003cspan class=\"text-xs md:text-sm font-bold text-gray-600\"\u003e(Tax-Deductible For Business Owners)\u003c/span\u003e",
+                                                                "total_value":  "Total Monthly Market Value + Savings: $2,358–$6,299 per month"
+                                                            },
+                                                            {
+                                                                "id":  "business-testimonials",
+                                                                "desc":  "Since 2011 Pay Yourself First has helped W-2 employees, independent contractors, and entrepreneurs legally reduce tax liability and build compliant home-based businesses. Our affiliates range from teachers and government employees to corporate professionals — all learning to leverage the tax code the way business owners do.",
+                                                                "type":  "testimonials",
+                                                                "label":  "Testimonials",
+                                                                "headline":  "Testimonials",
+                                                                "video_url":  "https://www.youtube.com/watch?v=tw-MUhF0-g0"
+                                                            },
+                                                            {
+                                                                "id":  "business-investment",
+                                                                "desc":  "",
+                                                                "list":  [
+                                                                             "Tax guidance",
+                                                                             "Legal support",
+                                                                             "Business training",
+                                                                             "Consumer discount platform",
+                                                                             "Entrepreneurship resources",
+                                                                             "Community support",
+                                                                             "Optional affiliate enrollment at no additional cost"
+                                                                         ],
+                                                                "type":  "investment_card",
+                                                                "image":  "Business-Support-Page/IPP_Value.jpg",
+                                                                "label":  "Affiliate / Investment",
+                                                                "button":  {
+                                                                               "link":  "https://buy.stripe.com/8x2aEQe300Gjgyg19CcIE03",
+                                                                               "text":  "Get Business Support Package",
+                                                                               "style":  "primary"
+                                                                           },
+                                                                "headline":  "Value",
+                                                                "guarantee":  "Protected by our 30-Day Money-Back Guarantee",
+                                                                "image_caption":  "That’s $5 per day to unlock $3,000-$10,000 annually in potential tax savings.",
+                                                                "includes_title":  "Includes:"
+                                                            },
+                                                            {
+                                                                "id":  "business-faq",
+                                                                "type":  "faq",
+                                                                "label":  "FAQ",
+                                                                "headline":  "Common \u003cspan class=\"text-brand-primary\"\u003eQuestions\u003c/span\u003e",
+                                                                "questions":  [
+                                                                                  {
+                                                                                      "a":  "Yes. Many services apply whether or not you operate a business. However, certain tax benefits require legitimate business activity. You should consult a tax professional for guidance specific to your situation.",
+                                                                                      "q":  "Can I use Business Support Package without starting a business?"
+                                                                                  },
+                                                                                  {
+                                                                                      "a":  "No. You may purchase Business Support Package standalone with no affiliate enrollment.",
+                                                                                      "q":  "Do I need to enroll as an affiliate?"
+                                                                                  },
+                                                                                  {
+                                                                                      "a":  "No. Affiliate enrollment is optional. If you choose to enroll, it is provided at no additional cost.",
+                                                                                      "q":  "Does enrolling as an affiliate cost anything?"
+                                                                                  },
+                                                                                  {
+                                                                                      "a":  "Affiliates may receive referral fees when others purchase PYF products through their referral. Referral fee details are described in the affiliate materials you receive after enrollment.",
+                                                                                      "q":  "What do affiliates earn?"
+                                                                                  },
+                                                                                  {
+                                                                                      "a":  "No. Referral fees depend solely on your personal activity and results vary.",
+                                                                                      "q":  "Are earnings guaranteed?"
+                                                                                  },
+                                                                                  {
+                                                                                      "a":  "No. Business Support Package is a service product. Affiliate enrollment is optional and provided for customers who choose to share PYF services.",
+                                                                                      "q":  "Is Business Support Package a business opportunity?"
+                                                                                  },
+                                                                                  {
+                                                                                      "a":  "Both have access to the same affiliate program and can receive the same referral fees. However, Business Support Package members who are also affiliates have access to professional tax support, legal services, business training, and a discount platform—tools that help them build an affiliate business more effectively.",
+                                                                                      "q":  "What\u0027s the difference between a standalone Affiliate and an IPP member who enrolls as an affiliate?"
+                                                                                  }
+                                                                              ]
+                                                            },
+                                                            {
+                                                                "id":  "business-bottom-cta",
+                                                                "desc":  "",
+                                                                "type":  "bottom_cta",
+                                                                "label":  "Bottom CTA",
+                                                                "badges":  [
+                                                                               {
+                                                                                   "icon":  "fa-check-circle",
+                                                                                   "text":  "Tax Guidance Included"
+                                                                               },
+                                                                               {
+                                                                                   "icon":  "fa-check-circle",
+                                                                                   "text":  "Legal Support Access"
+                                                                               },
+                                                                               {
+                                                                                   "icon":  "fa-check-circle",
+                                                                                   "text":  "Business Training Tools"
+                                                                               },
+                                                                               {
+                                                                                   "icon":  "fa-check-circle",
+                                                                                   "text":  "30-Day Money-Back Guarantee"
+                                                                               }
+                                                                           ],
+                                                                "buttons":  [
+                                                                                {
+                                                                                    "link":  "https://backoffice.pyfaffiliates.com/merchants/login.php#login",
+                                                                                    "text":  "BECOME AN AFFILIATE",
+                                                                                    "style":  "primary"
+                                                                                },
+                                                                                {
+                                                                                    "link":  "packages.html",
+                                                                                    "text":  "View Service Packages",
+                                                                                    "style":  "secondary"
+                                                                                }
+                                                                            ],
+                                                                "headline":  "Take Control of Your Taxes. Strengthen Your Finances. Move Forward with Confidence."
+                                                            },
+                                                            {
+                                                                "id":  "business-disclaimer",
+                                                                "type":  "disclaimer_section",
+                                                                "label":  "Disclaimer",
+                                                                "blocks":  [
+                                                                               {
+                                                                                   "text":  "Pay Yourself First (PYF) is the administrator of the Income Power Pro program. PYF does not directly provide tax, legal, financial, or discount services. All services included with Income Power Pro are delivered by independent third-party providers. Access to these services is subject to the terms, conditions, and availability of each provider.",
+                                                                                   "title":  "Service Provider Disclosure"
+                                                                               },
+                                                                               {
+                                                                                   "text":  "Referral fee earnings are not guaranteed and vary based on individual effort and market conditions. Past results do not guarantee future performance.",
+                                                                                   "title":  "Earnings Disclaimer"
+                                                                               }
+                                                                           ],
+                                                                "headline":  "Disclaimer"
+                                                            }
+                                                        ],
+                                           "ideal_for":  {
+                                                             "desc":  "Business Support Package is available to anyone and is especially beneficial to business owners or those who are considering operating a business. IPP gives you the expert tax, legal, and business support you need to reduce your taxes to the legal minimum, and improve your financial position.",
+                                                             "list":  [
+                                                                          "Individuals who want expert tax and financial support",
+                                                                          "People who want to stop overpaying taxes",
+                                                                          "Business owners who want guidance on deductions",
+                                                                          "Business owners who want expert tax, legal, and business support"
+                                                                      ],
+                                                             "image":  "Business-Support-Page/IPP_Income Power Pro_1.jpg",
+                                                             "headline":  "Business \u003cspan class=\"text-brand-primary\"\u003eSupport\u003c/span\u003e Package",
+                                                             "list_headline":  "Business Support Package is ideal for:"
+                                                         },
+                                           "advantages":  {
+                                                              "card1":  {
+                                                                            "desc":  "Put more money back into your pocket with professional guidance.",
+                                                                            "list":  [
+                                                                                         "Learn which deductions apply",
+                                                                                         "Reduce taxable income legally",
+                                                                                         "Receive guidance on proper documentation",
+                                                                                         "Adjust W-2 withholdings when appropriate"
+                                                                                     ],
+                                                                            "image":  "Business-Support-Page/IPP_Core Advantages_Tax Support.jpg",
+                                                                            "title":  "Tax Support You Can Use Right Away",
+                                                                            "footer":  "*Tax savings vary based on individual circumstances."
+                                                                        },
+                                                              "card2":  {
+                                                                            "desc":  "",
+                                                                            "list":  [
+                                                                                         "Financial Planning For Entrepreneurs",
+                                                                                         "Discounted Business Support Services",
+                                                                                         "Multi-Millionaire Business Success Coach",
+                                                                                         "Access to wealth-building strategies"
+                                                                                     ],
+                                                                            "image":  "Business-Support-Page/IPP_Core Advantages_Business Education.jpg",
+                                                                            "title":  "Business Education \u0026 Financial Literacy",
+                                                                            "footer":  ""
+                                                                        },
+                                                              "card3":  {
+                                                                            "desc":  "What\u0027s Included with Business Support Package:",
+                                                                            "list":  [
+                                                                                         "Expert Business Guidance",
+                                                                                         "Expert Tax Support",
+                                                                                         "Personal Legal Support",
+                                                                                         "Business Legal Support",
+                                                                                         "Home Based/Small Business Education"
+                                                                                     ],
+                                                                            "image":  "Business-Support-Page/IPP_Core Advantages_PYF Support System.jpg",
+                                                                            "title":  "PYF SUPPORT SYSTEM",
+                                                                            "footer":  ""
+                                                                        },
+                                                              "cards":  [
+                                                                            {
+                                                                                "desc":  "Put more money back into your pocket with professional guidance.",
+                                                                                "list":  [
+                                                                                             "Learn which deductions apply",
+                                                                                             "Reduce taxable income legally",
+                                                                                             "Receive guidance on proper documentation",
+                                                                                             "Adjust W-2 withholdings when appropriate"
+                                                                                         ],
+                                                                                "image":  "Business-Support-Page/IPP_Core Advantages_Tax Support.jpg",
+                                                                                "title":  "Tax Support You Can Use Right Away",
+                                                                                "footer":  "*Tax savings vary based on individual circumstances."
+                                                                            },
+                                                                            {
+                                                                                "desc":  "",
+                                                                                "list":  [
+                                                                                             "Financial Planning For Entrepreneurs",
+                                                                                             "Discounted Business Support Services",
+                                                                                             "Multi-Millionaire Business Success Coach",
+                                                                                             "Access to wealth-building strategies"
+                                                                                         ],
+                                                                                "image":  "Business-Support-Page/IPP_Core Advantages_Business Education.jpg",
+                                                                                "title":  "Business Education \u0026 Financial Literacy",
+                                                                                "footer":  ""
+                                                                            },
+                                                                            {
+                                                                                "desc":  "What\u0027s Included with Business Support Package:",
+                                                                                "list":  [
+                                                                                             "Expert Business Guidance",
+                                                                                             "Expert Tax Support",
+                                                                                             "Personal Legal Support",
+                                                                                             "Business Legal Support",
+                                                                                             "Home Based/Small Business Education"
+                                                                                         ],
+                                                                                "image":  "Business-Support-Page/IPP_Core Advantages_PYF Support System.jpg",
+                                                                                "title":  "PYF SUPPORT SYSTEM",
+                                                                                "footer":  ""
+                                                                            }
+                                                                        ],
+                                                              "headline":  "Core \u003cspan class=\"text-brand-primary\"\u003eAdvantages\u003c/span\u003e"
+                                                          },
+                                           "bottom_cta":  {
+                                                              "desc":  "",
+                                                              "badges":  [
+                                                                             {
+                                                                                 "icon":  "fa-check-circle",
+                                                                                 "text":  "Tax Guidance Included"
+                                                                             },
+                                                                             {
+                                                                                 "icon":  "fa-check-circle",
+                                                                                 "text":  "Legal Support Access"
+                                                                             },
+                                                                             {
+                                                                                 "icon":  "fa-check-circle",
+                                                                                 "text":  "Business Training Tools"
+                                                                             },
+                                                                             {
+                                                                                 "icon":  "fa-check-circle",
+                                                                                 "text":  "30-Day Money-Back Guarantee"
+                                                                             }
+                                                                         ],
+                                                              "buttons":  [
+                                                                              {
+                                                                                  "link":  "https://backoffice.pyfaffiliates.com/merchants/login.php#login",
+                                                                                  "text":  "BECOME AN AFFILIATE",
+                                                                                  "style":  "primary"
+                                                                              },
+                                                                              {
+                                                                                  "link":  "packages.html",
+                                                                                  "text":  "View Service Packages",
+                                                                                  "style":  "secondary"
+                                                                              }
+                                                                          ],
+                                                              "headline":  "Take Control of Your Taxes. Strengthen Your Finances. Move Forward with Confidence.",
+                                                              "btn1_link":  "https://backoffice.pyfaffiliates.com/merchants/login.php#login",
+                                                              "btn1_text":  "BECOME AN AFFILIATE",
+                                                              "btn2_link":  "packages.html",
+                                                              "btn2_text":  "View Service Packages"
+                                                          },
+                                           "testimonials":  {
+                                                                "desc":  "Since 2011 Pay Yourself First has helped W-2 employees, independent contractors, and entrepreneurs legally reduce tax liability and build compliant home-based businesses. Our affiliates range from teachers and government employees to corporate professionals — all learning to leverage the tax code the way business owners do.",
+                                                                "headline":  "Testimonials",
+                                                                "video_url":  "https://www.youtube.com/watch?v=tw-MUhF0-g0"
+                                                            },
+                                           "value_section":  {
+                                                                 "image":  "Business-Support-Page/IPP_Income Power Pro Value.jpg",
+                                                                 "table":  [
+                                                                               {
+                                                                                   "market":  "$250 – $833",
+                                                                                   "service":  "Tax Savings (Typical Range)",
+                                                                                   "included":  "Savings Potential*"
+                                                                               },
+                                                                               {
+                                                                                   "market":  "$50 – $208",
+                                                                                   "service":  "Consumer Discount Savings",
+                                                                                   "included":  "Included Savings Potential*"
+                                                                               },
+                                                                               {
+                                                                                   "market":  "$1,500 – $4,500",
+                                                                                   "service":  "Business Training \u0026 Coaching",
+                                                                                   "included":  "Included"
+                                                                               },
+                                                                               {
+                                                                                   "market":  "$239",
+                                                                                   "service":  "CPA Support",
+                                                                                   "included":  "Included"
+                                                                               },
+                                                                               {
+                                                                                   "market":  "$169",
+                                                                                   "service":  "Business Legal Services",
+                                                                                   "included":  "Included"
+                                                                               },
+                                                                               {
+                                                                                   "market":  "$50",
+                                                                                   "service":  "Discount Platform Access",
+                                                                                   "included":  "Included"
+                                                                               },
+                                                                               {
+                                                                                   "market":  "$100 – $300",
+                                                                                   "service":  "Community Access",
+                                                                                   "included":  "Included"
+                                                                               }
+                                                                           ],
+                                                                 "headline":  "Business Support\u003cspan class=\"text-brand-primary\"\u003ePackage Value\u003c/span\u003e",
+                                                                 "disclaimer":  "*Savings vary based on individual spending habits, use of the platform, and legitimate qualification for deductible expenses.",
+                                                                 "investment":  "Your Investment: $150 per month",
+                                                                 "bottom_line":  "Bottom line: You\u0027re accessing over $6,000 per month in combined market value and potential savings for $150/month—a powerful value proposition backed by professional support.",
+                                                                 "price_title":  "Your Investment: $150/Month\u003cbr\u003e\u003cspan class=\"text-xs md:text-sm font-bold text-gray-600\"\u003e(Tax-Deductible For Business Owners)\u003c/span\u003e",
+                                                                 "total_value":  "Total Monthly Market Value + Savings: $2,358–$6,299 per month"
+                                                             },
+                                           "investment_card":  {
+                                                                   "desc":  "",
+                                                                   "list":  [
+                                                                                "Tax guidance",
+                                                                                "Legal support",
+                                                                                "Business training",
+                                                                                "Consumer discount platform",
+                                                                                "Entrepreneurship resources",
+                                                                                "Community support",
+                                                                                "Optional affiliate enrollment at no additional cost"
+                                                                            ],
+                                                                   "image":  "Business-Support-Page/IPP_Value.jpg",
+                                                                   "button":  {
+                                                                                  "link":  "https://buy.stripe.com/8x2aEQe300Gjgyg19CcIE03",
+                                                                                  "text":  "Get Business Support Package",
+                                                                                  "style":  "primary"
+                                                                              },
+                                                                   "btn_link":  "https://buy.stripe.com/8x2aEQe300Gjgyg19CcIE03",
+                                                                   "btn_text":  "Get Business Support Package",
+                                                                   "headline":  "Value",
+                                                                   "guarantee":  "Protected by our 30-Day Money-Back Guarantee",
+                                                                   "price_title":  "Your Investment: $150/Month\u003cbr\u003e\u003cspan class=\"text-xs md:text-sm font-bold text-gray-600\"\u003e(Tax-Deductible For Business Owners)\u003c/span\u003e",
+                                                                   "image_caption":  "That’s $5 per day to unlock $3,000-$10,000 annually in potential tax savings.",
+                                                                   "includes_title":  "Includes:"
+                                                               },
+                                           "disclaimer_section":  {
+                                                                      "blocks":  [
+                                                                                     {
+                                                                                         "text":  "Pay Yourself First (PYF) is the administrator of the Income Power Pro program. PYF does not directly provide tax, legal, financial, or discount services. All services included with Income Power Pro are delivered by independent third-party providers. Access to these services is subject to the terms, conditions, and availability of each provider.",
+                                                                                         "title":  "Service Provider Disclosure"
+                                                                                     },
+                                                                                     {
+                                                                                         "text":  "Referral fee earnings are not guaranteed and vary based on individual effort and market conditions. Past results do not guarantee future performance.",
+                                                                                         "title":  "Earnings Disclaimer"
+                                                                                     }
+                                                                                 ],
+                                                                      "headline":  "Disclaimer"
+                                                                  }
+                                       }
+                  }
+              ],
+    "Count":  1
+}

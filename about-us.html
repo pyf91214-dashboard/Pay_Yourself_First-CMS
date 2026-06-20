@@ -1,0 +1,1019 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Yourself First</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&amp;display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Roboto Flex", 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-primary': '#389400', 
+                        'brand-dark': '#1c1c1c',
+                        'footer-bg': '#1f2022',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdn.pagesense.io/js/payyourselffirst/c2e5673c7d15457d8a0925080101f545.js"></script>
+
+    <style>
+        /* Custom styles for sticky header transition */
+         .sticky-header { transition: transform 0.3s ease-in-out; }
+        .header-hidden { transform: translateY(-100%); }
+        .cms-image-pending { opacity: 0; }
+        .cms-image-ready { opacity: 1; }
+        
+    </style>
+
+</head>
+
+<body class="bg-white text-gray-800 font-sans antialiased flex flex-col min-h-screen" x-data="siteData" x-cloak="">
+
+   <div id="main-header" class="fixed top-0 left-0 w-full z-50 sticky-header shadow-md">
+        <div class="bg-brand-dark text-white py-6 text-xs font-semibold">
+            <div class="container mx-auto px-4 flex justify-end items-center space-x-6">
+                <a href="https://payyourselffirst.benefithub.com/Welcome" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas fa-dollar-sign"></i></div> DISCOUNT PORTAL
+                </a>
+                <a href="https://backoffice.pyfaffiliates.com/merchants/login.php#login" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <i class="fas fa-user text-brand-primary mr-2"></i> AFFILIATE LOGIN
+                </a>
+            </div>
+        </div>
+        <nav class="bg-white py-4">
+            <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
+                <a href="index.html"><img src="pyf-logo.svg" alt="Pay Yourself First Logo" class="h-12 object-contain"></a>
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl text-brand-dark focus:outline-none"><i class="fas fa-bars"></i></button>
+                <div data-site-nav-desktop class="hidden lg:flex items-center space-x-5 text-xs xl:text-sm font-bold text-gray-700 uppercase"></div>
+            </div>
+            <div id="mobile-menu" data-site-nav-mobile class="hidden lg:hidden text-sm bg-white border-t mt-4 p-4 flex flex-col space-y-4 font-bold text-gray-700 uppercase"></div>
+        </nav>
+    </div>
+
+<div data-about-sections-root>
+
+<header data-about-section="hero" x-cloak x-show="isContentReady && hasSection('hero')" class="container mx-auto px-4 mb-16 mt-48">
+        <div class="relative rounded-[2rem] overflow-hidden h-[500px] md:h-[600px] shadow-2xl group">
+            
+            <img :src="resolvedImages.hero || ''" alt="Team Helping Customers" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-200" :class="loadedImages.hero ? 'cms-image-ready' : 'cms-image-pending'">
+            
+          <div class="absolute inset-0 bg-black/40"></div>
+
+            <div class="relative z-10 h-full flex flex-col justify-center px-4 md:px-20 max-w-7xl">
+                
+                <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-6 uppercase leading-tight drop-shadow-md" x-html="pageData.about_us.hero.headline"></h1>
+                
+                <p class="text-base md:text-xl text-gray-100 mb-10 font-medium leading-relaxed max-w-3xl whitespace-pre-line" x-text="pageData.about_us.hero.desc"></p>
+                
+                <div class="flex flex-col sm:flex-row sm:flex-wrap space-y-4 sm:space-y-0 sm:gap-4">
+                    <template x-for="(button, index) in getHeroButtons()" :key="`about-hero-btn-${index}`">
+                        <a :href="button.link || '#'" target="_blank" :class="getHeroButtonClass(button, index)" x-text="button.text"></a>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+
+        <section data-about-section="who_we_are" x-cloak x-show="isContentReady && hasSection('who_we_are')" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4">
+                
+                <h2 class="text-3xl md:text-4xl font-extrabold text-center text-brand-dark uppercase mb-16" x-html="pageData.about_us.who_we_are.headline"></h2>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    
+                    <div>
+                        <p class="text-gray-700 text-lg mb-6 leading-relaxed" x-html="pageData.about_us.who_we_are.desc1"></p>
+                        <p class="text-gray-700 text-lg mb-8 leading-relaxed" x-text="pageData.about_us.who_we_are.desc2"></p>
+
+                        <ul class="space-y-4 mb-10">
+                            <template x-for="(item, idx) in pageData.about_us.who_we_are.list" :key="idx">
+                                <li class="flex items-start">
+                                    <i class="fas fa-exclamation-triangle text-[#C0392B] text-xl mt-1 mr-4 flex-shrink-0"></i>
+                                    <span class="text-gray-700 font-medium" x-html="item"></span>
+                                </li>
+                            </template>
+                        </ul>
+
+                        <p class="text-gray-700 text-lg leading-relaxed mb-6" x-text="pageData.about_us.who_we_are.desc3"></p>
+                        <p class="text-gray-700 text-lg leading-relaxed" x-text="pageData.about_us.who_we_are.desc4"></p>
+                    </div>
+
+                    <div class="h-full min-h-[400px]">
+                        <img :src="resolvedImages.whoWeAre || ''" alt="Team Smiling" class="rounded-[2rem] shadow-xl w-full h-full object-cover transition-opacity duration-200" :class="loadedImages.whoWeAre ? 'cms-image-ready' : 'cms-image-pending'">
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section data-about-section="origin" x-cloak x-show="isContentReady && hasSection('origin')" class="py-16 md:py-24 bg-gray-50">
+            <div class="container mx-auto px-4">
+                
+                <h2 class="text-3xl md:text-4xl font-extrabold text-center text-brand-dark uppercase mb-16" x-html="pageData.about_us.origin.headline"></h2>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    
+                    <div class="h-full min-h-[400px] order-2 lg:order-1">
+                        <img :src="resolvedImages.origin || ''" alt="PYF Origin Story" class="rounded-[2rem] shadow-xl w-full h-full object-cover transition-opacity duration-200" :class="loadedImages.origin ? 'cms-image-ready' : 'cms-image-pending'">
+                    </div>
+
+                    <div class="order-1 lg:order-2">
+                        <p class="text-gray-700 text-lg mb-8 leading-relaxed" x-text="pageData.about_us.origin.desc1"></p>
+
+                        <ul class="space-y-4 mb-10">
+                            <template x-for="(item, idx) in pageData.about_us.origin.list" :key="idx">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-brand-primary text-xl mt-1 mr-4 flex-shrink-0"></i>
+                                    <span class="text-gray-700 font-medium" x-html="item"></span>
+                                </li>
+                            </template>
+                        </ul>
+
+                        <p class="text-gray-700 text-lg leading-relaxed mb-8" x-text="pageData.about_us.origin.desc2"></p>
+                        
+                        <h3 class="text-2xl font-extrabold text-brand-dark uppercase" x-html="pageData.about_us.origin.headline_bottom"></h3>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section data-about-section="mission" x-cloak x-show="isContentReady && hasSection('mission')" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4">
+                
+                <div class="bg-gray-50 rounded-[2rem] shadow-lg p-8 md:p-12 border border-gray-100 max-w-6xl mx-auto">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        
+                        <div>
+                            <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-6" x-html="pageData.about_us.mission.headline"></h2>
+                            <p class="text-xl text-gray-700 font-medium mb-6" x-text="pageData.about_us.mission.subtitle"></p>
+                            <p class="text-lg md:text-xl text-brand-dark font-bold leading-relaxed" x-text="pageData.about_us.mission.desc"></p>
+                        </div>
+
+                        <div class="h-64 md:h-80">
+                            <img :src="resolvedImages.mission || ''" alt="Our Mission" class="rounded-2xl shadow w-full h-full object-cover transition-opacity duration-200" :class="loadedImages.mission ? 'cms-image-ready' : 'cms-image-pending'">
+                        </div>
+
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+       <section data-about-section="serving" x-cloak x-show="isContentReady && hasSection('serving')" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4">
+                
+                <div class="bg-white rounded-[2rem] shadow-2xl border border-gray-100 p-8 md:p-12 max-w-6xl mx-auto mb-16">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        
+                        <div class="h-full min-h-[300px]">
+                            <img :src="resolvedImages.serving || ''" alt="Family Reviewing Finances" class="rounded-2xl shadow-lg w-full h-full object-cover transition-opacity duration-200" :class="loadedImages.serving ? 'cms-image-ready' : 'cms-image-pending'">
+                        </div>
+
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-extrabold text-brand-dark uppercase mb-10 leading-tight" x-html="pageData.about_us.serving.headline"></h2>
+
+                            <div class="space-y-8">
+                                <template x-for="(stat, idx) in pageData.about_us.serving.stats" :key="idx">
+                                    <div>
+                                        <h3 class="text-2xl font-bold text-brand-dark" x-text="stat.title"></h3>
+                                        <p class="text-gray-600 font-medium" x-text="stat.desc"></p>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="text-center max-w-4xl mx-auto mb-8">
+                    <h3 class="text-xl font-bold text-brand-dark uppercase mb-8">3 Core Principles</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <template x-for="(prin, idx) in pageData.about_us.serving.principles" :key="idx">
+                    <div class="flex items-center space-x-4 bg-white p-4 rounded shadow-sm border border-gray-100">
+                        <div class="h-12 w-12 bg-[#bbf7d0] rounded-full flex items-center justify-center flex-shrink-0">
+                            <i :class="prin.icon" class="text-brand-primary text-xl"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-800 text-lg uppercase" x-text="prin.title"></h4>
+                    </div>
+                </template>
+            </div>
+                </div>
+
+            </div>
+        </section>
+
+            <section data-about-section="system" x-cloak x-show="isContentReady && hasSection('system')" class="max-w-8xl mx-auto px-4 py-16 md:py-24">
+        
+        <!-- Header Section -->
+        <div class="text-center mb-16 space-y-4">
+            <h1 class="text-3xl md:text-5xl font-extrabold uppercase leading-tight" x-html="pageData.about_us.system.headline"></h1>
+            <p class="text-lg text-slate-600 font-medium" x-text="pageData.about_us.system.subtitle"></p>
+        </div>
+        <!-- Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 px-4 md:px-16">
+            <template x-for="(card, index) in getSystemCards()" :key="card.id || index">
+                <div class="group relative h-[500px] w-full overflow-hidden rounded-3xl shadow-xl cursor-pointer">
+                    <!-- Background Image -->
+                    <img :src="resolvedImages.systemCards[index] || ''" :alt="card.title" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:grayscale-[20%]" :class="loadedImages.systemCards[index] ? 'cms-image-ready' : 'cms-image-pending'">
+                    
+                    <div class="absolute inset-0 top-auto h-full bg-gradient-to-t from-[#caddab] via-[#e4f0d0] to-[#e4f0d0] 
+                                transition-transform duration-500 ease-[cubic-bezier(0.33,1,0.68,1)] 
+                                translate-y-[calc(100%-90px)] group-hover:translate-y-0 
+                                p-6 flex flex-col">
+                        
+                        <!-- Header -->
+                        <div class="flex items-center justify-between pb-12 border-b border-green-800/10 mb-4 h-[90px] shrink-0">
+                            <h2 class="text-2xl font-bold text-green-900" x-text="card.title"></h2>
+                            <div class="h-10 w-10 bg-green-900 rounded-full flex items-center justify-center text-white transition-transform duration-500 group-hover:rotate-180">
+                                <i class="fas fa-chevron-up"></i>
+                            </div>
+                        </div>
+
+                        <!-- Revealed Content -->
+                        <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 overflow-y-auto custom-scrollbar">
+                            <p class="text-green-950 mb-4 text-sm font-medium" x-html="card.desc"></p>
+                            
+                            <!-- Dynamic List Layouts -->
+                            <template x-if="index === 0">
+                                <ul :class="getSystemCardListClass(index)">
+                                    <template x-for="(item, i) in card.list" :key="i">
+                                        <li :class="getSystemCardItemClass(index)">
+                                            <i :class="i === 0 ? 'fas fa-graduation-cap' : (i === 1 ? 'fas fa-wrench' : 'fas fa-users')" class="w-5 h-5 mr-3 text-green-700 mt-1"></i>
+                                            <span x-html="item"></span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </template>
+
+                            <template x-if="index === 1">
+                                <ul :class="getSystemCardListClass(index)">
+                                    <template x-for="(item, i) in card.list" :key="i">
+                                        <li :class="getSystemCardItemClass(index)">
+                                            <i class="fas fa-check-circle text-brand-primary w-4 h-4 mr-2 mt-0.5 text-green-700 shrink-0"></i> 
+                                            <span x-html="item"></span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </template>
+
+                            <template x-if="index === 2">
+                                <div :class="getSystemCardListClass(index)">
+                                    <template x-for="(item, i) in card.list" :key="i">
+                                        <div :class="getSystemCardItemClass(index)" x-html="item"></div>
+                                    </template>
+                                </div>
+                            </template>
+                            
+                            <template x-if="card.quote">
+                                <div class="bg-green-900/10 p-3 rounded-lg border-l-4 border-green-800">
+                                    <p class="text-xs text-green-900 font-bold italic" x-text="card.quote"></p>
+                                </div>
+                            </template>
+                            
+                            <template x-if="card.footer">
+                                <p class="text-green-900 font-bold text-center text-sm border-t border-green-800/10 pt-4" x-text="card.footer"></p>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </section>
+
+        <script>
+        lucide.createIcons();
+    </script>
+
+        <section data-about-section="who_we_serve" x-cloak x-show="isContentReady && hasSection('who_we_serve')" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-6xl mx-auto">
+                    
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-4" x-html="pageData.about_us.who_we_serve.headline"></h2>
+                        <p class="text-gray-800 font-bold mb-8" x-text="pageData.about_us.who_we_serve.subtitle"></p>
+
+                        <ul class="space-y-4 mb-8">
+                            <template x-for="(item, idx) in pageData.about_us.who_we_serve.list" :key="idx">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-square text-brand-primary text-xl mt-1 mr-4 flex-shrink-0"></i>
+                                    <span class="text-gray-700 font-medium" x-text="item"></span>
+                                </li>
+                            </template>
+                        </ul>
+
+                        <p class="text-brand-dark font-bold text-lg" x-text="pageData.about_us.who_we_serve.footer"></p>
+                    </div>
+
+                    <div class="h-full min-h-[400px]">
+                        <img :src="resolvedImages.whoWeServe || ''" alt="Who We Serve" class="rounded-[2rem] shadow-xl w-full h-full object-cover transition-opacity duration-200" :class="loadedImages.whoWeServe ? 'cms-image-ready' : 'cms-image-pending'">
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section data-about-section="different" x-cloak x-show="isContentReady && hasSection('different')" class="py-16 md:py-24 bg-gray-50">
+            <div class="container mx-auto px-4 max-w-6xl">
+                
+                <div class="bg-white rounded-[2rem] shadow-xl p-8 md:p-12 mb-12">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="h-full min-h-[300px]">
+                            <img :src="resolvedImages.different || ''" alt="Different Approach" class="rounded-xl w-full h-full object-cover transition-opacity duration-200" :class="loadedImages.different ? 'cms-image-ready' : 'cms-image-pending'">
+                        </div>
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-extrabold text-brand-dark uppercase mb-6" x-html="pageData.about_us.different.headline"></h2>
+                            <ul class="space-y-4">
+                                <template x-for="(item, idx) in pageData.about_us.different.list" :key="idx">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-brand-primary text-xl mt-1 mr-4 flex-shrink-0"></i>
+                                        <span class="text-gray-700 font-medium" x-text="item"></span>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section data-about-section="pledge" x-cloak x-show="isContentReady && hasSection('pledge')" class="py-16 md:py-24 bg-gray-50">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <div class="bg-white rounded-[2rem] shadow-xl p-8 md:p-12">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="order-2 lg:order-1">
+                            <h2 class="text-2xl md:text-3xl font-extrabold text-brand-dark uppercase mb-6" x-html="pageData.about_us.pledge.headline"></h2>
+                            <ul class="space-y-4">
+                                <template x-for="(item, idx) in pageData.about_us.pledge.list" :key="idx">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-double text-brand-primary text-xl mt-1 mr-4 flex-shrink-0"></i>
+                                        <span class="text-gray-700 font-medium text-lg" x-text="item"></span>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                        <div class="order-1 lg:order-2 h-full min-h-[300px]">
+                            <img :src="resolvedImages.pledge || ''" alt="Our Commitment" class="rounded-xl w-full h-full object-cover transition-opacity duration-200" :class="loadedImages.pledge ? 'cms-image-ready' : 'cms-image-pending'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section data-about-section="journey" x-cloak x-show="isContentReady && hasSection('journey')" class="py-20 bg-[#F2FFEB]">
+            <div class="container mx-auto px-4 text-center">
+                
+                <h2 class="text-2xl md:text-4xl font-extrabold text-brand-dark uppercase mb-8" x-text="pageData.about_us.journey.headline"></h2>
+                
+                <p class="text-brand-dark font-bold text-lg md:text-xl mb-12" x-text="pageData.about_us.journey.desc"></p>
+
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6">
+                    <template x-for="(button, index) in getJourneyButtons()" :key="`about-journey-btn-${index}`">
+                        <a :href="button.link || '#'" target="_blank" :class="getJourneyButtonClass(button, index)" x-text="button.text"></a>
+                    </template>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+</div>
+
+
+
+
+
+
+    <div data-pyf-footer-root></div>
+
+
+
+
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Sticky Header Logic
+        let lastScrollTop = 0;
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) { header.classList.add('header-hidden'); } 
+            else { header.classList.remove('header-hidden'); }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+    </script>
+
+    <button id="backToTopBtn" onclick="scrollToTop()" class="fixed bottom-8 right-8 z-50 bg-brand-primary hover:bg-[#2d7a00] text-white w-12 h-12 rounded-full shadow-lg transition-all duration-300 transform translate-y-20 opacity-0 flex items-center justify-center focus:outline-none">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        // Show/Hide logic based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show after scrolling down 300px
+                backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
+            } else {
+                backToTopBtn.classList.add('translate-y-20', 'opacity-0');
+            }
+        });
+
+        // Smooth scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Alpine.js -->
+    <script defer="" src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <script>
+        const supabaseUrl = 'https://nqwggnereuhphwmkqove.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xd2dnbmVyZXVocGh3bWtxb3ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDUxMjAsImV4cCI6MjA5MTM4MTEyMH0.1OM-fLTth5FcMKUPHgepeM3BdJMydHiK1coD0vw0o0M';
+        
+        document.addEventListener('alpine:init', () => {
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            
+            Alpine.data('siteData', () => ({
+                pageData: {
+                    about_us: {
+    "hero": {
+        "headline": "We're Here To Help <span class=\"text-[#bbf7d0]\">Everyday People</span><br>\n                    Take Control Of Their Financial Future",
+        "desc": "Pay Yourself First was created to make financial stability accessible to everyone, not just the wealthy or very high-income earners. Our system gives people access to the tools, guidance, and support to earn more, keep more, and spend less through practical, real-world solutions.",
+        "btn1_text": "How We Help You",
+        "btn1_link": "how-we-help-you.html",
+        "btn2_text": "View Our Packages",
+        "btn2_link": "packages.html",
+        "buttons": [
+            {
+                "text": "How We Help You",
+                "link": "how-we-help-you.html",
+                "style": "primary"
+            },
+            {
+                "text": "View Our Packages",
+                "link": "packages.html",
+                "style": "secondary"
+            }
+        ],
+        "image": "About-us/About Us_Hero.jpg"
+    },
+    "who_we_are": {
+        "headline": "Who <span class=\"text-brand-primary\">We Are</span>",
+        "desc1": "Pay Yourself First (PYF) is a financial empowerment company built on a simple belief: <span class=\"font-bold text-brand-primary\">You deserve a clear, practical way to improve your finances.</span>",
+        "desc2": "As the cost of living rises and financial pressure grows, too many people feel stuck.",
+        "list": [
+            "W-2 workers overpaying taxes without realizing it",
+            "1099 earners facing unstable income",
+            "Families spending more but saving less",
+            "Individuals working hard but falling behind financially."
+        ],
+        "desc3": "PYF was created to solve these problems by giving you access to the tools, education, and professional support they need to gain financial control.",
+        "desc4": "Our company is built around a system. One designed to help people break\nnegative financial cycles, build financial stability, and move forward with clarity\nand confidence.",
+        "image": "About-us/About Us_Who We Are.jpg"
+    },
+    "origin": {
+        "headline": "Our <span class=\"text-brand-primary\">Origin</span>",
+        "desc1": "PYF was built by financial professionals with decades of experience guiding real people\u2014just like you\u2014toward better financial outcomes. Through this work, a consistent pattern emerged:",
+        "list": [
+            "People earned money but struggled to keep it",
+            "Tax rules were confusing and costly",
+            "Financial tools used by the wealthy were out of reach for most",
+            "Independent earners lacked support systems",
+            "Many families headed toward an uncertain financial future"
+        ],
+        "desc2": "The team behind PYF recognized a gap: people needed a system \u2014 not just products, tips, or one-time fixes, but a comprehensive approach that helped them improve their financial lives year after year.",
+        "headline_bottom": "PYF was created to <span class=\"text-brand-primary\">fill that gap.</span>",
+        "image": "About-us/About Us_Our Origin.jpg"
+    },
+    "mission": {
+        "headline": "Our <span class=\"text-brand-primary\">Mission</span>",
+        "subtitle": "Our mission is simple",
+        "desc": "To help everyday people gain control of their finances by giving them access to tools, education, and expert support normally out of reach to them.",
+        "image": "About-us/About Us_Our Mission.jpg"
+    },
+    "serving": {
+        "headline": "Serving Everyday Americans For Over A <span class=\"text-brand-primary\">Decade</span>",
+        "stats": [
+            {
+                "title": "14+ Years",
+                "desc": "In business supporting individuals and families."
+            },
+            {
+                "title": "46 States",
+                "desc": "Nationwide coverage and accessibility."
+            },
+            {
+                "title": "Thousands",
+                "desc": "Of users building better financial futures."
+            }
+        ],
+        "principles": [
+            {
+                "icon": "fas fa-brain",
+                "title": "Taxpayer Awareness"
+            },
+            {
+                "icon": "fas fa-book-reader",
+                "title": "Financial Literacy"
+            },
+            {
+                "icon": "fas fa-city",
+                "title": "Entrepreneurship"
+            }
+        ],
+        "image": "About-us/About Us_Serving Everyday Americans.jpg"
+    },
+    "system": {
+        "headline": "A system, not a personality. <br> <span class=\"text-brand-primary\">PYF is designed </span> to work regardless of who <span class=\"text-brand-primary\">uses </span> it",
+        "subtitle": "Financial control comes from mastering three critical levers:",
+        "cards": [
+            {
+                "id": "1",
+                "title": "1. Earn More",
+                "desc": "PYF offers simple, accessible ways for people to open new income pathways through home-based entrepreneurship \u2014 supported by:",
+                "list": [
+                    "Education",
+                    "Tools",
+                    "Professional Guidance"
+                ],
+                "image": "About-us/About Us_Built For Real Life_Earn More.jpg"
+            },
+            {
+                "id": "2",
+                "title": "2. Keep More",
+                "desc": "Most W-2 earners unknowingly overpay their taxes. PYF connects users with licensed tax professionals who help them:",
+                "list": [
+                    "Adjust withholding correctly",
+                    "Unlock home-based deductions",
+                    "Maximize tax savings",
+                    "Reduce taxes to legal minimum"
+                ],
+                "image": "About-us/About Us_Built For Real Life_Keep More.jpg",
+                "quote": "\"This single category often creates the biggest transformation for everyday Americans.\""
+            },
+            {
+                "id": "3",
+                "title": "3. Spend Less",
+                "desc": "Access to nationwide savings programs that reduce everyday expenses, including:",
+                "list": [
+                    "Shopping",
+                    "Dining",
+                    "Vision",
+                    "Dental",
+                    "Travel",
+                    "Telehealth",
+                    "Auto Care",
+                    "Rx Meds"
+                ],
+                "footer": "Every dollar saved is a dollar that strengthens long-term stability.",
+                "image": "About-us/About Us_Built For Real Life_Spend Less.jpg"
+            }
+        ]
+    },
+    "who_we_serve": {
+        "headline": "Who We <span class=\"text-brand-primary\">Serve</span>",
+        "subtitle": "PYF is built for real people with real financial goals.",
+        "list": [
+            "W-2 workers who want to keep more of what they earn",
+            "1099 earners who need stability and tax guidance",
+            "Home-based entrepreneurs building supplemental income",
+            "Gig workers seeking predictable support",
+            "Families lowering household expenses",
+            "Individuals planning for long-term security"
+        ],
+        "footer": "If financial improvement is your goal, PYF is designed for you.",
+        "image": "About-us/About Us_Who We Serve.jpg"
+    },
+    "different": {
+        "headline": "What Makes <span class=\"text-brand-primary\">PYF Different</span>",
+        "list": [
+            "Professional-grade tax and legal support for everyday people",
+            "Real savings programs that reduce real expenses",
+            "Entrepreneurial tools and education resources that are simple to use",
+            "A system, not a personality. PYF is designed to work regardless of who leads it",
+            "A clear, step-by-step path toward financial clarity for those who want it",
+            "Support year-round, not just during tax season"
+        ],
+        "image": "About-us/About Us_What Makes PYF Different.jpg"
+    },
+    "pledge": {
+        "headline": "Our <span class=\"text-brand-primary\">Pledge To Help You</span>",
+        "list": [
+            "Understand your finances",
+            "Reduce unnecessary expenses",
+            "Legally minimize your tax burden",
+            "Increase your income opportunities",
+            "Gain a clearer path toward long-term stability",
+            "Access professional guidance"
+        ],
+        "image": "About-us/About Us_Built For Real Life_Our Commitment.jpg"
+    },
+    "journey": {
+        "headline": "Start Your PYF Journey",
+        "desc": "Choose the path that fits your goals today. PYF will support\nyou every step of the way.",
+        "btn1_text": "BECOME AN AFFILIATE",
+        "btn1_link": "https://backoffice.pyfaffiliates.com/affiliates/signup.php#SignupForm",
+        "btn2_text": "View Service Packages",
+        "btn2_link": "packages.html",
+        "buttons": [
+            {
+                "text": "BECOME AN AFFILIATE",
+                "link": "https://backoffice.pyfaffiliates.com/affiliates/signup.php#SignupForm",
+                "style": "primary"
+            },
+            {
+                "text": "View Service Packages",
+                "link": "packages.html",
+                "style": "primary"
+            }
+        ]
+    },
+    "sections": [
+        {
+            "id": "hero",
+            "type": "hero",
+            "label": "Hero Banner"
+        },
+        {
+            "id": "who-we-are",
+            "type": "who_we_are",
+            "label": "Who We Are"
+        },
+        {
+            "id": "origin",
+            "type": "origin",
+            "label": "Our Origin"
+        },
+        {
+            "id": "mission",
+            "type": "mission",
+            "label": "Our Mission"
+        },
+        {
+            "id": "serving",
+            "type": "serving",
+            "label": "Serving Everyday Americans"
+        },
+        {
+            "id": "system",
+            "type": "system",
+            "label": "The PYF System"
+        },
+        {
+            "id": "who-we-serve",
+            "type": "who_we_serve",
+            "label": "Who We Serve"
+        },
+        {
+            "id": "different",
+            "type": "different",
+            "label": "What Makes PYF Different"
+        },
+        {
+            "id": "pledge",
+            "type": "pledge",
+            "label": "Our Pledge"
+        },
+        {
+            "id": "journey",
+            "type": "journey",
+            "label": "Start Your PYF Journey"
+        }
+    ]
+}
+                },
+                isContentReady: false,
+                resolvedImages: {
+                    hero: '',
+                    whoWeAre: '',
+                    origin: '',
+                    mission: '',
+                    serving: '',
+                    systemCards: [],
+                    whoWeServe: '',
+                    different: '',
+                    pledge: ''
+                },
+                loadedImages: {
+                    hero: false,
+                    whoWeAre: false,
+                    origin: false,
+                    mission: false,
+                    serving: false,
+                    systemCards: [],
+                    whoWeServe: false,
+                    different: false,
+                    pledge: false
+                },
+
+                getDefaultSections() {
+                    return [
+                        { id: 'hero', type: 'hero', label: 'Hero Banner' },
+                        { id: 'who-we-are', type: 'who_we_are', label: 'Who We Are' },
+                        { id: 'origin', type: 'origin', label: 'Our Origin' },
+                        { id: 'mission', type: 'mission', label: 'Our Mission' },
+                        { id: 'serving', type: 'serving', label: 'Serving Everyday Americans' },
+                        { id: 'system', type: 'system', label: 'The PYF System' },
+                        { id: 'who-we-serve', type: 'who_we_serve', label: 'Who We Serve' },
+                        { id: 'different', type: 'different', label: 'What Makes PYF Different' },
+                        { id: 'pledge', type: 'pledge', label: 'Our Pledge' },
+                        { id: 'journey', type: 'journey', label: 'Start Your PYF Journey' }
+                    ];
+                },
+
+                normalizeSections(sections) {
+                    const defaults = this.getDefaultSections();
+                    if (!Array.isArray(sections)) return defaults;
+
+                    return sections
+                        .map((section, index) => {
+                            const type = section?.type || section?.id;
+                            const fallback = defaults.find(item => item.type === type || item.id === type);
+                            if (!fallback) return null;
+
+                            return {
+                                id: section?.id || `${fallback.id}-${index + 1}`,
+                                type: fallback.type,
+                                label: section?.label || fallback.label
+                            };
+                        })
+                        .filter(Boolean);
+                },
+
+                normalizeAboutUsData(content = {}) {
+                    const base = this.pageData.about_us || {};
+                    const heroSource = { ...(base.hero || {}), ...(content.hero || {}) };
+                    const systemSource = { ...(base.system || {}), ...(content.system || {}) };
+                    const journeySource = { ...(base.journey || {}), ...(content.journey || {}) };
+
+                    const heroButtons = Array.isArray(heroSource.buttons) && heroSource.buttons.length
+                        ? heroSource.buttons
+                        : [
+                            { text: heroSource.btn1_text || '', link: heroSource.btn1_link || '', style: 'primary' },
+                            { text: heroSource.btn2_text || '', link: heroSource.btn2_link || '', style: 'secondary' }
+                        ].filter(button => button.text || button.link);
+
+                    const journeyButtons = Array.isArray(journeySource.buttons) && journeySource.buttons.length
+                        ? journeySource.buttons
+                        : [
+                            { text: journeySource.btn1_text || '', link: journeySource.btn1_link || '', style: 'primary' },
+                            { text: journeySource.btn2_text || '', link: journeySource.btn2_link || '', style: 'primary' }
+                        ].filter(button => button.text || button.link);
+
+                    const systemCards = Array.isArray(systemSource.cards)
+                        ? systemSource.cards.filter(card => card && (card.title || card.desc || (Array.isArray(card.list) && card.list.length)))
+                        : [];
+
+                    return {
+                        ...base,
+                        ...content,
+                        hero: {
+                            ...(base.hero || {}),
+                            ...(content.hero || {}),
+                            buttons: heroButtons.map((button, index) => ({
+                                text: button?.text || `Button ${index + 1}`,
+                                link: button?.link || '#',
+                                style: button?.style === 'secondary' ? 'secondary' : 'primary'
+                            })),
+                            btn1_text: heroButtons[0]?.text || '',
+                            btn1_link: heroButtons[0]?.link || '',
+                            btn2_text: heroButtons[1]?.text || '',
+                            btn2_link: heroButtons[1]?.link || ''
+                        },
+                        who_we_are: {
+                            ...(base.who_we_are || {}),
+                            ...(content.who_we_are || {}),
+                            list: Array.isArray(content.who_we_are?.list) ? content.who_we_are.list : (Array.isArray(base.who_we_are?.list) ? base.who_we_are.list : [])
+                        },
+                        origin: {
+                            ...(base.origin || {}),
+                            ...(content.origin || {}),
+                            list: Array.isArray(content.origin?.list) ? content.origin.list : (Array.isArray(base.origin?.list) ? base.origin.list : [])
+                        },
+                        serving: {
+                            ...(base.serving || {}),
+                            ...(content.serving || {}),
+                            stats: Array.isArray(content.serving?.stats) ? content.serving.stats : (Array.isArray(base.serving?.stats) ? base.serving.stats : []),
+                            principles: Array.isArray(content.serving?.principles) ? content.serving.principles : (Array.isArray(base.serving?.principles) ? base.serving.principles : [])
+                        },
+                        system: {
+                            ...(base.system || {}),
+                            ...(content.system || {}),
+                            cards: systemCards.map((card, index) => ({
+                                id: card?.id || `${index + 1}`,
+                                title: card?.title || `Card ${index + 1}`,
+                                desc: card?.desc || '',
+                                list: Array.isArray(card?.list) ? card.list : [],
+                                image: card?.image || '',
+                                quote: card?.quote || '',
+                                footer: card?.footer || ''
+                            }))
+                        },
+                        who_we_serve: {
+                            ...(base.who_we_serve || {}),
+                            ...(content.who_we_serve || {}),
+                            list: Array.isArray(content.who_we_serve?.list) ? content.who_we_serve.list : (Array.isArray(base.who_we_serve?.list) ? base.who_we_serve.list : [])
+                        },
+                        different: {
+                            ...(base.different || {}),
+                            ...(content.different || {}),
+                            list: Array.isArray(content.different?.list) ? content.different.list : (Array.isArray(base.different?.list) ? base.different.list : [])
+                        },
+                        pledge: {
+                            ...(base.pledge || {}),
+                            ...(content.pledge || {}),
+                            list: Array.isArray(content.pledge?.list) ? content.pledge.list : (Array.isArray(base.pledge?.list) ? base.pledge.list : [])
+                        },
+                        journey: {
+                            ...(base.journey || {}),
+                            ...(content.journey || {}),
+                            buttons: journeyButtons.map((button, index) => ({
+                                text: button?.text || `Button ${index + 1}`,
+                                link: button?.link || '#',
+                                style: button?.style === 'secondary' ? 'secondary' : 'primary'
+                            })),
+                            btn1_text: journeyButtons[0]?.text || '',
+                            btn1_link: journeyButtons[0]?.link || '',
+                            btn2_text: journeyButtons[1]?.text || '',
+                            btn2_link: journeyButtons[1]?.link || ''
+                        },
+                        sections: this.normalizeSections(content.sections ?? base.sections)
+                    };
+                },
+
+                hasSection(type) {
+                    return (this.pageData.about_us.sections || []).some(section => section.type === type);
+                },
+
+                getHeroButtons() {
+                    return (this.pageData.about_us.hero?.buttons || []).filter(button => button && (button.text || button.link));
+                },
+
+                getHeroButtonClass(button, index) {
+                    const style = button?.style || (index === 0 ? 'primary' : 'secondary');
+                    const base = 'font-bold py-4 px-8 rounded shadow transition uppercase text-sm tracking-wide text-center w-full sm:w-auto';
+                    return style === 'secondary'
+                        ? `${base} bg-[#dcfce7] text-brand-primary hover:bg-white`
+                        : `${base} bg-[#75C400] text-white hover:bg-[#389400]`;
+                },
+
+                getSystemCards() {
+                    return (this.pageData.about_us.system?.cards || []).filter(card => card && (card.title || card.desc || (Array.isArray(card.list) && card.list.length)));
+                },
+
+                getSystemCardListClass(index) {
+                    if (index === 0) return 'mt-6 space-y-3';
+                    if (index === 1) return 'space-y-2 mb-4';
+                    return 'grid grid-cols-2 gap-3 mb-6';
+                },
+
+                getSystemCardItemClass(index) {
+                    if (index === 0) return 'flex items-center text-green-900 font-semibold bg-white/40 p-3 rounded-lg';
+                    if (index === 1) return 'flex items-start text-green-900 text-sm';
+                    return 'bg-white/50 rounded-lg p-2 text-center text-sm font-semibold text-green-900 shadow-sm';
+                },
+
+                getJourneyButtons() {
+                    return (this.pageData.about_us.journey?.buttons || []).filter(button => button && (button.text || button.link));
+                },
+
+                getJourneyButtonClass(button, index) {
+                    const style = button?.style || (index === 0 ? 'primary' : 'secondary');
+                    const base = 'w-full md:w-auto font-bold py-4 px-8 rounded shadow hover:shadow-lg transition uppercase text-sm tracking-wide text-center';
+                    return style === 'secondary'
+                        ? `${base} bg-[#dcfce7] text-brand-primary hover:bg-white`
+                        : `${base} bg-gradient-to-r from-[#389400] to-[#75C400] text-white hover:opacity-95`;
+                },
+
+                syncSectionLayout() {
+                    const root = document.querySelector('[data-about-sections-root]');
+                    if (!root) return;
+
+                    const nodesByType = new Map(
+                        Array.from(root.querySelectorAll('[data-about-section]')).map(node => [node.dataset.aboutSection, node])
+                    );
+
+                    (this.pageData.about_us.sections || []).forEach(section => {
+                        const node = nodesByType.get(section.type);
+                        if (node) root.appendChild(node);
+                    });
+                },
+
+                getImageTargets(content) {
+                    const systemCards = Array.isArray(content.system?.cards) ? content.system.cards : [];
+                    return {
+                        hero: content.hero?.image || 'About-us/About Us_Hero.jpg',
+                        whoWeAre: content.who_we_are?.image || 'About-us/About Us_Who We Are.jpg',
+                        origin: content.origin?.image || 'About-us/About Us_Our Origin.jpg',
+                        mission: content.mission?.image || 'About-us/About Us_Our Mission.jpg',
+                        serving: content.serving?.image || 'About-us/About Us_Serving Everyday Americans.jpg',
+                        systemCards: systemCards.map((card, index) => card?.image || [
+                            'About-us/About Us_Built For Real Life_Earn More.jpg',
+                            'About-us/About Us_Built For Real Life_Keep More.jpg',
+                            'About-us/About Us_Built For Real Life_Spend Less.jpg'
+                        ][index] || 'About-us/About Us_Built For Real Life_Earn More.jpg'),
+                        whoWeServe: content.who_we_serve?.image || 'About-us/About Us_Who We Serve.jpg',
+                        different: content.different?.image || 'About-us/About Us_What Makes PYF Different.jpg',
+                        pledge: content.pledge?.image || 'About-us/About Us_Built For Real Life_Our Commitment.jpg'
+                    };
+                },
+                
+                preloadImage(src) {
+                    return new Promise((resolve, reject) => {
+                        if (!src) {
+                            reject(new Error('Missing image source'));
+                            return;
+                        }
+
+                        const img = new Image();
+                        img.onload = () => resolve(src);
+                        img.onerror = () => reject(new Error(`Failed to preload image: ${src}`));
+                        img.src = src;
+                    });
+                },
+                
+                async resolveImages(content) {
+                    const imageTargets = this.getImageTargets(content);
+                    this.resolvedImages.systemCards = new Array((imageTargets.systemCards || []).length).fill('');
+                    this.loadedImages.systemCards = new Array((imageTargets.systemCards || []).length).fill(false);
+
+                    const scalarEntries = Object.entries(imageTargets).filter(([key]) => key !== 'systemCards');
+                    await Promise.all(scalarEntries.map(async ([key, src]) => {
+                        try {
+                            const loadedSrc = await this.preloadImage(src);
+                            this.resolvedImages[key] = loadedSrc;
+                            this.loadedImages[key] = true;
+                        } catch (error) {
+                            console.error(error);
+                        }
+                    }));
+
+                    await Promise.all((imageTargets.systemCards || []).map(async (src, index) => {
+                        try {
+                            const loadedSrc = await this.preloadImage(src);
+                            this.resolvedImages.systemCards[index] = loadedSrc;
+                            this.loadedImages.systemCards[index] = true;
+                        } catch (error) {
+                            console.error(error);
+                        }
+                    }));
+                },
+
+                async init() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const isPreviewMode = urlParams.get('mode') === 'preview';
+                    let mergedAbout = { ...this.pageData.about_us };
+
+                    try {
+                        let { data, error } = await supabase.from('site_content').select('*').eq('page_id', 'about_us').single();
+                        if (error) throw error;
+                        if (data) {
+                            const loadedContent = isPreviewMode ? data.draft_content : data.live_content;
+                            mergedAbout = { ...this.pageData.about_us, ...(loadedContent || {}) };
+                        }
+                    } catch (e) {
+                        console.error("Failed to load CMS data", e);
+                    }
+
+                    this.pageData.about_us = this.normalizeAboutUsData(mergedAbout);
+                    this.syncSectionLayout();
+                    this.isContentReady = true;
+                    await this.resolveImages(this.pageData.about_us);
+                }
+            }));
+        });
+    </script>
+
+    <script src="js/site-nav.js"></script>
+    <script src="js/site-footer.js"></script>
+</body></html>

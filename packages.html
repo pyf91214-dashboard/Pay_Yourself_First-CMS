@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Yourself First - Packages</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Roboto Flex", "sans-serif"],
+                    },
+                    colors: {
+                        "brand-primary": "#389400",
+                        "brand-dark": "#1c1c1c",
+                        "footer-bg": "#1f2022",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdn.pagesense.io/js/payyourselffirst/c2e5673c7d15457d8a0925080101f545.js"></script>
+
+    <style>
+        .sticky-header { transition: transform 0.3s ease-in-out; }
+        .header-hidden { transform: translateY(-100%); }
+        [x-cloak] { display: none !important; }
+        .cms-image-pending { opacity: 0; }
+        .cms-image-ready { opacity: 1; }
+    </style>
+</head>
+
+<body x-data="siteData" class="bg-white text-gray-800 font-sans antialiased flex flex-col min-h-screen">
+
+    <div id="main-header" class="fixed top-0 left-0 w-full z-50 sticky-header shadow-md">
+        <div class="bg-brand-dark text-white py-6 text-xs font-semibold">
+            <div class="container mx-auto px-4 flex justify-end items-center space-x-6">
+                <a href="https://payyourselffirst.benefithub.com/Welcome" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas fa-dollar-sign"></i></div> DISCOUNT PORTAL
+                </a>
+                <a href="https://backoffice.pyfaffiliates.com/merchants/login.php#login" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <i class="fas fa-user text-brand-primary mr-2"></i> AFFILIATE LOGIN
+                </a>
+            </div>
+        </div>
+        <nav class="bg-white py-4">
+            <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
+                <a href="index.html"><img src="pyf-logo.svg" alt="Pay Yourself First Logo" class="h-12 object-contain"></a>
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl text-brand-dark focus:outline-none"><i class="fas fa-bars"></i></button>
+                <div data-site-nav-desktop class="hidden lg:flex items-center space-x-5 text-xs xl:text-sm font-bold text-gray-700 uppercase"></div>
+            </div>
+            <div id="mobile-menu" data-site-nav-mobile class="hidden lg:hidden text-sm bg-white border-t mt-4 p-4 flex flex-col space-y-4 font-bold text-gray-700 uppercase"></div>
+        </nav>
+    </div>
+
+    <div data-packages-sections-root>
+        <header data-packages-section="hero" x-cloak x-show="isContentReady && hasSection('hero')" class="container mx-auto px-4 mb-16 mt-48">
+            <div class="relative rounded-[2rem] overflow-hidden h-[500px] md:h-[600px] shadow-2xl group">
+                <img :src="resolvedImages.hero || ''"
+                     alt="Choose Your Path"
+                     class="absolute inset-0 w-full h-full object-cover transition-opacity duration-200"
+                     :class="loadedImages.hero ? 'cms-image-ready' : 'cms-image-pending'">
+
+                <div class="absolute inset-0 bg-black/40"></div>
+
+                <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 md:px-20">
+                    <h1 x-text="pageData.packages.hero.headline" class="text-3xl md:text-5xl font-extrabold text-white mb-6 uppercase leading-tight drop-shadow-md">
+                        Choose The Path That Fits Your Goals
+                    </h1>
+
+                    <p x-text="pageData.packages.hero.desc" class="text-base md:text-xl text-gray-100 mb-10 max-w-4xl font-normal leading-relaxed">
+                        You can save money, or you can receive referral fees, or you can do both - the choice is yours.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4 sm:gap-6">
+                        <template x-for="(button, index) in getHeroButtons()" :key="`hero-button-${index}`">
+                            <a :href="button.link || '#'" :target="button.link && button.link.startsWith('#') ? null : '_blank'" :class="getButtonClass(button, index === 0 ? 'primary' : 'secondary', 'py-4 px-10 text-sm w-full sm:w-auto')" x-text="button.text"></a>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-grow">
+            <section data-packages-section="two_paths" x-cloak x-show="isContentReady && hasSection('two_paths')" class="py-16 md:py-24 bg-white">
+                <div class="container mx-auto px-4">
+                    <h2 x-html="pageData.packages.two_paths.headline" class="text-3xl md:text-4xl font-extrabold text-center text-brand-dark uppercase mb-16">
+                        Two Simple <span class="text-brand-primary">Paths</span>
+                    </h2>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-6xl mx-auto">
+                        <div>
+                            <p x-html="pageData.packages.two_paths.desc" class="text-lg text-gray-800 font-medium mb-8">
+                                Not sure where to start?<br>Choose the path that matches your priorities:
+                            </p>
+
+                            <template x-for="(path, index) in getTwoPathItems()" :key="`path-card-${index}`">
+                                <div :class="index === getTwoPathItems().length - 1 ? 'mb-10' : 'mb-8'">
+                                    <h3 class="text-xl font-bold text-gray-900 flex items-center mb-2">
+                                        <i class="fas fa-check text-brand-dark mr-3"></i>
+                                        <span x-text="path.title"></span>
+                                    </h3>
+                                    <p x-text="path.desc" class="text-gray-600 ml-8 leading-relaxed"></p>
+                                </div>
+                            </template>
+
+                            <p x-text="pageData.packages.two_paths.footer" class="text-gray-700 font-medium mb-10 text-sm">
+                                You may choose either path individually or combine them at any time.
+                            </p>
+
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <template x-for="(button, index) in getTwoPathButtons()" :key="`two-path-button-${index}`">
+                                    <a :href="button.link || '#'" :target="button.link && button.link.startsWith('#') ? null : '_blank'" :class="getButtonClass(button, index === 0 ? 'secondary' : 'primary', 'py-3 px-8 text-xs text-center')" x-text="button.text"></a>
+                                </template>
+                            </div>
+                        </div>
+
+                        <div class="relative h-full min-h-[400px]">
+                            <img :src="resolvedImages.twoPaths || ''"
+                                 alt="Two Paths Presentation"
+                                 class="rounded-[2rem] shadow-xl w-full h-full object-cover transition-opacity duration-200"
+                                 :class="loadedImages.twoPaths ? 'cms-image-ready' : 'cms-image-pending'">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section data-packages-section="affiliate_program" x-cloak x-show="isContentReady && hasSection('affiliate_program')" class="py-16 md:py-24 bg-white">
+                <div class="container mx-auto px-4">
+                    <h2 x-html="pageData.packages.affiliate_program.headline" class="text-3xl md:text-4xl font-extrabold text-center text-brand-dark uppercase mb-16">
+                        Affiliate <span class="text-brand-primary">Program</span>
+                    </h2>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-6xl mx-auto">
+                        <div class="relative h-full min-h-[400px]">
+                            <img :src="resolvedImages.affiliateProgram || ''"
+                                 alt="Affiliate Program"
+                                 class="rounded-[2rem] shadow-xl w-full h-full object-cover transition-opacity duration-200"
+                                 :class="loadedImages.affiliateProgram ? 'cms-image-ready' : 'cms-image-pending'">
+                        </div>
+
+                        <div>
+                            <h3 x-html="pageData.packages.affiliate_program.subtitle" class="text-2xl font-bold text-gray-900 mb-2 uppercase">
+                                Affiliate Program - <span class="text-brand-primary">$0/Month</span>
+                            </h3>
+
+                            <p x-text="pageData.packages.affiliate_program.desc" class="text-gray-600 mb-8 leading-relaxed">
+                                Become a PYF Affiliate at no cost.
+                            </p>
+
+                            <h4 x-text="pageData.packages.affiliate_program.benefits_title" class="text-xl font-bold text-brand-dark mb-6 uppercase">Key Benefits</h4>
+
+                            <ul class="space-y-4 mb-10">
+                                <template x-for="benefit in pageData.packages.affiliate_program.benefits_list" :key="benefit">
+                                    <li class="flex items-center">
+                                        <i class="fas fa-check-square text-brand-primary text-xl mr-4"></i>
+                                        <span x-text="benefit" class="text-gray-700 font-medium"></span>
+                                    </li>
+                                </template>
+                            </ul>
+
+                            <div class="flex flex-wrap gap-4">
+                                <template x-for="(button, index) in getAffiliateButtons()" :key="`affiliate-button-${index}`">
+                                    <a :href="button.link || '#'" :target="button.link && button.link.startsWith('#') ? null : '_blank'" :class="getButtonClass(button, 'primary', 'py-4 px-10 text-sm inline-block')" x-text="button.text"></a>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section data-packages-section="service_packages" x-cloak x-show="isContentReady && hasSection('service_packages')" id="service-packages" class="py-16 md:py-24 bg-white">
+                <div class="container mx-auto px-4">
+                    <div class="text-center max-w-4xl mx-auto mb-16">
+                        <h2 x-html="pageData.packages.service_packages.headline" class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-4">
+                            Service <span class="text-brand-primary">Packages</span>
+                        </h2>
+                        <p x-text="pageData.packages.service_packages.desc" class="text-gray-600 font-medium text-sm md:text-base">
+                            These are consumer service packages. They do not require affiliate enrollment.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 items-start max-w-7xl mx-auto pt-8">
+                        <template x-if="getFeaturedServicePackage()">
+                            <div class="lg:col-span-2 relative bg-white rounded-2xl border-2 border-brand-primary shadow-2xl flex flex-col transform lg:-translate-y-4 lg:scale-105 z-10">
+                                <template x-if="getFeaturedServicePackage().badge">
+                                    <div x-text="getFeaturedServicePackage().badge" class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand-primary text-white text-xs font-bold uppercase py-1 px-4 rounded-full shadow-md">Most Popular</div>
+                                </template>
+                                <div class="p-8 text-center border-b border-gray-100">
+                                    <h3 x-text="getFeaturedServicePackage().title" class="text-2xl font-extrabold text-gray-900 uppercase mb-4">Business Support Package</h3>
+                                    <div x-text="getFeaturedServicePackage().price" class="bg-brand-primary text-white font-bold text-3xl py-4 rounded-lg shadow-inner">$149.99/MONTH</div>
+                                </div>
+                                <div class="p-8 flex-grow text-left">
+                                    <p x-text="getFeaturedServicePackage().desc" class="text-gray-600 text-sm mb-8 leading-relaxed font-medium"></p>
+                                    <div class="mb-8 p-4 bg-gray-50 rounded-lg border border-gray-100">
+                                        <span class="font-bold text-gray-900 text-sm block mb-1">Best For</span>
+                                        <p x-text="getFeaturedServicePackage().best_for" class="text-xs text-gray-600"></p>
+                                    </div>
+                                    <span x-text="getFeaturedServicePackage().includes_title" class="font-bold text-gray-900 text-sm block mb-4 border-b border-gray-100 pb-2"></span>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
+                                        <ul class="space-y-3 text-xs text-gray-700 font-bold">
+                                            <template x-for="item in getFeaturedServicePackage().includes_list1" :key="item">
+                                                <li class="flex items-center"><i class="fas fa-check text-brand-primary mr-2"></i><span x-text="item"></span></li>
+                                            </template>
+                                        </ul>
+                                        <ul class="space-y-3 text-xs text-gray-700 font-bold">
+                                            <template x-for="item in getFeaturedServicePackage().includes_list2" :key="item">
+                                                <li class="flex items-center"><i class="fas fa-check text-brand-primary mr-2"></i><span x-text="item"></span></li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="p-8 pt-0 mt-auto">
+                                    <a :href="getFeaturedServicePackage().btn_link" x-text="getFeaturedServicePackage().btn_text" class="block w-full bg-gradient-to-r from-[#389400] to-[#75C400] text-white font-bold py-5 rounded-lg shadow-lg hover:shadow-xl transition text-center text-sm uppercase tracking-wider transform hover:-translate-y-1" target="_blank">View Business Support Package</a>
+                                </div>
+                            </div>
+                        </template>
+
+                        <template x-for="pkg in getSecondaryServicePackages()" :key="pkg.id">
+                            <div class="lg:col-span-1 bg-white rounded-2xl shadow-lg border border-gray-100 flex flex-col overflow-hidden hover:shadow-xl transition duration-300 h-auto">
+                                <div class="p-4 xl:p-6 text-center">
+                                    <h3 x-text="pkg.title" class="text-sm xl:text-lg font-bold text-gray-900 uppercase mb-3"></h3>
+                                    <div x-text="pkg.price" class="bg-brand-primary text-white font-bold text-lg xl:text-xl py-2 rounded shadow-sm"></div>
+                                </div>
+                                <div class="p-4 xl:p-6 pt-0 flex-grow">
+                                    <p x-text="pkg.desc" class="text-gray-500 text-[10px] xl:text-xs mb-4 min-h-[40px]"></p>
+                                    <div class="mb-4">
+                                        <span class="font-bold text-gray-900 text-[10px] xl:text-xs block mb-1">Best For</span>
+                                        <p x-text="pkg.best_for" class="text-[9px] xl:text-[10px] text-gray-500"></p>
+                                    </div>
+                                    <span x-text="pkg.includes_title" class="font-bold text-gray-900 text-[10px] xl:text-xs block mb-2"></span>
+                                    <ul class="space-y-2 text-[9px] xl:text-[10px] text-gray-600 font-medium">
+                                        <template x-for="item in pkg.includes_list1" :key="item">
+                                            <li x-text="'• ' + item"></li>
+                                        </template>
+                                        <template x-for="item in pkg.includes_list2" :key="item">
+                                            <li x-text="'• ' + item"></li>
+                                        </template>
+                                    </ul>
+                                </div>
+                                <div class="p-4 xl:p-6 pt-0 mt-auto">
+                                    <a :href="pkg.btn_link" x-text="pkg.btn_text" class="block w-full bg-[#559e10] hover:bg-[#389400] text-white font-bold py-2 rounded shadow transition text-center text-[10px] uppercase" target="_blank">View Details</a>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <section data-packages-section="comparison_table" x-cloak x-show="isContentReady && hasSection('comparison_table')" class="py-16 md:py-24 bg-gray-50">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                        <h2 x-html="pageData.packages.comparison_table.headline" class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase">
+                            Compare <span class="text-brand-primary">All Packages</span>
+                        </h2>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-t-xl shadow-xl bg-white border border-gray-200">
+                        <table class="w-full min-w-[1000px] border-collapse">
+                            <thead>
+                                <tr class="bg-brand-primary text-white text-sm md:text-base uppercase tracking-wider">
+                                    <th class="py-5 px-6 text-left font-bold w-1/6">Feature</th>
+                                    <th class="py-5 px-4 text-center font-bold w-1/6">Affiliate Program</th>
+                                    <th class="py-5 px-4 text-center font-bold w-1/6">Purchase Power</th>
+                                    <th class="py-5 px-4 text-center font-bold w-1/6">Dental Power</th>
+                                    <th class="py-5 px-4 text-center font-bold w-1/6">Doctor Power</th>
+                                    <th class="py-5 px-4 text-center font-bold w-1/6 border-l border-green-600">Business Support Package</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-700 text-sm font-medium">
+                                <template x-for="(row, idx) in pageData.packages.comparison_table.rows" :key="idx">
+                                    <tr :class="idx % 2 === 0 ? 'border-b border-gray-100 hover:bg-gray-50 transition' : 'border-b border-gray-100 hover:bg-gray-50 transition bg-gray-50/50'">
+                                        <td x-text="row.feature" class="py-4 px-6 text-left font-bold text-gray-900"></td>
+                                        <td x-html="row.affiliate" class="py-4 px-4 text-center font-bold text-brand-primary"></td>
+                                        <td x-html="row.purchase_power" class="py-4 px-4 text-center font-bold text-brand-primary"></td>
+                                        <td x-html="row.dental_power" class="py-4 px-4 text-center"></td>
+                                        <td x-html="row.doctor_power" class="py-4 px-4 text-center"></td>
+                                        <td x-html="row.business_support" class="py-4 px-4 text-center border-l border-gray-100"></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-center mt-4 md:hidden text-gray-400 text-xs italic">
+                        <i class="fas fa-arrows-alt-h mr-1"></i> Swipe table left/right to see more
+                    </div>
+                </div>
+            </section>
+
+            <section data-packages-section="faq" x-cloak x-show="isContentReady && hasSection('faq')" class="py-16 md:py-24 bg-white">
+                <div class="container mx-auto px-4 max-w-4xl">
+                    <div class="text-center mb-12">
+                        <h2 x-html="pageData.packages.faq.headline" class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase">
+                            Frequently Asked <span class="text-brand-primary">Questions</span>
+                        </h2>
+                    </div>
+
+                    <div class="space-y-4">
+                        <template x-for="(item, idx) in pageData.packages.faq.questions" :key="idx">
+                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                <button class="w-full flex justify-between items-center p-6 bg-gray-50 hover:bg-gray-100 transition focus:outline-none" @click="$el.nextElementSibling.classList.toggle('hidden'); $el.querySelector('i').classList.toggle('rotate-180')">
+                                    <span x-text="item.q" class="font-bold text-gray-900 text-left"></span>
+                                    <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                                </button>
+                                <div class="hidden bg-white p-6 border-t border-gray-200 text-gray-600 text-sm leading-relaxed">
+                                    <p x-text="item.a"></p>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <section data-packages-section="cta" x-cloak x-show="isContentReady && hasSection('cta')" class="py-20 bg-[#F2FFEB]">
+                <div class="container mx-auto px-4 text-center">
+                    <h2 x-text="pageData.packages.cta.headline" class="text-2xl md:text-4xl font-extrabold text-brand-dark uppercase mb-8">
+                        Ready to Move Forward?
+                    </h2>
+
+                    <p x-text="pageData.packages.cta.desc" class="text-brand-dark font-bold text-lg md:text-xl mb-12">
+                        Start saving, start earning referral fees, or both.
+                    </p>
+
+                    <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6">
+                        <template x-for="(button, index) in getCtaButtons()" :key="`cta-button-${index}`">
+                            <a :href="button.link || '#'" :target="button.link && button.link.startsWith('#') ? null : '_blank'" :class="getButtonClass(button, 'primary', 'w-full md:w-auto py-4 px-8 text-sm')" x-text="button.text"></a>
+                        </template>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div data-pyf-footer-root></div>
+
+    <script>
+        const menuBtn = document.getElementById("mobile-menu-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        menuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+
+        let lastScrollTop = 0;
+        const header = document.getElementById("main-header");
+        window.addEventListener("scroll", function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                header.classList.add("header-hidden");
+            } else {
+                header.classList.remove("header-hidden");
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+    </script>
+
+    <button id="backToTopBtn"
+            onclick="scrollToTop()"
+            class="fixed bottom-8 right-8 z-50 bg-brand-primary hover:bg-[#2d7a00] text-white w-12 h-12 rounded-full shadow-lg transition-all duration-300 transform translate-y-20 opacity-0 flex items-center justify-center focus:outline-none">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const backToTopBtn = document.getElementById("backToTopBtn");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove("translate-y-20", "opacity-0");
+            } else {
+                backToTopBtn.classList.add("translate-y-20", "opacity-0");
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    </script>
+
+    <script>
+        const SUPABASE_URL = "https://nqwggnereuhphwmkqove.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xd2dnbmVyZXVocGh3bWtxb3ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDUxMjAsImV4cCI6MjA5MTM4MTEyMH0.1OM-fLTth5FcMKUPHgepeM3BdJMydHiK1coD0vw0o0M";
+
+        document.addEventListener("alpine:init", () => {
+            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+            Alpine.data("siteData", () => ({
+                pageData: {
+                    packages: {
+                        hero: {
+                            headline: "Choose The Path That Fits Your Goals",
+                            desc: "You can save money, or you can receive referral fees, or you can do both - the choice is yours.",
+                            btn1_text: "I Want to Save Money",
+                            btn1_link: "#service-packages",
+                            btn2_text: "I Want to Receive Referral Fees",
+                            btn2_link: "affiliate-plan.html",
+                            buttons: [
+                                { text: "I Want to Save Money", link: "#service-packages", style: "primary" },
+                                { text: "I Want to Receive Referral Fees", link: "affiliate-plan.html", style: "secondary" }
+                            ],
+                            image: "Plans-overview/Packages_Hero.jpg"
+                        },
+                        two_paths: {
+                            headline: "Two Simple <span class=\"text-brand-primary\">Paths</span>",
+                            desc: "Not sure where to start?<br>Choose the path that matches your priorities:",
+                            path1_title: "Path 1 - Save Money",
+                            path1_desc: "Pick one of our service plans. No affiliate enrollment required.",
+                            path2_title: "Path 2 - Earn Referral Fees",
+                            path2_desc: "Become an Affiliate and receive referral fees by sharing PYF with others.",
+                            paths: [
+                                { title: "Path 1 - Save Money", desc: "Pick one of our service plans. No affiliate enrollment required." },
+                                { title: "Path 2 - Earn Referral Fees", desc: "Become an Affiliate and receive referral fees by sharing PYF with others." }
+                            ],
+                            footer: "You may choose either path individually or combine them at any time.",
+                            btn1_text: "View Service Packages",
+                            btn1_link: "packages.html",
+                            btn2_text: "Become An Affiliate",
+                            btn2_link: "https://backoffice.pyfaffiliates.com/affiliates/signup.php#SignupForm",
+                            buttons: [
+                                { text: "View Service Packages", link: "packages.html", style: "secondary" },
+                                { text: "Become An Affiliate", link: "https://backoffice.pyfaffiliates.com/affiliates/signup.php#SignupForm", style: "primary" }
+                            ],
+                            image: "Plans-overview/Packages_Two Simple Paths.jpg"
+                        },
+                        affiliate_program: {
+                            headline: "Affiliate <span class=\"text-brand-primary\">Program</span>",
+                            subtitle: "Affiliate Program - <span class=\"text-brand-primary\">$0/Month</span>",
+                            desc: "Become a PYF Affiliate at no cost. Receive referral fees when people you refer purchase PYF service packages.",
+                            benefits_title: "Key Benefits",
+                            benefits_list: [
+                                "Free to join",
+                                "No purchase required",
+                                "No monthly fees",
+                                "No production requirements",
+                                "Receive referral fees",
+                                "Add any PYF service packages at any time"
+                            ],
+                            btn_text: "Become An Affiliate",
+                            btn_link: "#",
+                            buttons: [
+                                { text: "Become An Affiliate", link: "#", style: "primary" }
+                            ],
+                            image: "Plans-overview/Packages_Affiliate Program.jpg"
+                        },
+                        service_packages: {
+                            headline: "Service <span class=\"text-brand-primary\">Packages</span>",
+                            desc: "These are consumer service packages. They do not require affiliate enrollment.",
+                            packages: [
+                                {
+                                    id: "business",
+                                    title: "Business Support Package",
+                                    badge: "Most Popular",
+                                    price: "$149.99/MONTH",
+                                    desc: "Our premium support package gives you the expert tax, legal, and business support you need to operate a business if you choose to, reduce your taxes to the legal minimum, and improve your financial position.",
+                                    best_for: "People who are interested in tax deductions, business support services, entrepreneurship education, and financial literacy.",
+                                    includes_title: "Includes Everything In Other Plans Plus:",
+                                    includes_list1: ["Tax-deduction support", "CPA support", "Personal & business legal"],
+                                    includes_list2: ["Business training & tools", "Purchase Power", "Add Dental/Doctor anytime"],
+                                    btn_text: "View Business Support Package",
+                                    btn_link: "business-support-package.html"
+                                },
+                                {
+                                    id: "doctor",
+                                    title: "Doctor Power",
+                                    badge: "",
+                                    price: "$24.95/mo",
+                                    desc: "Telemedicine, wellness, fitness, personal legal support.",
+                                    best_for: "Families seeking convenience & wellness.",
+                                    includes_title: "Includes",
+                                    includes_list1: ["24/7 doctor access", "Wellness programs", "Family legal support", "Dental Power", "Purchase Power"],
+                                    includes_list2: [],
+                                    btn_text: "View Details",
+                                    btn_link: "doctor-power.html"
+                                },
+                                {
+                                    id: "dental",
+                                    title: "Dental Power",
+                                    badge: "",
+                                    price: "$16.95/mo",
+                                    desc: "Save on dental, vision, hearing, and prescriptions.",
+                                    best_for: "Significant dental & health savings.",
+                                    includes_title: "Includes",
+                                    includes_list1: ["20%-60% dental savings", "Vision program", "Hearing program", "Prescription savings", "Purchase Power"],
+                                    includes_list2: [],
+                                    btn_text: "View Details",
+                                    btn_link: "dental-power.html"
+                                },
+                                {
+                                    id: "purchase",
+                                    title: "Purchase Power",
+                                    badge: "",
+                                    price: "$9.95/mo",
+                                    desc: "Save on dining, groceries, shopping, travel, etc.",
+                                    best_for: "Instant/flexible everyday savings.",
+                                    includes_title: "Includes",
+                                    includes_list1: ["Dining & grocery", "Retail & shopping", "Travel savings", "Automotive", "Household savings"],
+                                    includes_list2: [],
+                                    btn_text: "View Details",
+                                    btn_link: "purchase-power.html"
+                                }
+                            ]
+                        },
+                        comparison_table: {
+                            headline: "Compare <span class=\"text-brand-primary\">All Packages</span>",
+                            rows: [
+                                { feature: "Monthly Subscription", affiliate: "$0", purchase_power: "$9.95", dental_power: "$16.95", doctor_power: "$24.95", business_support: "$149.99" },
+                                { feature: "Purchase Power Discounts", affiliate: "<i class=\"fas fa-times text-red-500\"></i>", purchase_power: "<i class=\"fas fa-check text-gray-800\"></i>", dental_power: "Included", doctor_power: "Included", business_support: "Included" },
+                                { feature: "Dental Savings", affiliate: "<i class=\"fas fa-times text-red-500\"></i>", purchase_power: "<i class=\"fas fa-times text-red-500\"></i>", dental_power: "Included", doctor_power: "Included", business_support: "Optional Add-On" },
+                                { feature: "Vision Savings", affiliate: "<i class=\"fas fa-times text-red-500\"></i>", purchase_power: "<i class=\"fas fa-times text-red-500\"></i>", dental_power: "Included", doctor_power: "Included", business_support: "Optional Add-On" },
+                                { feature: "Hearing Savings", affiliate: "<i class=\"fas fa-times text-red-500\"></i>", purchase_power: "<i class=\"fas fa-times text-red-500\"></i>", dental_power: "Included", doctor_power: "Included", business_support: "Optional Add-On" },
+                                { feature: "Prescription Savings", affiliate: "<i class=\"fas fa-times text-red-500\"></i>", purchase_power: "<i class=\"fas fa-times text-red-500\"></i>", dental_power: "Included", doctor_power: "Included", business_support: "Optional Add-On" },
+                                { feature: "Telemedicine", affiliate: "<i class=\"fas fa-times text-red-500\"></i>", purchase_power: "<i class=\"fas fa-times text-red-500\"></i>", dental_power: "<i class=\"fas fa-times text-red-500\"></i>", doctor_power: "Included", business_support: "Optional Add-On" },
+                                { feature: "Wellness & Fitness", affiliate: "<i class=\"fas fa-times text-red-500\"></i>", purchase_power: "<i class=\"fas fa-times text-red-500\"></i>", dental_power: "<i class=\"fas fa-times text-red-500\"></i>", doctor_power: "Included", business_support: "Optional Add-On" },
+                                { feature: "Legal Support", affiliate: "<i class=\"fas fa-times text-red-500\"></i>", purchase_power: "<i class=\"fas fa-times text-red-500\"></i>", dental_power: "<i class=\"fas fa-times text-red-500\"></i>", doctor_power: "Personal Legal Support", business_support: "Personal & Business Legal Support" },
+                                { feature: "Tax-Deduction Support", affiliate: "<i class=\"fas fa-times text-red-500\"></i>", purchase_power: "<i class=\"fas fa-times text-red-500\"></i>", dental_power: "<i class=\"fas fa-times text-red-500\"></i>", doctor_power: "<i class=\"fas fa-times text-red-500\"></i>", business_support: "Included" },
+                                { feature: "Business Tools", affiliate: "<i class=\"fas fa-times text-red-500\"></i>", purchase_power: "<i class=\"fas fa-times text-red-500\"></i>", dental_power: "<i class=\"fas fa-times text-red-500\"></i>", doctor_power: "<i class=\"fas fa-times text-red-500\"></i>", business_support: "Included" },
+                                { feature: "Referral Earnings", affiliate: "Yes", purchase_power: "<i class=\"fas fa-times text-red-500\"></i>", dental_power: "<i class=\"fas fa-times text-red-500\"></i>", doctor_power: "<i class=\"fas fa-times text-red-500\"></i>", business_support: "<i class=\"fas fa-times text-red-500\"></i>" },
+                                { feature: "Add-On Friendly", affiliate: "<i class=\"fas fa-check text-gray-800\"></i>", purchase_power: "<i class=\"fas fa-check text-gray-800\"></i>", dental_power: "<i class=\"fas fa-check text-gray-800\"></i>", doctor_power: "<i class=\"fas fa-check text-gray-800\"></i>", business_support: "<i class=\"fas fa-check text-gray-800\"></i>" }
+                            ]
+                        },
+                        faq: {
+                            headline: "Frequently Asked <span class=\"text-brand-primary\">Questions</span>",
+                            questions: [
+                                { q: "Do I need to be an affiliate to purchase a service plan?", a: "No. All service plans can be purchased individually. Affiliate enrollment is completely optional." },
+                                { q: "Is Business Support Package an affiliate plan?", a: "No. Business Support Package is a service plan." },
+                                { q: "Can affiliates earn from service plan referrals?", a: "Yes." },
+                                { q: "Can I change plans later?", a: "Yes. All plans are month-to-month and can be modified or combined anytime." },
+                                { q: "Do all plans include Purchase Power?", a: "All service plans except the Affiliate Program include Purchase Power." }
+                            ]
+                        },
+                        cta: {
+                            headline: "Ready to Move Forward?",
+                            desc: "Start saving, start earning referral fees, or both. Choose the path that matches your goals",
+                            btn1_text: "BECOME AN AFFILIATE",
+                            btn1_link: "#",
+                            btn2_text: "View Service Packages",
+                            btn2_link: "#service-packages",
+                            buttons: [
+                                { text: "BECOME AN AFFILIATE", link: "#", style: "primary" },
+                                { text: "View Service Packages", link: "#service-packages", style: "primary" }
+                            ]
+                        },
+                        sections: [
+                            { id: "hero", type: "hero", label: "Packages Hero" },
+                            { id: "two-paths", type: "two_paths", label: "Two Simple Paths" },
+                            { id: "affiliate-program", type: "affiliate_program", label: "Affiliate Program" },
+                            { id: "service-packages", type: "service_packages", label: "Service Packages" },
+                            { id: "comparison-table", type: "comparison_table", label: "Comparison Table" },
+                            { id: "faq", type: "faq", label: "FAQ" },
+                            { id: "cta", type: "cta", label: "Bottom CTA" }
+                        ]
+                    }
+                },
+                isContentReady: false,
+                resolvedImages: {
+                    hero: "",
+                    twoPaths: "",
+                    affiliateProgram: ""
+                },
+                loadedImages: {
+                    hero: false,
+                    twoPaths: false,
+                    affiliateProgram: false
+                },
+
+                getDefaultSections() {
+                    return [
+                        { id: "hero", type: "hero", label: "Packages Hero" },
+                        { id: "two-paths", type: "two_paths", label: "Two Simple Paths" },
+                        { id: "affiliate-program", type: "affiliate_program", label: "Affiliate Program" },
+                        { id: "service-packages", type: "service_packages", label: "Service Packages" },
+                        { id: "comparison-table", type: "comparison_table", label: "Comparison Table" },
+                        { id: "faq", type: "faq", label: "FAQ" },
+                        { id: "cta", type: "cta", label: "Bottom CTA" }
+                    ];
+                },
+
+                normalizeSections(sections) {
+                    const defaults = this.getDefaultSections();
+                    if (!Array.isArray(sections)) return defaults;
+
+                    return sections
+                        .map((section, index) => {
+                            const type = section?.type || section?.id;
+                            const fallback = defaults.find(item => item.type === type || item.id === type);
+                            if (!fallback) return null;
+                            return {
+                                id: section?.id || `${fallback.id}-${index + 1}`,
+                                type: fallback.type,
+                                label: section?.label || fallback.label
+                            };
+                        })
+                        .filter(Boolean);
+                },
+
+                normalizePackagesData(packages = {}) {
+                    const base = this.pageData.packages;
+                    const heroSource = { ...(base.hero || {}), ...(packages.hero || {}) };
+                    const twoPathsSource = { ...(base.two_paths || {}), ...(packages.two_paths || {}) };
+                    const affiliateSource = { ...(base.affiliate_program || {}), ...(packages.affiliate_program || {}) };
+                    const ctaSource = { ...(base.cta || {}), ...(packages.cta || {}) };
+
+                    const heroButtons = Array.isArray(heroSource.buttons) && heroSource.buttons.length
+                        ? heroSource.buttons
+                        : [
+                            { text: heroSource.btn1_text || "", link: heroSource.btn1_link || "", style: "primary" },
+                            { text: heroSource.btn2_text || "", link: heroSource.btn2_link || "", style: "secondary" }
+                        ].filter(button => button.text || button.link);
+
+                    const twoPathItems = Array.isArray(twoPathsSource.paths) && twoPathsSource.paths.length
+                        ? twoPathsSource.paths
+                        : [
+                            { title: twoPathsSource.path1_title || "", desc: twoPathsSource.path1_desc || "" },
+                            { title: twoPathsSource.path2_title || "", desc: twoPathsSource.path2_desc || "" }
+                        ].filter(item => item.title || item.desc);
+
+                    const twoPathButtons = Array.isArray(twoPathsSource.buttons) && twoPathsSource.buttons.length
+                        ? twoPathsSource.buttons
+                        : [
+                            { text: twoPathsSource.btn1_text || "", link: twoPathsSource.btn1_link || "", style: "secondary" },
+                            { text: twoPathsSource.btn2_text || "", link: twoPathsSource.btn2_link || "", style: "primary" }
+                        ].filter(button => button.text || button.link);
+
+                    const affiliateButtons = Array.isArray(affiliateSource.buttons) && affiliateSource.buttons.length
+                        ? affiliateSource.buttons
+                        : [
+                            { text: affiliateSource.btn_text || "", link: affiliateSource.btn_link || "", style: "primary" }
+                        ].filter(button => button.text || button.link);
+
+                    const ctaButtons = Array.isArray(ctaSource.buttons) && ctaSource.buttons.length
+                        ? ctaSource.buttons
+                        : [
+                            { text: ctaSource.btn1_text || "", link: ctaSource.btn1_link || "", style: "primary" },
+                            { text: ctaSource.btn2_text || "", link: ctaSource.btn2_link || "", style: "primary" }
+                        ].filter(button => button.text || button.link);
+
+                    const servicePackages = Array.isArray(packages.service_packages?.packages)
+                        ? packages.service_packages.packages
+                        : (base.service_packages?.packages || []);
+                    const comparisonRows = Array.isArray(packages.comparison_table?.rows)
+                        ? packages.comparison_table.rows
+                        : (base.comparison_table?.rows || []);
+                    const faqQuestions = Array.isArray(packages.faq?.questions)
+                        ? packages.faq.questions
+                        : (base.faq?.questions || []);
+
+                    return {
+                        ...base,
+                        ...packages,
+                        hero: {
+                            ...(base.hero || {}),
+                            ...(packages.hero || {}),
+                            buttons: heroButtons,
+                            btn1_text: heroButtons[0]?.text || "",
+                            btn1_link: heroButtons[0]?.link || "",
+                            btn2_text: heroButtons[1]?.text || "",
+                            btn2_link: heroButtons[1]?.link || ""
+                        },
+                        two_paths: {
+                            ...(base.two_paths || {}),
+                            ...(packages.two_paths || {}),
+                            paths: twoPathItems,
+                            buttons: twoPathButtons,
+                            path1_title: twoPathItems[0]?.title || "",
+                            path1_desc: twoPathItems[0]?.desc || "",
+                            path2_title: twoPathItems[1]?.title || "",
+                            path2_desc: twoPathItems[1]?.desc || "",
+                            btn1_text: twoPathButtons[0]?.text || "",
+                            btn1_link: twoPathButtons[0]?.link || "",
+                            btn2_text: twoPathButtons[1]?.text || "",
+                            btn2_link: twoPathButtons[1]?.link || ""
+                        },
+                        affiliate_program: {
+                            ...(base.affiliate_program || {}),
+                            ...(packages.affiliate_program || {}),
+                            benefits_list: Array.isArray(affiliateSource.benefits_list) ? affiliateSource.benefits_list : [],
+                            buttons: affiliateButtons,
+                            btn_text: affiliateButtons[0]?.text || "",
+                            btn_link: affiliateButtons[0]?.link || ""
+                        },
+                        service_packages: {
+                            ...(base.service_packages || {}),
+                            ...(packages.service_packages || {}),
+                            packages: servicePackages.map((pkg, index) => ({
+                                id: pkg?.id || `package-${index + 1}`,
+                                title: pkg?.title || `Package ${index + 1}`,
+                                badge: pkg?.badge || "",
+                                price: pkg?.price || "",
+                                desc: pkg?.desc || "",
+                                best_for: pkg?.best_for || "",
+                                includes_title: pkg?.includes_title || "Includes",
+                                includes_list1: Array.isArray(pkg?.includes_list1) ? pkg.includes_list1 : [],
+                                includes_list2: Array.isArray(pkg?.includes_list2) ? pkg.includes_list2 : [],
+                                btn_text: pkg?.btn_text || "View Details",
+                                btn_link: pkg?.btn_link || "#"
+                            }))
+                        },
+                        comparison_table: {
+                            ...(base.comparison_table || {}),
+                            ...(packages.comparison_table || {}),
+                            rows: comparisonRows.map(row => ({
+                                feature: row?.feature || "",
+                                affiliate: row?.affiliate || "",
+                                purchase_power: row?.purchase_power || "",
+                                dental_power: row?.dental_power || "",
+                                doctor_power: row?.doctor_power || "",
+                                business_support: row?.business_support || ""
+                            }))
+                        },
+                        faq: {
+                            ...(base.faq || {}),
+                            ...(packages.faq || {}),
+                            questions: faqQuestions.map(item => ({
+                                q: item?.q || "",
+                                a: item?.a || ""
+                            }))
+                        },
+                        cta: {
+                            ...(base.cta || {}),
+                            ...(packages.cta || {}),
+                            buttons: ctaButtons,
+                            btn1_text: ctaButtons[0]?.text || "",
+                            btn1_link: ctaButtons[0]?.link || "",
+                            btn2_text: ctaButtons[1]?.text || "",
+                            btn2_link: ctaButtons[1]?.link || ""
+                        },
+                        sections: this.normalizeSections(packages.sections ?? base.sections)
+                    };
+                },
+
+                hasSection(type) {
+                    return (this.pageData.packages.sections || []).some(section => section.type === type);
+                },
+
+                syncSectionLayout() {
+                    const root = document.querySelector("[data-packages-sections-root]");
+                    if (!root) return;
+
+                    const nodesByType = new Map(
+                        Array.from(root.querySelectorAll("[data-packages-section]")).map(node => [node.dataset.packagesSection, node])
+                    );
+
+                    (this.pageData.packages.sections || []).forEach(section => {
+                        const node = nodesByType.get(section.type);
+                        if (node) root.appendChild(node);
+                    });
+                },
+
+                getButtonClass(button, fallbackStyle = "primary", sizeClasses = "py-4 px-10 text-sm") {
+                    const style = button?.style || fallbackStyle;
+                    const base = `font-bold rounded shadow transition uppercase tracking-wide ${sizeClasses}`;
+                    return style === "secondary"
+                        ? `${base} bg-[#dcfce7] text-brand-primary hover:bg-white`
+                        : `${base} bg-gradient-to-r from-[#389400] to-[#75C400] text-white hover:opacity-95`;
+                },
+
+                getHeroButtons() {
+                    return Array.isArray(this.pageData.packages.hero?.buttons)
+                        ? this.pageData.packages.hero.buttons.filter(button => button && (button.text || button.link))
+                        : [];
+                },
+
+                getTwoPathItems() {
+                    return Array.isArray(this.pageData.packages.two_paths?.paths)
+                        ? this.pageData.packages.two_paths.paths.filter(item => item && (item.title || item.desc))
+                        : [];
+                },
+
+                getTwoPathButtons() {
+                    return Array.isArray(this.pageData.packages.two_paths?.buttons)
+                        ? this.pageData.packages.two_paths.buttons.filter(button => button && (button.text || button.link))
+                        : [];
+                },
+
+                getAffiliateButtons() {
+                    return Array.isArray(this.pageData.packages.affiliate_program?.buttons)
+                        ? this.pageData.packages.affiliate_program.buttons.filter(button => button && (button.text || button.link))
+                        : [];
+                },
+
+                getFeaturedServicePackage() {
+                    return (this.pageData.packages.service_packages?.packages || [])[0] || null;
+                },
+
+                getSecondaryServicePackages() {
+                    return (this.pageData.packages.service_packages?.packages || []).slice(1);
+                },
+
+                getCtaButtons() {
+                    return Array.isArray(this.pageData.packages.cta?.buttons)
+                        ? this.pageData.packages.cta.buttons.filter(button => button && (button.text || button.link))
+                        : [];
+                },
+
+                getImageTargets(content) {
+                    return {
+                        hero: content.hero?.image || "Plans-overview/Packages_Hero.jpg",
+                        twoPaths: content.two_paths?.image || "Plans-overview/Packages_Two Simple Paths.jpg",
+                        affiliateProgram: content.affiliate_program?.image || "Plans-overview/Packages_Affiliate Program.jpg"
+                    };
+                },
+
+                preloadImage(src) {
+                    return new Promise((resolve, reject) => {
+                        if (!src) {
+                            reject(new Error("Missing image source"));
+                            return;
+                        }
+
+                        const img = new Image();
+                        img.onload = () => resolve(src);
+                        img.onerror = () => reject(new Error(`Failed to preload image: ${src}`));
+                        img.src = src;
+                    });
+                },
+
+                async resolveImages(content) {
+                    const imageTargets = this.getImageTargets(content);
+
+                    await Promise.all(Object.entries(imageTargets).map(async ([key, src]) => {
+                        try {
+                            const loadedSrc = await this.preloadImage(src);
+                            this.resolvedImages[key] = loadedSrc;
+                            this.loadedImages[key] = true;
+                        } catch (error) {
+                            console.error(error);
+                        }
+                    }));
+                },
+
+                async init() {
+                    const params = new URLSearchParams(window.location.search);
+                    const isPreview = params.get("mode") === "preview" || params.get("preview") === "true";
+                    let mergedPackages = this.normalizePackagesData(this.pageData.packages);
+
+                    try {
+                        const { data, error } = await supabase
+                            .from("site_content")
+                            .select("*")
+                            .eq("page_id", "packages")
+                            .maybeSingle();
+
+                        if (error) throw error;
+
+                        if (data) {
+                            const contentToLoad = isPreview ? data.draft_content : data.live_content;
+                            if (contentToLoad) {
+                                mergedPackages = this.normalizePackagesData(this._deepMerge(this.pageData.packages, contentToLoad));
+                            }
+                        }
+                    } catch (e) {
+                        console.error("Failed to load CMS data", e);
+                    }
+
+                    this.pageData.packages = mergedPackages;
+                    this.syncSectionLayout();
+                    this.isContentReady = true;
+                    await this.resolveImages(mergedPackages);
+                },
+
+                _deepMerge(target, source) {
+                    const result = { ...target };
+                    for (const key of Object.keys(source || {})) {
+                        if (source[key] && typeof source[key] === "object" && !Array.isArray(source[key])) {
+                            result[key] = this._deepMerge(target[key] || {}, source[key]);
+                        } else {
+                            result[key] = source[key];
+                        }
+                    }
+                    return result;
+                }
+            }));
+        });
+    </script>
+
+    <script src="js/site-nav.js"></script>
+    <script src="js/site-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Yourself First - Tax Season Discount</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+   <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                       sans: ["Roboto Flex", 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-primary': '#389400', 
+                        'brand-dark': '#1c1c1c',
+                        'footer-bg': '#1f2022',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdn.pagesense.io/js/payyourselffirst/c2e5673c7d15457d8a0925080101f545.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        /* Custom styles for sticky header transition */
+         .sticky-header { transition: transform 0.3s ease-in-out; }
+        .header-hidden { transform: translateY(-100%); }
+        
+    </style>
+
+</head>
+
+<body class="bg-white text-gray-800 font-sans antialiased flex flex-col min-h-screen">
+
+   <div id="main-header" class="fixed top-0 left-0 w-full z-50 sticky-header shadow-md">
+        <div class="bg-brand-dark text-white py-6 text-xs font-semibold">
+            <div class="container mx-auto px-4 flex justify-end items-center space-x-6">
+                <a href="https://payyourselffirst.benefithub.com/Welcome" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas fa-dollar-sign"></i></div> DISCOUNT PORTAL
+                </a>
+                <a href="https://backoffice.pyfaffiliates.com/merchants/login.php#login" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <i class="fas fa-user text-brand-primary mr-2"></i> AFFILIATE LOGIN
+                </a>
+            </div>
+        </div>
+        <nav class="bg-white py-4">
+            <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
+                <a href="index.html"><img src="pyf-logo.svg" alt="Pay Yourself First Logo" class="h-12 object-contain"></a>
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl text-brand-dark focus:outline-none"><i class="fas fa-bars"></i></button>
+                <div data-site-nav-desktop class="hidden lg:flex items-center space-x-5 text-xs xl:text-sm font-bold text-gray-700 uppercase"></div>
+            </div>
+            <div id="mobile-menu" data-site-nav-mobile class="hidden lg:hidden text-sm bg-white border-t mt-4 p-4 flex flex-col space-y-4 font-bold text-gray-700 uppercase"></div>
+        </nav>
+    </div>
+
+
+
+   <header id="tax-section-hero" class="container mx-auto px-4 mb-16 mt-48">
+        <div class="relative rounded-[2rem] overflow-hidden h-[500px] md:h-[700px] shadow-2xl group">
+            
+            <img src="Tax-season-discount/Tax Season Discount_Hero.jpg" 
+                 alt="Professional Tax Meeting" 
+                 class="absolute inset-0 w-full h-full object-cover">
+            
+            <div class="absolute inset-0 bg-black/40"></div>
+
+            <div class="relative z-10 h-full flex flex-col justify-center px-6 md:px-20 max-w-6xl">
+                
+                <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-6 uppercase leading-tight drop-shadow-md">
+                    Access To Expert Tax Preparation <br> And Advice For Just $49
+                </h1>
+                
+                <p class="text-base md:text-lg text-gray-100 mb-10 font-medium leading-relaxed max-w-4xl">
+                    Service provided by a national Professional Tax Firm with 30 years of experience and CPAs on staff.<br> Federal and State filing included. Professional Tax Advice all season long.
+                </p>
+                
+                <div>
+                    <a href="https://buy.stripe.com/3cIfZa2kiex9gyg4lOcIE02" target="_blank" class="bg-[#75C400] text-white font-bold py-4 px-10 rounded shadow hover:bg-[#389400] transition uppercase text-sm tracking-wide inline-block">
+                        Start My Access
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="tax-sections-root" class="flex-grow">
+
+        <section id="tax-section-includes" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4">
+                
+                <h2 class="text-2xl md:text-3xl font-extrabold text-center text-brand-dark uppercase mb-16">
+                    Your <span class="bg-brand-primary text-white px-2 py-1 rounded mx-1">$49</span> Tax Season Discount Package <span class="text-brand-primary">Includes</span>
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+                    
+                    <div class="bg-[#F2FFEB] p-8 rounded-xl text-center hover:shadow-lg transition border border-gray-100 h-full">
+                        <div class="w-16 h-16 bg-[#4a8a0a] rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-dark mb-2">Professional Tax Preparation</h3>
+                        <p class="text-xs text-gray-600">Service provided by a professional tax firm with 30 years of experience advising over 1 million taxpayers</p>
+                    </div>
+
+                    <div class="bg-[#F2FFEB] p-8 rounded-xl text-center hover:shadow-lg transition border border-gray-100 h-full">
+                        <div class="w-16 h-16 bg-[#4a8a0a] rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-dark mb-2">Federal and State Filing</h3>
+                        <p class="text-xs text-gray-600">Preparation and E-Filing for both returns</p>
+                    </div>
+
+                    <div class="bg-[#F2FFEB] p-8 rounded-xl text-center hover:shadow-lg transition border border-gray-100 h-full">
+                        <div class="w-16 h-16 bg-[#4a8a0a] rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-dark mb-2">Schedule C or E Filing</h3>
+                        <p class="text-xs text-gray-600">Flat $60 for Schedule C or E (Personal or LLC)</p>
+                    </div>
+
+                    <div class="bg-[#F2FFEB] p-8 rounded-xl text-center hover:shadow-lg transition border border-gray-100 h-full">
+                        <div class="w-16 h-16 bg-[#4a8a0a] rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-dark mb-2">Professional Tax Advice</h3>
+                        <p class="text-xs text-gray-600">Access to human experts throughout tax season</p>
+                    </div>
+
+                    <div class="bg-[#F2FFEB] p-8 rounded-xl text-center hover:shadow-lg transition border border-gray-100 h-full">
+                        <div class="w-16 h-16 bg-[#4a8a0a] rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-dark mb-2">Review of Prior Year Returns</h3>
+                        <p class="text-xs text-gray-600">Provided by expert and experienced tax professionals</p>
+                    </div>
+
+                    <div class="bg-[#F2FFEB] p-8 rounded-xl text-center hover:shadow-lg transition border border-gray-100 h-full">
+                        <div class="w-16 h-16 bg-[#4a8a0a] rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                            <i class="fas fa-folder-open"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-dark mb-2">Second Opinion Available</h3>
+                        <p class="text-xs text-gray-600">Independent review from tax professionals</p>
+                    </div>
+
+                    <div class="bg-[#F2FFEB] p-8 rounded-xl text-center hover:shadow-lg transition border border-gray-100 h-full">
+                        <div class="w-16 h-16 bg-[#4a8a0a] rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-dark mb-2">$1,000,000 Liability Protection</h3>
+                        <p class="text-xs text-gray-600">Tax services backed by a professional liability insurance policy.</p>
+                    </div>
+
+                    <div class="bg-[#F2FFEB] p-8 rounded-xl text-center hover:shadow-lg transition border border-gray-100 h-full">
+                        <div class="w-16 h-16 bg-[#4a8a0a] rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-dark mb-2">Tax Attorney Consultation</h3>
+                        <p class="text-xs text-gray-600">Access to attorney consultation for business matters</p>
+                    </div>
+
+                    <div class="bg-[#F2FFEB] p-8 rounded-xl text-center hover:shadow-lg transition border border-gray-100 h-full">
+                        <div class="w-16 h-16 bg-[#4a8a0a] rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-dark mb-2">Business Legal Services</h3>
+                        <p class="text-xs text-gray-600">Access to ongoing discounted legal support through our partners</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="tax-section-pricing_summary" class="py-16 bg-white">
+            <div class="container mx-auto px-4 max-w-4xl">
+                <div class="bg-[#F2FFEB] rounded-3xl p-8 md:p-12 text-center shadow-sm">
+                    
+                    <div class="space-y-4 max-w-md mx-auto text-sm md:text-base font-medium text-gray-700 mb-8">
+                        <div class="flex justify-between border-b border-gray-300 pb-2">
+                            <span>Regular Tax Prep:</span>
+                            <span class="font-bold text-brand-primary line-through">$ 279</span>
+                        </div>
+                        <div class="flex justify-between border-b border-gray-300 pb-2">
+                            <span>Regular Tax Advice:</span>
+                            <span class="font-bold text-brand-primary line-through">$ 119</span>
+                        </div>
+                        <div class="flex justify-between font-bold text-gray-900 pt-2">
+                            <span>Total Retail Value:</span>
+                            <span class="line-through">$ 398</span>
+                        </div>
+                    </div>
+
+                    <h2 class="text-4xl md:text-6xl font-black text-brand-dark uppercase mb-4">
+                        Your Price: <span class="text-brand-primary">$49</span>
+                    </h2>
+                    <h3 class="text-2xl md:text-3xl font-bold text-brand-dark uppercase">
+                        You Save: <span class="text-brand-primary">$349</span>
+                    </h3>
+
+                </div>
+            </div>
+        </section>
+
+ <section id="tax-section-done_for_you" class="bg-white pt-16 md:pt-24 pb-16">
+            
+            <div class="container mx-auto px-4 mb-16">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch max-w-6xl mx-auto">
+                    
+                    <div class="h-[650px] min-h-[650px] lg:min-h-[650px] rounded-[2rem] overflow-hidden shadow-xl">
+                        <img src="Tax-season-discount/Tax Season Discount_Affordable Tax Preparation.jpg" 
+                             alt="Tax Team" 
+                             class="h-[650px] object-cover">
+                    </div>
+
+                    <div class="flex flex-col justify-center">
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-brand-dark uppercase mb-6 leading-tight">
+                            Affordable Tax Preparation And Advice From A Human <span class="text-brand-primary">Expert</span>, Not Just Software.
+                        </h2>
+                        
+                        <p class="text-gray-600 mb-8 leading-relaxed">
+                            Get your max refund and file your taxes with confidence. No need to try and save money on tax preparation using "Do It Yourself" software. Have your taxes prepared and filed by using a professional firm at a very affordable price.
+                        </p>
+
+                        <h4 class="font-bold text-brand-dark mb-4 text-lg">If any of these sound familiar</h4>
+                        
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-hand-point-right text-brand-primary mt-1 mr-3 text-lg"></i>
+                                <span class="text-gray-700 font-medium">You're tired of overpaying for tax preparation</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-hand-point-right text-brand-primary mt-1 mr-3 text-lg"></i>
+                                <span class="text-gray-700 font-medium">You're not confident about the credentials of your tax preparer</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-hand-point-right text-brand-primary mt-1 mr-3 text-lg"></i>
+                                <span class="text-gray-700 font-medium">You're frustrated and unconfident about preparing your taxes yourself</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-hand-point-right text-brand-primary mt-1 mr-3 text-lg"></i>
+                                <span class="text-gray-700 font-medium">You want professional help without spending hundreds of dollars</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-hand-point-right text-brand-primary mt-1 mr-3 text-lg"></i>
+                                <span class="text-gray-700 font-medium">You need reliable tax advice throughout the season, not just at filing time</span>
+                            </li>
+                        </ul>
+
+                        <div class="border-2 border-brand-primary text-center py-3 rounded-lg font-bold text-brand-dark uppercase tracking-wider inline-block w-full md:w-auto px-8">
+                            This Package is for you!
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="w-full bg-[#ff8c00] text-white text-center py-4 px-4 font-bold text-sm md:text-base uppercase tracking-wide mb-12 shadow-sm">
+                Limited Time Offer | Purchase Period: December 1, 2025 – April 30, 2026
+            </div>
+
+            <div class="text-center px-4">
+                <a href="https://buy.stripe.com/3cIfZa2kiex9gyg4lOcIE02" target="_blank" class="bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-4 px-8 md:px-12 rounded shadow-lg transition uppercase text-sm tracking-widest inline-block transform hover:-translate-y-1">
+                   Start My Access
+                </a>
+            </div>
+        </section>
+
+        <section id="tax-section-savings_table" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4 max-w-7xl">
+                
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-extrabold text-brand-dark uppercase mb-4">
+                        See How Much You <span class="text-brand-primary">Save With PYF</span>
+                    </h2>
+                    <p class="text-gray-600">Professional tax services for individuals and businesses at affordable prices.</p>
+                </div>
+
+                <div class="overflow-x-auto rounded-xl shadow-xl border border-gray-200">
+                    <table class="w-full text-center text-sm md:text-base border-collapse bg-white">
+                        <thead class="bg-[#00695c] text-white">
+                            <tr>
+                                <th class="p-4 text-left border-r border-[#004d40]">Return Type</th>
+                                <th class="p-4 border-r border-[#004d40]">DIY Software</th>
+                                <th class="p-4 border-r border-[#004d40]">Tax Chain</th>
+                                <th class="p-4 border-r border-[#004d40]">Local CPA</th>
+                                <th class="p-4 bg-[#0f2900] border-r border-[#0f2900] font-bold text-brand-primary border-b-4 border-brand-primary">PYF Tax Season Discount</th>
+                                <th class="p-4 bg-[#00695c]">You Save</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 font-medium text-gray-700">
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 text-left font-bold border-r">Simple 1040</td>
+                                <td class="p-4 border-r">$50-$100</td>
+                                <td class="p-4 border-r">$200-$300</td>
+                                <td class="p-4 border-r">$220-$300</td>
+                                <td class="p-4 bg-[#0f2900] text-white text-xl font-bold border-r">$49</td>
+                                <td class="p-4 bg-[#dcfce7] text-brand-dark font-bold text-lg">$151-$251</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 text-left font-bold border-r">1040 + Itemized</td>
+                                <td class="p-4 border-r">$100-$150</td>
+                                <td class="p-4 border-r">$300-$400</td>
+                                <td class="p-4 border-r">$323-$400</td>
+                                <td class="p-4 bg-[#0f2900] text-white text-xl font-bold border-r">$49</td>
+                                <td class="p-4 bg-[#dcfce7] text-brand-dark font-bold text-lg">$274-$351</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 text-left font-bold border-r">1040 + Schedule C/E</td>
+                                <td class="p-4 border-r">$150-$200</td>
+                                <td class="p-4 border-r">$400-$600</td>
+                                <td class="p-4 border-r">$400-$600</td>
+                                <td class="p-4 bg-[#0f2900] text-white text-xl font-bold border-r">$109</td>
+                                <td class="p-4 bg-[#dcfce7] text-brand-dark font-bold text-lg">$291-$491</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 text-left font-bold border-r">C Corporation</td>
+                                <td class="p-4 border-r text-gray-400">N/A*</td>
+                                <td class="p-4 border-r">$800-$2,000</td>
+                                <td class="p-4 border-r">$913-$2,500</td>
+                                <td class="p-4 bg-[#0f2900] text-white text-xl font-bold border-r">$395</td>
+                                <td class="p-4 bg-[#dcfce7] text-brand-dark font-bold text-lg">$518-$2,105</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 text-left font-bold border-r">S Corporation</td>
+                                <td class="p-4 border-r text-gray-400">N/A*</td>
+                                <td class="p-4 border-r">$800-$2,000</td>
+                                <td class="p-4 border-r">$800-$2,000</td>
+                                <td class="p-4 bg-[#0f2900] text-white text-xl font-bold border-r">$395</td>
+                                <td class="p-4 bg-[#dcfce7] text-brand-dark font-bold text-lg">$405-$1,605</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-center text-xs font-bold text-brand-primary mt-4 uppercase">*Corporate returns too complex for DIY software</p>
+
+            </div>
+        </section>
+
+        <section id="tax-section-features" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    
+                    <div>
+                        <h3 class="font-bold text-brand-dark text-lg mb-8 uppercase">Done For You. NOT Do-It-Yourself.</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-center text-brand-dark font-medium">
+                                <div class="w-8 h-8 rounded border-2 border-[#4a8a0a] flex items-center justify-center text-[#4a8a0a] mr-4"><i class="fas fa-check"></i></div>
+                                Credential Tax Experts
+                            </li>
+                            <li class="flex items-center text-brand-dark font-medium">
+                                <div class="w-8 h-8 rounded border-2 border-[#4a8a0a] flex items-center justify-center text-[#4a8a0a] mr-4"><i class="fas fa-check"></i></div>
+                                CPA's on staff
+                            </li>
+                            <li class="flex items-center text-brand-dark font-medium">
+                                <div class="w-8 h-8 rounded border-2 border-[#4a8a0a] flex items-center justify-center text-[#4a8a0a] mr-4"><i class="fas fa-check"></i></div>
+                                100% U.S Based
+                            </li>
+                            <li class="flex items-center text-brand-dark font-medium">
+                                <div class="w-8 h-8 rounded border-2 border-[#4a8a0a] flex items-center justify-center text-[#4a8a0a] mr-4"><i class="fas fa-check"></i></div>
+                                $1m Liability Insurance
+                            </li>
+                            <li class="flex items-center text-brand-dark font-medium">
+                                <div class="w-8 h-8 rounded border-2 border-[#4a8a0a] flex items-center justify-center text-[#4a8a0a] mr-4"><i class="fas fa-check"></i></div>
+                                Unlimited Sessions
+                            </li>
+                            <li class="flex items-center text-brand-dark font-medium">
+                                <div class="w-8 h-8 rounded border-2 border-[#4a8a0a] flex items-center justify-center text-[#4a8a0a] mr-4"><i class="fas fa-check"></i></div>
+                                Jan 1 - Apr 30 2026
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="h-80">
+                        <img src="Tax-season-discount/Tax Season Discount_Done For You.jpg" 
+                             alt="Happy Customer" 
+                             class="rounded-[2rem] shadow-xl w-full h-full object-cover">
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section id="tax-section-value_cta" class="py-16 bg-[#F2FFEB] text-center">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <p class="text-sm md:text-base text-gray-800 font-medium leading-relaxed mb-8">
+                    Whether you're filing as an individual or running a business, professional tax preparation shouldn't break the bank. Most Americans pay $220 - $400+ for basic returns, and business owners pay $800-$2,500 for corporate filings. With PYF Tax Season Discount, you get the same professional CPA expertise, unlimited advice, and $1M liability insurance—for a fraction of the cost.
+                </p>
+                <a href="https://buy.stripe.com/3cIfZa2kiex9gyg4lOcIE02" target="_blank" class="bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-4 px-8 rounded shadow-lg transition uppercase text-xs tracking-widest inline-block">
+                    Start My Access
+                </a>
+            </div>
+        </section>
+
+        <section id="tax-section-timeline" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
+                    
+                    <div class="h-80 md:h-96 rounded-[2rem] overflow-hidden shadow-xl">
+                        <img src="Tax-season-discount/Tax Season Discount_Serving People Since 2011.jpg" 
+                             alt="Serving People" 
+                             class="w-full h-full object-cover">
+                    </div>
+
+                    <div>
+                        <h2 class="text-3xl font-extrabold text-brand-dark uppercase mb-6">
+                            Serving People <span class="text-brand-primary">Since 2011</span>
+                        </h2>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-6 items-justified text-justify">
+                            Pay Yourself First connects you with a national professional tax firm that has served over 1 million taxpayers since 1995. With 30 years of experience, CPAs on staff, and a $1 million professional liability insurance policy backing all advice, you get the expertise and protection you deserve—at a price that actually makes sense. Services are provided by independent third-party professionals.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-extrabold text-brand-dark uppercase">
+                        Program <span class="text-brand-primary">Details & Timeline</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <div class="bg-[#F2FFEB] rounded-xl p-8 text-center border border-[#dcfce7] hover:shadow-lg transition">
+                        <div class="w-20 h-20 bg-[#4a8a0a] rounded-full flex items-center justify-center text-white text-3xl mx-auto mb-6">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-dark mb-4">Program Dates</h3>
+                        <div class="text-xs text-gray-700 space-y-2">
+                            <p><span class="font-bold">Purchase Period:</span> December 1, 2025 – April 30, 2026</p>
+                            <p><span class="font-bold">Service Active:</span> January 1 – April 30, 2026</p>
+                           
+                        </div>
+                    </div>
+
+                    <div class="bg-[#4a8a0a] rounded-xl p-8 text-center shadow-xl transform md:scale-105 z-10 text-white">
+                        <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center text-[#4a8a0a] text-3xl mx-auto mb-6">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        <h3 class="font-bold mb-4">Pricing</h3>
+                        <div class="bg-[#F2FFEB] rounded-full py-2 px-6 inline-block mb-4">
+                            <span class="text-2xl text-brand-primary font-black">$49</span> <span class="text-sm text-brand-dark">(Regular price $99)</span>
+                        </div>
+                        <div class="text-xs text-white/90 space-y-1">
+                            <p>Schedule C/E: + $60 if needed</p>
+                            <p>Corporate filings: $395 per return</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#F2FFEB] rounded-xl p-8 text-center border border-[#dcfce7] hover:shadow-lg transition">
+                        <div class="w-20 h-20 bg-[#4a8a0a] rounded-full flex items-center justify-center text-white text-3xl mx-auto mb-6">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-dark mb-4">What's Next</h3>
+                        <p class="text-xs text-gray-700 mb-4 leading-relaxed">
+                            Sign up today and lock in your rate. We'll connect you with your tax professionals when you're ready to file.
+                        </p>
+                        <div class="font-bold text-brand-dark text-xs">
+                            <p>No hidden fees</p>
+                            <p>No complex requirements</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+         <section id="tax-section-faq" class="py-16 bg-white">
+            <div class="container mx-auto px-4 max-w-4xl">
+                
+                <h2 class="text-3xl font-extrabold text-center text-brand-dark uppercase mb-12">
+                    Common Questions About <span class="text-brand-primary">Tax Season Discount</span>
+                </h2>
+
+                <div class="space-y-4">
+                    
+                    <div class="border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
+                        <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-white transition focus:outline-none">
+                            <span class="font-bold text-gray-900 text-left pr-4">What is the service period for this Package?</span>
+                            <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-6 border-t border-gray-200 text-gray-600 text-sm leading-relaxed bg-white">
+                            The service is active from January 1 – April 30, 2026. You can purchase the Package from December 1, 2025 through March 31, 2026 to lock in your $49 rate.
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
+                        <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-white transition focus:outline-none">
+                            <span class="font-bold text-gray-900 text-left pr-4">What's included in the $49?</span>
+                            <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-6 border-t border-gray-200 text-gray-600 text-sm leading-relaxed bg-white">
+                            Access to federal and state tax preparation and filing, plus unlimited tax advice from professionals throughout the tax season.
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
+                        <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-white transition focus:outline-none">
+                            <span class="font-bold text-gray-900 text-left pr-4">What if I have Schedule C or E?</span>
+                            <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-6 border-t border-gray-200 text-gray-600 text-sm leading-relaxed bg-white">
+                            Schedule C or E filing is available for a flat $60 fee (Personal or LLC) in addition to the $49 base price. These are the most common schedules. Other schedules are included at no extra cost or are deeply discounted.
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
+                        <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-white transition focus:outline-none">
+                            <span class="font-bold text-gray-900 text-left pr-4">What if I have a C Corporation or an S Corporation?</span>
+                            <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-6 border-t border-gray-200 text-gray-600 text-sm leading-relaxed bg-white">
+                            The fee for corporate filings is $395 per return.
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
+                        <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-white transition focus:outline-none">
+                            <span class="font-bold text-gray-900 text-left pr-4">Is there a guarantee?</span>
+                            <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-6 border-t border-gray-200 text-gray-600 text-sm leading-relaxed bg-white">
+                            All tax advice and preparation provided is backed by a $1,000,000 professional liability insurance policy for your protection.
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
+                        <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-white transition focus:outline-none">
+                            <span class="font-bold text-gray-900 text-left pr-4">Do I need to be a PYF affiliate to purchase this?</span>
+                            <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-6 border-t border-gray-200 text-gray-600 text-sm leading-relaxed bg-white">
+                            No. This service is available to anyone. Affiliate enrollment is completely optional and free.
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
+                        <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-white transition focus:outline-none">
+                            <span class="font-bold text-gray-900 text-left pr-4">Can I add affiliate enrollment later?</span>
+                            <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-6 border-t border-gray-200 text-gray-600 text-sm leading-relaxed bg-white">
+                            Yes. You can become an affiliate at any time—during your initial purchase or after.
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
+                        <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-white transition focus:outline-none">
+                            <span class="font-bold text-gray-900 text-left pr-4">What do affiliates earn?</span>
+                            <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-6 border-t border-gray-200 text-gray-600 text-sm leading-relaxed bg-white">
+                            Affiliates may receive referral fees when others purchase PYF products through their referral. Referral fee details are described in the affiliate materials you receive after enrollment.
+                        </div>
+                    </div>
+
+                    <div class="border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
+                        <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-white transition focus:outline-none">
+                            <span class="font-bold text-gray-900 text-left pr-4">Are earnings guaranteed?</span>
+                            <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content hidden p-6 border-t border-gray-200 text-gray-600 text-sm leading-relaxed bg-white">
+                            No. Referral fees depend solely on your personal activity and results vary.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <section id="tax-section-affiliate_cta" class="py-16 md:py-24 bg-white">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <h2 class="text-3xl font-extrabold text-center text-brand-dark uppercase mb-16">
+                    Become A <span class="text-brand-primary">PYF Affiliate</span>
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    
+                    <div>
+                        <h3 class="font-bold text-brand-dark text-lg mb-4">Earn $15 Per Tax Season Discount Referral</h3>
+                        <p class="text-gray-600 text-sm mb-8 leading-relaxed">
+                            It is free to become a PYF Affiliate. There is no cost and no upfront or ongoing requirements or qualifications. As a PYF affiliate you can receive referral fees when you share PYF products with others.
+                        </p>
+
+                        <h4 class="font-bold text-brand-dark text-md mb-4">Affiliate Pay</h4>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center text-sm font-medium text-gray-700">
+                                <i class="fas fa-check-square text-brand-primary text-xl mr-3"></i>
+                                $5 per Tax Season Discount referral.
+                            </li>
+                            <li class="flex items-center text-sm font-medium text-gray-700">
+                                <i class="fas fa-check-square text-brand-primary text-xl mr-3"></i>
+                                Up to $50 monthly for other products.
+                            </li>
+                            <li class="flex items-center text-sm font-medium text-gray-700">
+                                <i class="fas fa-check-square text-brand-primary text-xl mr-3"></i>
+                                Earn by referring other PYF products.
+                            </li>
+                            <li class="flex items-center text-sm font-medium text-gray-700">
+                                <i class="fas fa-check-square text-brand-primary text-xl mr-3"></i>
+                                No cost.
+                            </li>
+                        </ul>
+
+                        <p class="font-bold text-brand-dark text-sm mb-6">
+                            You do not need to purchase a PYF product to become a PYF Affiliate.
+                        </p>
+
+                        <a href="affiliate-plan.html" target="_blank" class="bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-4 px-8 rounded shadow-lg transition uppercase text-xs tracking-widest inline-block">
+                            Become an Affiliate
+                        </a>
+                    </div>
+
+                    <div class="h-80 md:h-96">
+                        <img src="Tax-season-discount/Tax Season Discount_Become An Affiliate.jpg" 
+                             alt="Money in Pocket" 
+                             class="rounded-[2rem] shadow-xl w-full h-full object-cover">
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="tax-section-bottom_cta" class="py-16 md:py-24 bg-[#F2FFEB]">
+            <div class="container mx-auto px-4 text-center">
+                
+                <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-6">
+                    Don't Miss This <span class="text-brand-primary">Limited Time Offer</span>
+                </h2>
+
+                <p class="text-gray-700 max-w-3xl mx-auto mb-10 text-lg">
+                    Get professional tax preparation from a national tax firm for just $49. This package is only available during the 2026 tax season (January 1 – April 30).
+                </p>
+
+                <div class="mb-16">
+                    <a href="https://buy.stripe.com/3cIfZa2kiex9gyg4lOcIE02" target="_blank" class="bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-5 px-10 rounded shadow-lg transition uppercase text-sm tracking-widest inline-block transform hover:-translate-y-1">
+                        Start My Access
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                    <div class="flex items-center justify-center bg-[#dcfce7] p-4 rounded-lg">
+                        <i class="fas fa-check-circle text-brand-primary text-xl mr-3"></i>
+                        <span class="text-xs font-bold text-brand-dark">Serviced by a professional tax firm</span>
+                    </div>
+                    <div class="flex items-center justify-center bg-[#dcfce7] p-4 rounded-lg">
+                        <i class="fas fa-check-circle text-brand-primary text-xl mr-3"></i>
+                        <span class="text-xs font-bold text-brand-dark">$1M Liability Insurance</span>
+                    </div>
+                    <div class="flex items-center justify-center bg-[#dcfce7] p-4 rounded-lg">
+                        <i class="fas fa-check-circle text-brand-primary text-xl mr-3"></i>
+                        <span class="text-xs font-bold text-brand-dark">30 Years Experience</span>
+                    </div>
+                    <div class="flex items-center justify-center bg-[#dcfce7] p-4 rounded-lg">
+                        <i class="fas fa-check-circle text-brand-primary text-xl mr-3"></i>
+                        <span class="text-xs font-bold text-brand-dark">Federal & State Filing Included</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+       
+        <section id="tax-section-disclaimer" class="py-12 bg-white">
+            <div class="container mx-auto px-4 max-w-5xl text-center">
+                
+                <h3 class="text-2xl font-black text-brand-dark uppercase mb-8 pb-4 border-b border-gray-200 inline-block px-12">
+                    Disclaimer
+                </h3>
+
+                <div class="text-sm text-gray-500 leading-relaxed max-w-6xl mx-auto">
+                    <p>
+                        Information provided for illustrative purposes only and is not legal, tax, or financial advice. Tax preparation, filing, and advisory services are provided by independent third-party professionals, not by Pay Yourself First. Pay Yourself First facilitates access to these services. PYF does not guarantee specific tax outcomes. Professional consultation is advised for tax preparation. Full terms and details at www.payyourselffirst.com
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+
+
+
+
+
+
+
+
+   <footer class="relative bg-footer-bg text-white pt-16 pb-6 border-t-4 border-brand-primary">
+        <div class="absolute inset-0 overflow-hidden opacity-5 pointer-events-none">
+            <img src="Homepage/Footer_general.jpg" class="w-full h-full object-cover grayscale">
+        </div>
+
+        <div class="relative container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-6 pb-2 border-b border-gray-600 inline-block w-full">Find Us</h3>
+                    <ul class="space-y-6">
+                        
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt text-brand-primary text-xl mr-4 w-6"></i>
+                            <span class="text-gray-300 text-sm">+1 (855) 793-2582</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-brand-primary text-xl mr-4 w-6"></i>
+                            <a href="mailto:Service@PayYourselfFirst.com" class="text-gray-300 text-sm hover:text-brand-primary transition">info@payyourselffirst.com</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-6 pb-2 border-b border-gray-600 inline-block w-full">Legal</h3>
+                    <ul class="space-y-4 text-sm text-gray-300">
+                        <li><a href="terms.html" class="hover:text-brand-primary transition" target="_blank">Terms & Conditions</a></li>
+                        <li><a href="privacy.html" class="hover:text-brand-primary transition" target="_blank" >Privacy Policy</a></li>
+                        <li><a href="cookie.html" class="hover:text-brand-primary transition" target="_blank" >Cookie Policy</a></li>
+                        <li><a href="disclaimer.html" class="hover:text-brand-primary transition" target="_blank" >Disclaimer</a></li>
+                        <li><a href="use-policy.html" class="hover:text-brand-primary transition" target="_blank" >Acceptable Use Policy</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-6 pb-2 border-b border-gray-600 inline-block w-full">Quick Links</h3>
+                    <ul class="space-y-4 text-sm text-gray-300 mb-8">
+                        <li><a href="https://backoffice.pyfaffiliates.com/affiliates/signup.php#SignupForm" class="hover:text-brand-primary transition" target="_blank"> Become an Affiliate</a></li>
+                        <li><a href="packages.html" class="hover:text-brand-primary transition" target="_blank" >Join Now</a></li>
+                        <li><a href="contact-us.html" class="hover:text-brand-primary transition" target="_blank" >Contact Us</a></li>
+                    </ul>
+                    
+                    <div class="flex space-x-3">
+                        <a href="https://www.facebook.com/share/1SgQW8W1qQ/?mibextid=wwXIfr" class="w-10 h-10 rounded-full bg-brand-primary hover:bg-white text-brand-dark hover:text-brand-primary flex items-center justify-center transition shadow-lg" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://x.com/pyfinc" target="_blank" class="w-10 h-10 rounded-full bg-brand-primary hover:bg-white text-brand-dark hover:text-brand-primary flex items-center justify-center transition shadow-lg">
+                         <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/pay_yourself_first_inc" target="_blank" class="w-10 h-10 rounded-full bg-brand-primary hover:bg-white text-brand-dark hover:text-brand-primary flex items-center justify-center transition shadow-lg">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/pay-yourself-first-inc/about/?viewAsMember=true" target="_blank" class="w-10 h-10 rounded-full bg-brand-primary hover:bg-white text-brand-dark hover:text-brand-primary flex items-center justify-center transition shadow-lg">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
+                <p class="mb-2 md:mb-0">Copyright © 2025 - <span class="text-brand-primary">Pay Yourself First</span>. All Rights Reserved.</p>
+                <p>Powered By <span class="text-brand-primary">SapphireLead</span> © 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/site-nav.js"></script>
+
+    <script>
+        const taxPageSupabaseUrl = 'https://nqwggnereuhphwmkqove.supabase.co';
+        const taxPageSupabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xd2dnbmVyZXVocGh3bWtxb3ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDUxMjAsImV4cCI6MjA5MTM4MTEyMH0.1OM-fLTth5FcMKUPHgepeM3BdJMydHiK1coD0vw0o0M';
+        const taxPageId = 'tax';
+        const taxSectionOrder = ['hero', 'includes', 'pricing_summary', 'done_for_you', 'savings_table', 'features', 'value_cta', 'timeline', 'faq', 'affiliate_cta', 'bottom_cta', 'disclaimer'];
+        const taxSectionNodeMap = {
+            hero: document.getElementById('tax-section-hero'),
+            includes: document.getElementById('tax-section-includes'),
+            pricing_summary: document.getElementById('tax-section-pricing_summary'),
+            done_for_you: document.getElementById('tax-section-done_for_you'),
+            savings_table: document.getElementById('tax-section-savings_table'),
+            features: document.getElementById('tax-section-features'),
+            value_cta: document.getElementById('tax-section-value_cta'),
+            timeline: document.getElementById('tax-section-timeline'),
+            faq: document.getElementById('tax-section-faq'),
+            affiliate_cta: document.getElementById('tax-section-affiliate_cta'),
+            bottom_cta: document.getElementById('tax-section-bottom_cta'),
+            disclaimer: document.getElementById('tax-section-disclaimer')
+        };
+
+        function getTaxPreviewMode() {
+            return new URLSearchParams(window.location.search).get('mode') === 'preview';
+        }
+
+        function escapeTaxHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function createFrontendTaxButton(button = {}) {
+            return {
+                text: button?.text || '',
+                link: button?.link || button?.url || '',
+                style: button?.style === 'secondary' ? 'secondary' : 'primary'
+            };
+        }
+
+        function getTaxSectionContent(content = {}, type) {
+            return (Array.isArray(content.sections) ? content.sections : []).find(section => (section?.type || section?.id) === type) || {};
+        }
+
+        function normalizeTaxFrontendContent(content = {}) {
+            const heroSection = getTaxSectionContent(content, 'hero');
+            const includesSection = getTaxSectionContent(content, 'includes');
+            const pricingSection = getTaxSectionContent(content, 'pricing_summary');
+            const doneSection = getTaxSectionContent(content, 'done_for_you');
+            const savingsSection = getTaxSectionContent(content, 'savings_table');
+            const featuresSection = getTaxSectionContent(content, 'features');
+            const valueSection = getTaxSectionContent(content, 'value_cta');
+            const timelineSection = getTaxSectionContent(content, 'timeline');
+            const faqSection = getTaxSectionContent(content, 'faq');
+            const affiliateSection = getTaxSectionContent(content, 'affiliate_cta');
+            const bottomSection = getTaxSectionContent(content, 'bottom_cta');
+            const disclaimerSection = getTaxSectionContent(content, 'disclaimer');
+
+            const heroButtonsSource = Array.isArray(content.hero?.buttons) && content.hero.buttons.length
+                ? content.hero.buttons
+                : (Array.isArray(heroSection.buttons) ? heroSection.buttons : [{ text: content.hero?.btn_text || '', link: content.hero?.btn_link || '', style: 'primary' }]);
+            const heroButtons = heroButtonsSource
+                .map(button => createFrontendTaxButton(button))
+                .filter(button => button.text || button.link);
+
+            const pricingRows = (Array.isArray(content.pricing?.rows) && content.pricing.rows.length
+                ? content.pricing.rows
+                : (Array.isArray(pricingSection.rows) ? pricingSection.rows : [
+                    { label: 'Regular Tax Prep:', value: content.pricing?.regular_prep || '$ 279', strike: true },
+                    { label: 'Regular Tax Advice:', value: content.pricing?.regular_advice || '$ 119', strike: true },
+                    { label: 'Total Retail Value:', value: content.pricing?.total_value || '$ 398', strike: true }
+                ]))
+                .map(row => ({
+                    label: row?.label || '',
+                    value: row?.value || '',
+                    accent: row?.accent || 'default',
+                    strike: !!row?.strike
+                }));
+
+            const timelineCards = (Array.isArray(content.timeline?.cards) && content.timeline.cards.length
+                ? content.timeline.cards
+                : (Array.isArray(timelineSection.cards) ? timelineSection.cards : [
+                    { icon: 'fa-calendar-alt', title: content.timeline?.col1_title || 'Program Dates', desc: content.timeline?.col1_desc || '' },
+                    { icon: 'fa-tag', title: content.timeline?.col2_title || 'Pricing', highlight: content.timeline?.col2_price || '$49', subline: content.timeline?.col2_subline || '(Regular price $99)', desc: content.timeline?.col2_desc || '' },
+                    { icon: 'fa-sign-in-alt', title: content.timeline?.col3_title || "What's Next", desc: content.timeline?.col3_desc || '' }
+                ]))
+                .map(card => ({
+                    icon: card?.icon || 'fa-circle-info',
+                    title: card?.title || '',
+                    desc: card?.desc || '',
+                    highlight: card?.highlight || '',
+                    subline: card?.subline || ''
+                }));
+
+            const savedTypes = Array.isArray(content.sections)
+                ? content.sections.map(section => section?.type || section?.id).filter(Boolean)
+                : [];
+            const orderedTypes = [...savedTypes, ...taxSectionOrder].filter((type, index, array) => taxSectionOrder.includes(type) && array.indexOf(type) === index);
+
+            return {
+                sections: orderedTypes,
+                hero: {
+                    headline: content.hero?.headline || heroSection.headline || '',
+                    desc: content.hero?.desc || heroSection.desc || '',
+                    image: content.hero?.bg_image || content.hero?.image || heroSection.image || 'Tax-season-discount/Tax Season Discount_Hero.jpg',
+                    buttons: heroButtons
+                },
+                includes: {
+                    headline: content.includes?.headline || includesSection.headline || '',
+                    items: (Array.isArray(content.includes?.items) && content.includes.items.length ? content.includes.items : includesSection.items || []).map((item, index) => ({
+                        icon: item?.icon || ['user-tie', 'file-contract', 'calendar-alt', 'user-check', 'comments', 'folder-open', 'shield-alt', 'balance-scale', 'gavel'][index % 9],
+                        title: item?.title || '',
+                        desc: item?.desc || ''
+                    }))
+                },
+                pricing: {
+                    rows: pricingRows,
+                    your_price_label: content.pricing?.your_price_label || pricingSection.your_price_label || 'Your Price:',
+                    your_price: content.pricing?.your_price || pricingSection.your_price || '$49',
+                    savings_label: content.pricing?.savings_label || pricingSection.savings_label || 'You Save:',
+                    you_save: content.pricing?.you_save || pricingSection.you_save || '$349'
+                },
+                done_for_you: {
+                    headline: content.done_for_you?.headline || doneSection.headline || '',
+                    desc: content.done_for_you?.desc || doneSection.desc || '',
+                    sub_headline: content.done_for_you?.sub_headline || doneSection.list_headline || 'If any of these sound familiar',
+                    list: Array.isArray(content.done_for_you?.list) && content.done_for_you.list.length ? content.done_for_you.list : (doneSection.list || []),
+                    footer_box: content.done_for_you?.footer_box || doneSection.footer_box || '',
+                    limited_offer: content.done_for_you?.limited_offer || doneSection.offer_text || '',
+                    image: content.done_for_you?.image || doneSection.image || 'Tax-season-discount/Tax Season Discount_Affordable Tax Preparation.jpg',
+                    button: createFrontendTaxButton(content.done_for_you?.button || doneSection.button || { text: content.done_for_you?.btn_text || content.hero?.btn_text || '', link: content.done_for_you?.btn_link || content.hero?.btn_link || '' })
+                },
+                savings_table: {
+                    headline: content.savings_table?.headline || savingsSection.headline || '',
+                    desc: content.savings_table?.desc || savingsSection.desc || '',
+                    rows: (Array.isArray(content.savings_table?.rows) && content.savings_table.rows.length ? content.savings_table.rows : (savingsSection.rows || [])).map(row => ({
+                        return_type: row?.return_type || '',
+                        diy: row?.diy || '',
+                        chain: row?.chain || '',
+                        cpa: row?.cpa || '',
+                        pyf: row?.pyf || '',
+                        save: row?.save || ''
+                    })),
+                    footer: content.savings_table?.footer || savingsSection.footer || ''
+                },
+                features: {
+                    headline: content.features?.headline || featuresSection.headline || '',
+                    image: content.features?.image || featuresSection.image || 'Tax-season-discount/Tax Season Discount_Done For You.jpg',
+                    list: Array.isArray(content.features?.list) && content.features.list.length ? content.features.list : (featuresSection.list || [])
+                },
+                value_cta: {
+                    desc: content.value_cta?.desc || content.features?.mid_cta?.desc || valueSection.desc || '',
+                    button: createFrontendTaxButton(content.value_cta?.button || content.features?.mid_cta?.button || valueSection.button || { text: content.value_cta?.btn_text || content.features?.mid_cta?.btn_text || '', link: content.value_cta?.btn_link || content.features?.mid_cta?.btn_link || '' })
+                },
+                timeline: {
+                    headline: content.timeline?.headline || timelineSection.headline || '',
+                    desc: content.timeline?.desc || timelineSection.desc || '',
+                    second_headline: content.timeline?.second_headline || timelineSection.secondary_headline || '',
+                    image: content.timeline?.image || timelineSection.image || 'Tax-season-discount/Tax Season Discount_Serving People Since 2011.jpg',
+                    cards: timelineCards
+                },
+                faq: {
+                    headline: content.faq?.headline || faqSection.headline || '',
+                    questions: (Array.isArray(content.faq?.questions) && content.faq.questions.length ? content.faq.questions : (faqSection.questions || [])).map(item => ({
+                        q: item?.q || '',
+                        a: item?.a || ''
+                    }))
+                },
+                affiliate_cta: {
+                    headline: content.affiliate_cta?.headline || affiliateSection.headline || '',
+                    sub_headline: content.affiliate_cta?.sub_headline || affiliateSection.sub_headline || '',
+                    desc: content.affiliate_cta?.desc || affiliateSection.desc || '',
+                    list_title: content.affiliate_cta?.list_title || affiliateSection.list_title || 'Affiliate Pay',
+                    list: Array.isArray(content.affiliate_cta?.list) && content.affiliate_cta.list.length ? content.affiliate_cta.list : (affiliateSection.list || []),
+                    footer_text: content.affiliate_cta?.footer_text || affiliateSection.footer_text || '',
+                    image: content.affiliate_cta?.image || affiliateSection.image || 'Tax-season-discount/Tax Season Discount_Become An Affiliate.jpg',
+                    button: createFrontendTaxButton(content.affiliate_cta?.button || affiliateSection.button || { text: content.affiliate_cta?.btn_text || '', link: content.affiliate_cta?.btn_link || '' })
+                },
+                bottom_cta: {
+                    headline: content.bottom_cta?.headline || bottomSection.headline || '',
+                    desc: content.bottom_cta?.desc || bottomSection.desc || '',
+                    button: createFrontendTaxButton(content.bottom_cta?.button || bottomSection.button || { text: content.bottom_cta?.btn_text || '', link: content.bottom_cta?.btn_link || '' }),
+                    features: (Array.isArray(content.bottom_cta?.features) && content.bottom_cta.features.length ? content.bottom_cta.features : (bottomSection.features || [
+                        'Serviced by a professional tax firm',
+                        '$1M Liability Insurance',
+                        '30 Years Experience',
+                        'Federal & State Filing Included'
+                    ])).map(item => ({
+                        icon: typeof item === 'string' ? 'fa-check-circle' : (item?.icon || 'fa-check-circle'),
+                        text: typeof item === 'string' ? item : (item?.text || '')
+                    }))
+                },
+                disclaimer: {
+                    headline: content.disclaimer?.headline || disclaimerSection.headline || 'Disclaimer',
+                    text: content.disclaimer?.text || disclaimerSection.text || ''
+                }
+            };
+        }
+
+        function renderTaxButton(button, className, fallbackText = 'Learn More') {
+            const text = button?.text || fallbackText;
+            const link = button?.link || '#';
+            return `<a href="${escapeTaxHtml(link)}" target="_blank" rel="noopener" class="${className}">${text}</a>`;
+        }
+
+        function renderTaxSections(pageData) {
+            const heroButton = pageData.hero.buttons[0] || createFrontendTaxButton();
+            taxSectionNodeMap.hero.innerHTML = `
+                <div class="relative rounded-[2rem] overflow-hidden h-[500px] md:h-[700px] shadow-2xl group">
+                    <img src="${escapeTaxHtml(pageData.hero.image)}" alt="Professional Tax Meeting" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/40"></div>
+                    <div class="relative z-10 h-full flex flex-col justify-center px-6 md:px-20 max-w-6xl">
+                        <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-6 uppercase leading-tight drop-shadow-md">${pageData.hero.headline || ''}</h1>
+                        <p class="text-base md:text-lg text-gray-100 mb-10 font-medium leading-relaxed max-w-4xl">${pageData.hero.desc || ''}</p>
+                        <div>${heroButton.text ? renderTaxButton(heroButton, 'bg-[#75C400] text-white font-bold py-4 px-10 rounded shadow hover:bg-[#389400] transition uppercase text-sm tracking-wide inline-block', 'Start My Access') : ''}</div>
+                    </div>
+                </div>
+            `;
+
+            taxSectionNodeMap.includes.innerHTML = `
+                <div class="container mx-auto px-4">
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-center text-brand-dark uppercase mb-16">${pageData.includes.headline || ''}</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+                        ${pageData.includes.items.map(item => `
+                            <div class="bg-[#F2FFEB] p-8 rounded-xl text-center hover:shadow-lg transition border border-gray-100 h-full">
+                                <div class="w-16 h-16 bg-[#4a8a0a] rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                                    <i class="fas fa-${escapeTaxHtml(item.icon)}"></i>
+                                </div>
+                                <h3 class="font-bold text-brand-dark mb-2">${item.title || ''}</h3>
+                                <p class="text-xs text-gray-600">${item.desc || ''}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            taxSectionNodeMap.pricing_summary.innerHTML = `
+                <div class="container mx-auto px-4 max-w-4xl">
+                    <div class="bg-[#F2FFEB] rounded-3xl p-8 md:p-12 text-center shadow-sm">
+                        <div class="space-y-4 max-w-md mx-auto text-sm md:text-base font-medium text-gray-700 mb-8">
+                            ${pageData.pricing.rows.map((row, index) => `
+                                <div class="flex justify-between ${index < pageData.pricing.rows.length - 1 ? 'border-b border-gray-300 pb-2' : 'font-bold text-gray-900 pt-2'}">
+                                    <span>${row.label || ''}</span>
+                                    <span class="${row.accent === 'primary' ? 'font-bold text-brand-primary' : ''} ${row.strike ? 'line-through' : ''}">${row.value || ''}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <h2 class="text-4xl md:text-6xl font-black text-brand-dark uppercase mb-4">${pageData.pricing.your_price_label || 'Your Price:'} <span class="text-brand-primary">${pageData.pricing.your_price || ''}</span></h2>
+                        <h3 class="text-2xl md:text-3xl font-bold text-brand-dark uppercase">${pageData.pricing.savings_label || 'You Save:'} <span class="text-brand-primary">${pageData.pricing.you_save || ''}</span></h3>
+                    </div>
+                </div>
+            `;
+
+            taxSectionNodeMap.done_for_you.innerHTML = `
+                <div class="container mx-auto px-4 mb-16">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch max-w-6xl mx-auto">
+                        <div class="h-[650px] min-h-[650px] lg:min-h-[650px] rounded-[2rem] overflow-hidden shadow-xl">
+                            <img src="${escapeTaxHtml(pageData.done_for_you.image)}" alt="Tax Team" class="h-[650px] object-cover">
+                        </div>
+                        <div class="flex flex-col justify-center">
+                            <h2 class="text-2xl md:text-3xl font-extrabold text-brand-dark uppercase mb-6 leading-tight">${pageData.done_for_you.headline || ''}</h2>
+                            <p class="text-gray-600 mb-8 leading-relaxed">${pageData.done_for_you.desc || ''}</p>
+                            <h4 class="font-bold text-brand-dark mb-4 text-lg">${pageData.done_for_you.sub_headline || ''}</h4>
+                            <ul class="space-y-3 mb-8">
+                                ${pageData.done_for_you.list.map(item => `
+                                    <li class="flex items-start">
+                                        <i class="fas fa-hand-point-right text-brand-primary mt-1 mr-3 text-lg"></i>
+                                        <span class="text-gray-700 font-medium">${item || ''}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                            <div class="border-2 border-brand-primary text-center py-3 rounded-lg font-bold text-brand-dark uppercase tracking-wider inline-block w-full md:w-auto px-8">
+                                ${pageData.done_for_you.footer_box || ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full bg-[#ff8c00] text-white text-center py-4 px-4 font-bold text-sm md:text-base uppercase tracking-wide mb-12 shadow-sm">
+                    ${pageData.done_for_you.limited_offer || ''}
+                </div>
+                <div class="text-center px-4">
+                    ${pageData.done_for_you.button.text ? renderTaxButton(pageData.done_for_you.button, 'bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-4 px-8 md:px-12 rounded shadow-lg transition uppercase text-sm tracking-widest inline-block transform hover:-translate-y-1', 'Start My Access') : ''}
+                </div>
+            `;
+
+            taxSectionNodeMap.savings_table.innerHTML = `
+                <div class="container mx-auto px-4 max-w-7xl">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-extrabold text-brand-dark uppercase mb-4">${pageData.savings_table.headline || ''}</h2>
+                        <p class="text-gray-600">${pageData.savings_table.desc || ''}</p>
+                    </div>
+                    <div class="overflow-x-auto rounded-xl shadow-xl border border-gray-200">
+                        <table class="w-full text-center text-sm md:text-base border-collapse bg-white">
+                            <thead class="bg-[#00695c] text-white">
+                                <tr>
+                                    <th class="p-4 text-left border-r border-[#004d40]">Return Type</th>
+                                    <th class="p-4 border-r border-[#004d40]">DIY Software</th>
+                                    <th class="p-4 border-r border-[#004d40]">Tax Chain</th>
+                                    <th class="p-4 border-r border-[#004d40]">Local CPA</th>
+                                    <th class="p-4 bg-[#0f2900] border-r border-[#0f2900] font-bold text-brand-primary border-b-4 border-brand-primary">PYF Tax Season Discount</th>
+                                    <th class="p-4 bg-[#00695c]">You Save</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 font-medium text-gray-700">
+                                ${pageData.savings_table.rows.map(row => `
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="p-4 text-left font-bold border-r">${row.return_type || ''}</td>
+                                        <td class="p-4 border-r">${row.diy || ''}</td>
+                                        <td class="p-4 border-r">${row.chain || ''}</td>
+                                        <td class="p-4 border-r">${row.cpa || ''}</td>
+                                        <td class="p-4 bg-[#0f2900] text-white text-xl font-bold border-r">${row.pyf || ''}</td>
+                                        <td class="p-4 bg-[#dcfce7] text-brand-dark font-bold text-lg">${row.save || ''}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-center text-xs font-bold text-brand-primary mt-4 uppercase">${pageData.savings_table.footer || ''}</p>
+                </div>
+            `;
+
+            taxSectionNodeMap.features.innerHTML = `
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h3 class="font-bold text-brand-dark text-lg mb-8 uppercase">${pageData.features.headline || ''}</h3>
+                            <ul class="space-y-4">
+                                ${pageData.features.list.map(item => `
+                                    <li class="flex items-center text-brand-dark font-medium">
+                                        <div class="w-8 h-8 rounded border-2 border-[#4a8a0a] flex items-center justify-center text-[#4a8a0a] mr-4"><i class="fas fa-check"></i></div>
+                                        ${item || ''}
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        <div class="h-80">
+                            <img src="${escapeTaxHtml(pageData.features.image)}" alt="Happy Customer" class="rounded-[2rem] shadow-xl w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            taxSectionNodeMap.value_cta.innerHTML = `
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <p class="text-sm md:text-base text-gray-800 font-medium leading-relaxed mb-8">${pageData.value_cta.desc || ''}</p>
+                    ${pageData.value_cta.button.text ? renderTaxButton(pageData.value_cta.button, 'bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-4 px-8 rounded shadow-lg transition uppercase text-xs tracking-widest inline-block', 'Start My Access') : ''}
+                </div>
+            `;
+
+            taxSectionNodeMap.timeline.innerHTML = `
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
+                        <div class="h-80 md:h-96 rounded-[2rem] overflow-hidden shadow-xl">
+                            <img src="${escapeTaxHtml(pageData.timeline.image)}" alt="Serving People" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-extrabold text-brand-dark uppercase mb-6">${pageData.timeline.headline || ''}</h2>
+                            <p class="text-gray-600 text-sm leading-relaxed mb-6 items-justified text-justify">${pageData.timeline.desc || ''}</p>
+                        </div>
+                    </div>
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl font-extrabold text-brand-dark uppercase">${pageData.timeline.second_headline || ''}</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        ${pageData.timeline.cards.map((card, index) => `
+                            <div class="${index === 1 ? 'bg-[#4a8a0a] rounded-xl p-8 text-center shadow-xl transform md:scale-105 z-10 text-white' : 'bg-[#F2FFEB] rounded-xl p-8 text-center border border-[#dcfce7] hover:shadow-lg transition'}">
+                                <div class="${index === 1 ? 'w-20 h-20 bg-white rounded-full flex items-center justify-center text-[#4a8a0a] text-3xl mx-auto mb-6' : 'w-20 h-20 bg-[#4a8a0a] rounded-full flex items-center justify-center text-white text-3xl mx-auto mb-6'}">
+                                    <i class="fas ${escapeTaxHtml(card.icon)}"></i>
+                                </div>
+                                <h3 class="font-bold ${index === 1 ? '' : 'text-brand-dark'} mb-4">${card.title || ''}</h3>
+                                ${card.highlight ? `<div class="bg-[#F2FFEB] rounded-full py-2 px-6 inline-block mb-4"><span class="text-2xl text-brand-primary font-black">${card.highlight || ''}</span>${card.subline ? ` <span class="text-sm text-brand-dark">${card.subline}</span>` : ''}</div>` : ''}
+                                ${card.desc ? `<p class="text-xs ${index === 1 ? 'text-white/90' : 'text-gray-700'} ${card.highlight ? 'space-y-1' : 'mb-4 leading-relaxed'}">${card.desc}</p>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            taxSectionNodeMap.faq.innerHTML = `
+                <div class="container mx-auto px-4 max-w-4xl">
+                    <h2 class="text-3xl font-extrabold text-center text-brand-dark uppercase mb-12">${pageData.faq.headline || ''}</h2>
+                    <div class="space-y-4">
+                        ${pageData.faq.questions.map(item => `
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
+                                <button class="faq-btn w-full flex justify-between items-center p-6 hover:bg-white transition focus:outline-none">
+                                    <span class="font-bold text-gray-900 text-left pr-4">${item.q || ''}</span>
+                                    <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300"></i>
+                                </button>
+                                <div class="faq-content hidden p-6 border-t border-gray-200 text-gray-600 text-sm leading-relaxed bg-white">
+                                    ${item.a || ''}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            taxSectionNodeMap.affiliate_cta.innerHTML = `
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <h2 class="text-3xl font-extrabold text-center text-brand-dark uppercase mb-16">${pageData.affiliate_cta.headline || ''}</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h3 class="font-bold text-brand-dark text-lg mb-4">${pageData.affiliate_cta.sub_headline || ''}</h3>
+                            <p class="text-gray-600 text-sm mb-8 leading-relaxed">${pageData.affiliate_cta.desc || ''}</p>
+                            <h4 class="font-bold text-brand-dark text-md mb-4">${pageData.affiliate_cta.list_title || ''}</h4>
+                            <ul class="space-y-3 mb-8">
+                                ${pageData.affiliate_cta.list.map(item => `
+                                    <li class="flex items-center text-sm font-medium text-gray-700">
+                                        <i class="fas fa-check-square text-brand-primary text-xl mr-3"></i>
+                                        ${item || ''}
+                                    </li>
+                                `).join('')}
+                            </ul>
+                            <p class="font-bold text-brand-dark text-sm mb-6">${pageData.affiliate_cta.footer_text || ''}</p>
+                            ${pageData.affiliate_cta.button.text ? renderTaxButton(pageData.affiliate_cta.button, 'bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-4 px-8 rounded shadow-lg transition uppercase text-xs tracking-widest inline-block', 'Become an Affiliate') : ''}
+                        </div>
+                        <div class="h-80 md:h-96">
+                            <img src="${escapeTaxHtml(pageData.affiliate_cta.image)}" alt="Money in Pocket" class="rounded-[2rem] shadow-xl w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            taxSectionNodeMap.bottom_cta.innerHTML = `
+                <div class="container mx-auto px-4 text-center">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-6">${pageData.bottom_cta.headline || ''}</h2>
+                    <p class="text-gray-700 max-w-3xl mx-auto mb-10 text-lg">${pageData.bottom_cta.desc || ''}</p>
+                    <div class="mb-16">
+                        ${pageData.bottom_cta.button.text ? renderTaxButton(pageData.bottom_cta.button, 'bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-5 px-10 rounded shadow-lg transition uppercase text-sm tracking-widest inline-block transform hover:-translate-y-1', 'Start My Access') : ''}
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                        ${pageData.bottom_cta.features.map(item => `
+                            <div class="flex items-center justify-center bg-[#dcfce7] p-4 rounded-lg">
+                                <i class="fas ${escapeTaxHtml(item.icon)} text-brand-primary text-xl mr-3"></i>
+                                <span class="text-xs font-bold text-brand-dark">${item.text || ''}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            taxSectionNodeMap.disclaimer.innerHTML = `
+                <div class="container mx-auto px-4 max-w-5xl text-center">
+                    <h3 class="text-2xl font-black text-brand-dark uppercase mb-8 pb-4 border-b border-gray-200 inline-block px-12">${pageData.disclaimer.headline || 'Disclaimer'}</h3>
+                    <div class="text-sm text-gray-500 leading-relaxed max-w-6xl mx-auto">
+                        <p>${pageData.disclaimer.text || ''}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function reorderTaxSections(pageData) {
+            const root = document.getElementById('tax-sections-root');
+            if (!root) return;
+
+            pageData.sections
+                .filter(type => type !== 'hero')
+                .forEach(type => {
+                    const sectionNode = taxSectionNodeMap[type];
+                    if (sectionNode && sectionNode.parentElement === root) {
+                        root.appendChild(sectionNode);
+                    }
+                });
+        }
+
+        function initTaxFaqAccordion() {
+            document.querySelectorAll('.faq-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    content.classList.toggle('hidden');
+                    button.querySelector('i').classList.toggle('rotate-180');
+                });
+            });
+        }
+
+        async function loadTaxPageContent() {
+            if (!window.supabase) return;
+
+            const isPreviewMode = getTaxPreviewMode();
+            const taxSupabase = window.supabase.createClient(taxPageSupabaseUrl, taxPageSupabaseKey);
+
+            try {
+                console.log('[tax][frontend] page_id', taxPageId);
+                const { data, error } = await taxSupabase
+                    .from('site_content')
+                    .select('*')
+                    .eq('page_id', taxPageId)
+                    .single();
+
+                if (error) throw error;
+
+                const draftHeadline = data?.draft_content?.hero?.headline
+                    || data?.draft_content?.sections?.find(section => section.type === 'hero')?.headline
+                    || '(missing)';
+                const liveHeadline = data?.live_content?.hero?.headline
+                    || data?.live_content?.sections?.find(section => section.type === 'hero')?.headline
+                    || '(missing)';
+                console.log('[tax][frontend] fetched row', data);
+                console.log('[tax][frontend] draft/live headlines', { draftHeadline, liveHeadline });
+
+                const loadedContent = isPreviewMode
+                    ? (data?.draft_content || data?.live_content || {})
+                    : (data?.live_content || data?.draft_content || {});
+                const pageData = normalizeTaxFrontendContent(loadedContent);
+                console.log('[tax][frontend] final pageData after fetch', pageData);
+
+                renderTaxSections(pageData);
+                reorderTaxSections(pageData);
+                initTaxFaqAccordion();
+            } catch (error) {
+                console.error('[tax][frontend] failed to load CMS content', error);
+                initTaxFaqAccordion();
+            }
+        }
+
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Sticky Header Logic
+        let lastScrollTop = 0;
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) { header.classList.add('header-hidden'); } 
+            else { header.classList.remove('header-hidden'); }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+        loadTaxPageContent();
+
+    </script>
+
+    <button id="backToTopBtn" 
+            onclick="scrollToTop()" 
+            class="fixed bottom-8 right-8 z-50 bg-brand-primary hover:bg-[#2d7a00] text-white w-12 h-12 rounded-full shadow-lg transition-all duration-300 transform translate-y-20 opacity-0 flex items-center justify-center focus:outline-none">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        // Show/Hide logic based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show after scrolling down 300px
+                backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
+            } else {
+                backToTopBtn.classList.add('translate-y-20', 'opacity-0');
+            }
+        });
+
+        // Smooth scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+    </script>
+    <script type="text/javascript" id="pap_x2s6df8d" src="https://payyourselffirst.postaffiliatepro.com/scripts/ojyfma"></script>
+    <script type="text/javascript"> PostAffTracker.setAccountId('default1'); try { PostAffTracker.track(); } catch (err) { } 
+    </script>
+</body>
+</html>

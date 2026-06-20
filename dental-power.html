@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Yourself First - Dental Power</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Roboto Flex", 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-primary': '#389400',
+                        'brand-dark': '#1c1c1c',
+                        'footer-bg': '#1f2022',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdn.pagesense.io/js/payyourselffirst/c2e5673c7d15457d8a0925080101f545.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        .sticky-header { transition: transform 0.3s ease-in-out; }
+        .header-hidden { transform: translateY(-100%); }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+
+<body class="bg-white text-gray-800 font-sans antialiased flex flex-col min-h-screen" x-data="dentalPowerPage()" x-init="init()" x-cloak>
+    <div id="main-header" class="fixed top-0 left-0 w-full z-50 sticky-header shadow-md">
+        <div class="bg-brand-dark text-white py-6 text-xs font-semibold">
+            <div class="container mx-auto px-4 flex justify-end items-center space-x-6">
+                <a href="https://payyourselffirst.benefithub.com/Welcome" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas fa-dollar-sign"></i></div> DISCOUNT PORTAL
+                </a>
+                <a href="https://backoffice.pyfaffiliates.com/merchants/login.php#login" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <i class="fas fa-user text-brand-primary mr-2"></i> AFFILIATE LOGIN
+                </a>
+            </div>
+        </div>
+        <nav class="bg-white py-4">
+            <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
+                <a href="index.html"><img src="pyf-logo.svg" alt="Pay Yourself First Logo" class="h-12 object-contain"></a>
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl text-brand-dark focus:outline-none"><i class="fas fa-bars"></i></button>
+                <div data-site-nav-desktop class="hidden lg:flex items-center space-x-5 text-xs xl:text-sm font-bold text-gray-700 uppercase"></div>
+            </div>
+            <div id="mobile-menu" data-site-nav-mobile class="hidden lg:hidden text-sm bg-white border-t mt-4 p-4 flex flex-col space-y-4 font-bold text-gray-700 uppercase"></div>
+        </nav>
+    </div>
+
+    <main class="flex-grow pt-40 md:pt-44">
+        <div data-dental-sections-root x-show="isContentReady">
+            <header data-dental-section="hero" x-show="hasSection('hero')" class="container mx-auto px-4 mb-16 mt-8">
+                <div class="relative rounded-[2rem] overflow-hidden min-h-[500px] md:h-[600px] shadow-2xl group">
+                    <img :src="getSectionContent('hero').image || ''" alt="Dental Power Hero" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/40"></div>
+                    <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 py-20 md:px-20 md:py-0">
+                        <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-6 uppercase leading-tight drop-shadow-md max-w-5xl" x-html="getSectionContent('hero').headline"></h1>
+                        <p class="text-base md:text-xl text-gray-100 mb-8 font-medium leading-relaxed max-w-5xl" x-html="getSectionContent('hero').desc"></p>
+                        <div class="inline-block border-2 border-white rounded px-6 py-2 text-white font-bold text-lg mb-8 bg-white/10 backdrop-blur-sm max-w-lg" x-text="getSectionContent('hero').price_text"></div>
+                        <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                            <template x-for="(button, index) in (getSectionContent('hero').buttons || [])" :key="`hero-btn-${index}`">
+                                <a :href="button.link || '#'" :target="button.link && button.link.startsWith('http') ? '_blank' : null" class="bg-[#4a8a0a] text-white font-bold py-4 px-10 rounded shadow hover:bg-[#389400] transition uppercase text-sm tracking-wide text-center" x-text="button.text"></a>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <section data-dental-section="benefits" x-show="hasSection('benefits')" class="py-16 md:py-24 bg-white">
+                <div class="container mx-auto px-4">
+                    <div class="text-center max-w-7xl mx-auto mb-16">
+                        <h2 class="text-2xl md:text-4xl font-extrabold text-brand-dark uppercase mb-6 leading-tight" x-html="getSectionContent('benefits').headline"></h2>
+                        <p class="text-gray-600 font-medium text-sm md:text-base" x-html="getSectionContent('benefits').desc"></p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-start max-w-7xl mx-auto">
+                        <template x-for="(card, index) in (getSectionContent('benefits').cards || [])" :key="`benefit-${index}`">
+                            <div class="bg-gray-50 rounded-xl shadow-lg overflow-hidden border border-gray-100 flex flex-col h-full">
+                                <div class="bg-[#4a8a0a] p-4 text-center h-16 flex items-center justify-center">
+                                    <h3 class="text-white font-bold text-sm uppercase leading-tight" x-html="card.title"></h3>
+                                </div>
+                                <div class="p-6 text-xs text-gray-700 leading-relaxed flex-grow text-justify">
+                                    <img :src="card.image || ''" :alt="card.title || `Benefit ${index + 1}`" class="mb-4 rounded-lg shadow-md">
+                                    <p class="mb-4" x-html="card.intro"></p>
+                                    <div x-show="expandedCards[index]" class="mt-4 space-y-4 text-left">
+                                        <template x-for="(paragraph, paragraphIndex) in (card.paragraphs || [])" :key="`benefit-paragraph-${index}-${paragraphIndex}`">
+                                            <p class="text-xs" x-html="paragraph"></p>
+                                        </template>
+                                        <div x-show="card.highlight_title || (card.highlight_items || []).length">
+                                            <h4 class="font-bold text-brand-primary text-xs uppercase mb-2" x-html="card.highlight_title"></h4>
+                                            <ul class="space-y-2 text-xs">
+                                                <template x-for="(item, itemIndex) in (card.highlight_items || [])" :key="`benefit-highlight-${index}-${itemIndex}`">
+                                                    <li class="flex items-start">
+                                                        <i class="fas fa-check text-brand-primary mt-1 mr-2"></i>
+                                                        <span x-html="item"></span>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                        </div>
+                                        <template x-if="(card.bullets || []).length">
+                                            <ul class="space-y-2 text-xs">
+                                                <template x-for="(item, itemIndex) in (card.bullets || [])" :key="`benefit-bullet-${index}-${itemIndex}`">
+                                                    <li class="flex items-start">
+                                                        <span class="mr-2">•</span>
+                                                        <span x-html="item"></span>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                        </template>
+                                        <template x-if="(card.notes || []).length">
+                                            <div class="text-[10px] text-gray-500 italic space-y-1">
+                                                <template x-for="(note, noteIndex) in (card.notes || [])" :key="`benefit-note-${index}-${noteIndex}`">
+                                                    <span class="block" x-html="note"></span>
+                                                </template>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                                <div class="p-6 pt-0 mt-auto" x-show="hasExpandableContent(card)">
+                                    <button @click="toggleCard(index)" class="w-full border border-gray-300 rounded-lg py-3 text-gray-600 font-bold text-xs uppercase hover:bg-white hover:text-brand-primary transition flex items-center justify-center">
+                                        <span x-text="expandedCards[index] ? 'Collapse' : 'Expand'"></span>
+                                        <i class="fas fa-chevron-down ml-2 transform transition-transform" :class="expandedCards[index] ? 'rotate-180' : ''"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <section data-dental-section="pricing" x-show="hasSection('pricing')" class="py-16 md:py-24 bg-gray-50">
+                <div class="container mx-auto px-4 text-center">
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-brand-dark uppercase mb-16" x-html="getSectionContent('pricing').headline"></h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+                        <div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-100 text-left">
+                            <div class="bg-[#dcfce7] py-4 text-center">
+                                <h3 class="text-brand-dark font-black uppercase tracking-wider" x-text="getSectionContent('pricing').plan_name"></h3>
+                            </div>
+                            <div class="bg-[#4a8a0a] py-6 text-center">
+                                <h2 class="text-white text-3xl font-black uppercase" x-text="getSectionContent('pricing').price"></h2>
+                            </div>
+                            <div class="p-8">
+                                <h4 class="font-bold text-gray-900 text-sm mb-6 uppercase" x-text="getSectionContent('pricing').includes_title"></h4>
+                                <ul class="space-y-4 mb-8">
+                                    <template x-for="(item, index) in (getSectionContent('pricing').includes || [])" :key="`pricing-item-${index}`">
+                                        <li class="flex items-center">
+                                            <i class="fas fa-check-square text-brand-primary text-xl mr-3"></i>
+                                            <span class="text-gray-700 font-bold text-sm" x-text="item"></span>
+                                        </li>
+                                    </template>
+                                </ul>
+                                <a :href="getSectionContent('pricing').button_link || '#'" :target="getSectionContent('pricing').button_link && getSectionContent('pricing').button_link.startsWith('http') ? '_blank' : null" class="block w-full bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-4 rounded shadow transition text-center text-sm uppercase tracking-wide" x-text="getSectionContent('pricing').button_text"></a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="rounded-xl overflow-hidden shadow-lg mb-6 h-[350px]">
+                                <img :src="getSectionContent('pricing').image || ''" alt="Dental Power Package" class="w-full h-full object-cover">
+                            </div>
+                            <div class="bg-[#dcfce7] p-4 rounded-lg text-center">
+                                <p class="text-sm font-medium text-gray-800" x-text="getSectionContent('pricing').note"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section data-dental-section="faq" x-show="hasSection('faq')" class="py-16 bg-white">
+                <div class="container mx-auto px-4 max-w-4xl">
+                    <h2 class="text-3xl font-extrabold text-center text-brand-dark uppercase mb-12" x-html="getSectionContent('faq').headline"></h2>
+                    <div class="space-y-4">
+                        <template x-for="(faq, index) in (getSectionContent('faq').questions || [])" :key="`faq-${index}`">
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-white">
+                                <button @click="toggleFaq(index)" class="w-full flex justify-between items-center p-6 hover:bg-gray-50 transition focus:outline-none">
+                                    <span class="font-bold text-gray-900 text-left pr-4" x-text="faq.q"></span>
+                                    <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300" :class="openFaqs[index] ? 'rotate-180' : ''"></i>
+                                </button>
+                                <div x-show="openFaqs[index]" class="p-6 border-t border-gray-100 text-gray-600 text-sm leading-relaxed" x-html="faq.a"></div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <section data-dental-section="bottom_cta" x-show="hasSection('bottom_cta')" class="py-20 bg-[#F2FFEB]">
+                <div class="container mx-auto px-4 text-center">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-10" x-html="getSectionContent('bottom_cta').headline"></h2>
+                    <div class="mb-16">
+                        <a :href="getSectionContent('bottom_cta').button_link || '#'" :target="getSectionContent('bottom_cta').button_link && getSectionContent('bottom_cta').button_link.startsWith('http') ? '_blank' : null" class="bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-5 px-16 rounded shadow-lg transition uppercase text-sm tracking-widest inline-block transform hover:-translate-y-1 hover:shadow-xl" x-text="getSectionContent('bottom_cta').button_text"></a>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                        <template x-for="(badge, index) in (getSectionContent('bottom_cta').badges || [])" :key="`badge-${index}`">
+                            <div class="bg-[#dcfce7] rounded-xl p-6 flex items-center justify-center space-x-4 shadow-sm">
+                                <i class="fas fa-check-circle text-brand-primary text-3xl"></i>
+                                <span class="font-bold text-brand-dark text-sm" x-text="badge"></span>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <section data-dental-section="disclaimer_section" x-show="hasSection('disclaimer_section')" class="py-12 bg-gray-50">
+                <div class="container mx-auto px-4 max-w-6xl">
+                    <h3 class="text-2xl font-bold text-brand-dark uppercase mb-8 text-center" x-text="getSectionContent('disclaimer_section').headline"></h3>
+                    <div class="text-sm text-gray-600 leading-relaxed text-justify space-y-4 border-t border-gray-200 pt-8" x-html="getSectionContent('disclaimer_section').body"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div data-pyf-footer-root></div>
+
+    <button id="backToTopBtn"
+            onclick="scrollToTop()"
+            class="fixed bottom-8 right-8 z-50 bg-brand-primary hover:bg-[#2d7a00] text-white w-12 h-12 rounded-full shadow-lg transition-all duration-300 transform translate-y-20 opacity-0 flex items-center justify-center focus:outline-none">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const supabaseUrl = 'https://nqwggnereuhphwmkqove.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xd2dnbmVyZXVocGh3bWtxb3ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDUxMjAsImV4cCI6MjA5MTM4MTEyMH0.1OM-fLTth5FcMKUPHgepeM3BdJMydHiK1coD0vw0o0M';
+
+        document.addEventListener('alpine:init', () => {
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+            Alpine.data('dentalPowerPage', () => ({
+                isContentReady: false,
+                pageData: { sections: [] },
+                expandedCards: {},
+                openFaqs: {},
+
+                getDefaultPageData() {
+                    return {
+                        sections: [
+                            {
+                                id: 'dental-hero',
+                                type: 'hero',
+                                enabled: true,
+                                order: 1,
+                                content: {
+                                    headline: 'Dental, Vision, and Hearing Savings For Your Household',
+                                    desc: 'Dental savings, vision care discounts, hearing services, and prescription savings.',
+                                    price_text: 'PRICE: $16.95/month',
+                                    image: 'Dental-power-page/Dental Power_Hero.jpg',
+                                    buttons: [{ text: 'Get Dental Power', link: 'https://buy.stripe.com/8x25kwgb80Gjgyg3hKcIE05' }]
+                                }
+                            },
+                            {
+                                id: 'dental-benefits',
+                                type: 'benefits',
+                                enabled: true,
+                                order: 2,
+                                content: {
+                                    headline: 'Essential Savings For <span class="text-brand-primary">Dental, Vision, Hearing & Prescriptions</span>',
+                                    desc: 'A dental and health savings package, combining dental network access, vision care, hearing services, and prescription discounts.',
+                                    cards: [
+                                        {
+                                            title: 'Dental Network Savings',
+                                            image: 'Dental-power-page/Dental Network Savings_DentalPower_card.jpg',
+                                            intro: 'Pay Yourself First offers our dental plan through Careington International Corporation. They have one of the most recognized professional dental networks in the nation and boasts a provider network of over 70,000 dental access points.',
+                                            paragraphs: ['As a member, you can take advantage of savings offered by an industry leader in discount dental care.'],
+                                            highlight_title: 'What\'s included:',
+                                            highlight_items: [
+                                                'Save 20% to 60% on most dental procedures including routine oral exams, unlimited cleanings, and major work such as dentures, root canals, and crowns.',
+                                                '20% savings on orthodontics including braces and retainers for children and adults',
+                                                '20% reduction on specialist normal fees including Endodontics, Oral Surgery, Pediatric Dentistry, Periodontics, and Prosthodontics where available',
+                                                'Cosmetic dentistry such as bonding and veneers also included',
+                                                'All dentists must meet highly selective credentialing standards based on education, background, license standing and other requirements.',
+                                                'You may visit any participating dentist on the plan and change providers at any time.'
+                                            ],
+                                            bullets: [],
+                                            notes: []
+                                        },
+                                        {
+                                            title: 'Vision Program',
+                                            image: 'Dental-power-page/Vision Program_DentalPower_card.jpg',
+                                            intro: 'VSP Vision Savings Pass is a discount vision program that offers savings on eye care and eyewear. With the best choices in eyewear, VSP makes it easy to find the perfect frame.',
+                                            paragraphs: [],
+                                            highlight_title: 'What\'s included:',
+                                            highlight_items: [
+                                                'Access to discounts through a trusted, private-practice VSP doctor',
+                                                'One rate of $50 for eye exams',
+                                                '15% savings on contact lens exams',
+                                                'Special pricing on complete pairs of glasses and sunglasses',
+                                                'Unlimited use on materials throughout the year',
+                                                'Exclusive Member Extras and special offers'
+                                            ],
+                                            bullets: [],
+                                            notes: [
+                                                '*Brands subject to change',
+                                                '**This cost is only available with the purchase of a complete pair of prescription glasses; otherwise you will receive 20% off an eye exam only.',
+                                                '***Applies only to contact lens exam, not materials. You are responsible for 100% of the contact lens material cost. This plan is not insurance. Not available in WA.'
+                                            ]
+                                        },
+                                        {
+                                            title: 'Hearing Program',
+                                            image: 'Dental-power-page/Hearing Program_DentalPower_card.jpg',
+                                            intro: 'We are pleased to provide a hearing care discount plan that makes hearing-aid services accessible, as well as affordable. HearPO is one of the largest providers of hearing health care benefits in the United States.',
+                                            paragraphs: [],
+                                            highlight_title: 'Key Features of Our HearPO:',
+                                            highlight_items: [
+                                                '30% discount on diagnostic services, including hearing exams',
+                                                'Lowest Price Guarantee*',
+                                                'Financing options with up to 12-months no interest',
+                                                '60 day no risk trial period',
+                                                '1 year follow-up care',
+                                                '3 year warranty on most hearing aids',
+                                                '1 year of free batteries (80 cell per hearing aid)',
+                                                'Discounts on batteries mailed directly to your home',
+                                                'Over a 90% customer satisfaction for over a decade'
+                                            ],
+                                            bullets: [],
+                                            notes: [
+                                                '*Competitor coupon required for verification of price and model. Limited to manufacturers offered through the HearPO program. Local provider quotes only will be matched.',
+                                                '**Some exclusions apply. Limited to one time claim for loss and damage.'
+                                            ]
+                                        },
+                                        {
+                                            title: 'Prescription Discount Program',
+                                            image: 'Dental-power-page/Prescription Discount Program_DentalPower_card.jpg',
+                                            intro: 'Members are entitled to prescription savings offered by MedImpact. Discounts are available at over 53,000 participating pharmacies nationwide.',
+                                            paragraphs: [
+                                                'Members can save even more on maintenance medications through the convenient and money-saving mail service. MedVantix members receive savings on 90 day supplies of medications when ordered online, by phone or through the mail with our mail-order pharmacy!',
+                                                'Our card is accepted in over 53,000 pharmacies nationwide including CVS Pharmacy, Walgreens, Walmart Pharmacy, Target, Rite Aid, Safeway, Kroger Pharmacy, Publix Pharmacy, Sam\'s Club Pharmacy, Costco Pharmacy, and many more.',
+                                                'For prescription drug pricing or to locate a participating pharmacy, please call toll free (855) PYF-CLUB.'
+                                            ],
+                                            highlight_title: '',
+                                            highlight_items: [],
+                                            bullets: [],
+                                            notes: []
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                id: 'dental-pricing',
+                                type: 'pricing',
+                                enabled: true,
+                                order: 3,
+                                content: {
+                                    headline: 'A Comprehensive Package For Just <span class="text-brand-primary">$16.95/mo</span>',
+                                    plan_name: 'Dental Power',
+                                    price: '$16.95/Month',
+                                    includes_title: 'Includes',
+                                    includes: ['Dental network access (70,000+ providers)', 'Vision savings program', 'Hearing care discounts', 'Prescription drug savings (53,000+ pharmacies)', 'Nationwide provider networks', 'Purchase Power retail discounts'],
+                                    button_text: 'Get Dental Power',
+                                    button_link: 'https://buy.stripe.com/8x25kwgb80Gjgyg3hKcIE05',
+                                    image: 'Dental-power-page/Dental Power_Comprehensive Package.jpg',
+                                    note: 'Dental Power includes Purchase Power at no additional cost.'
+                                }
+                            },
+                            {
+                                id: 'dental-faq',
+                                type: 'faq',
+                                enabled: true,
+                                order: 4,
+                                content: {
+                                    headline: 'Common <span class="text-brand-primary">Questions</span>',
+                                    questions: [
+                                        { q: 'Is PYF Dental Power an insurance plan?', a: 'No, PYF Dental Power is a discount plan. It provides predetermined discounts on dental, vision, hearing, and prescription medicine services.' },
+                                        { q: 'Can my whole family use it?', a: 'Yes. The Dental Power plan can be used by your entire household.' },
+                                        { q: 'Can I use this plan if I already have dental insurance?', a: 'Yes, this plan would not conflict with your dental insurance. It would be an added complement.' },
+                                        { q: 'Can I get Dental Power without joining as an affiliate?', a: 'Yes.' },
+                                        { q: 'What does "affiliate enrollment" mean?', a: 'PYF affiliate program is free and allows you to receive referral fees when you refer others to PYF products. You can enroll as an affiliate with any PYF product at no additional cost, or enroll as an affiliate with no product purchase required. <a href="affiliate-page.html" class="text-brand-primary underline">Learn more</a>' },
+                                        { q: 'Can I use Dental Power with my current dentist?', a: 'You can use the plan with any provider in the Dental Power network. Check the provider directory to see if your dentist participates.' },
+                                        { q: 'Are there any waiting periods or annual limits?', a: 'No. There are no waiting periods, no annual limits, and no pre-approvals required.' }
+                                    ]
+                                }
+                            },
+                            {
+                                id: 'dental-cta',
+                                type: 'bottom_cta',
+                                enabled: true,
+                                order: 5,
+                                content: {
+                                    headline: 'Ready To Get <span class="text-brand-primary">Dental Power?</span>',
+                                    button_text: 'Get Dental Power',
+                                    button_link: 'https://buy.stripe.com/8x25kwgb80Gjgyg3hKcIE05',
+                                    badges: ['30-Day Money-Back Guarantee', 'No Long-Term Contract', 'Providing service since 2011']
+                                }
+                            },
+                            {
+                                id: 'dental-disclaimer',
+                                type: 'disclaimer_section',
+                                enabled: true,
+                                order: 6,
+                                content: {
+                                    headline: 'Disclaimer',
+                                    body: '<p><strong>Disclosures: THIS PLAN IS NOT INSURANCE. THIS IS NOT A MEDICARE PRESCRIPTION DRUG PLAN.*</strong> This plan does not meet the minimum creditable coverage requirements under M.G.L. c. 111M and 956 CMR 5.00. The plan provides discounts at certain health care providers for medical services. The range of discounts will vary depending on the type of provider and service. The plan does not make payments directly to the providers of medical services. Plan members are obligated to pay for all health care services but will receive a discount from those health care providers who have contracted with the discount medical plan organization. You may access a list of participating health care providers at this website. Upon request the plan will make available a written list of participating health care providers. You have the right to cancel within the first 30 days after receipt of membership materials and receive a full refund, less a nominal processing fee (nominal fee for MD residents is $5). Discount Medical Plan</p><p><strong>Organization and administrator:</strong> Careington International Corporation, 7400 Gaylord Parkway, Frisco, TX 75034; phone 800-441-0380. The program and its administrators have no liability for providing or guaranteeing service by providers or the quality of service rendered by providers. This program is not available in Montana and Vermont. This plan is not currently available in Washington. *Medicare statement applies to MD residents when pharmacy discounts are part of program</p>'
+                                }
+                            }
+                        ]
+                    };
+                },
+
+                normalizeSection(section = {}, fallback = {}, index = 0) {
+                    return {
+                        id: section.id || fallback.id || `dental-section-${index + 1}`,
+                        type: section.type || fallback.type || `section-${index + 1}`,
+                        enabled: typeof section.enabled === 'boolean' ? section.enabled : (typeof fallback.enabled === 'boolean' ? fallback.enabled : true),
+                        order: Number(section.order ?? fallback.order ?? index + 1),
+                        content: JSON.parse(JSON.stringify(section.content || fallback.content || {}))
+                    };
+                },
+
+                hydratePageData(content = {}) {
+                    const defaults = this.getDefaultPageData();
+                    const defaultSections = defaults.sections || [];
+                    const incomingSections = Array.isArray(content.sections) ? content.sections : [];
+                    const sections = incomingSections.length
+                        ? incomingSections.map((section, index) => {
+                            const fallback = defaultSections.find((item) => item.type === section.type) || {};
+                            return this.normalizeSection(section, fallback, index);
+                        })
+                        : defaultSections.map((section, index) => this.normalizeSection(section, section, index));
+
+                    return { sections };
+                },
+
+                hasSection(type) {
+                    return (this.pageData.sections || []).some((section) => section.type === type && section.enabled !== false);
+                },
+
+                getSection(type) {
+                    return (this.pageData.sections || []).find((section) => section.type === type) || null;
+                },
+
+                getSectionContent(type) {
+                    return this.getSection(type)?.content || {};
+                },
+
+                hasExpandableContent(card = {}) {
+                    return Boolean(
+                        (Array.isArray(card.paragraphs) && card.paragraphs.length) ||
+                        (Array.isArray(card.highlight_items) && card.highlight_items.length) ||
+                        (Array.isArray(card.bullets) && card.bullets.length) ||
+                        (Array.isArray(card.notes) && card.notes.length) ||
+                        card.highlight_title
+                    );
+                },
+
+                toggleCard(index) {
+                    this.expandedCards[index] = !this.expandedCards[index];
+                },
+
+                toggleFaq(index) {
+                    this.openFaqs[index] = !this.openFaqs[index];
+                },
+
+                syncSectionLayout() {
+                    const root = document.querySelector('[data-dental-sections-root]');
+                    if (!root) return;
+
+                    const nodesByType = new Map(
+                        Array.from(root.querySelectorAll('[data-dental-section]')).map((node) => [node.dataset.dentalSection, node])
+                    );
+
+                    (this.pageData.sections || [])
+                        .sort((a, b) => a.order - b.order)
+                        .forEach((section) => {
+                            const node = nodesByType.get(section.type);
+                            if (node) root.appendChild(node);
+                        });
+                },
+
+                async init() {
+                    const mode = new URLSearchParams(window.location.search).get('mode');
+                    this.pageData = this.hydratePageData(this.getDefaultPageData());
+                    this.isContentReady = true;
+
+                    try {
+                        const { data, error } = await supabase
+                            .from('site_content')
+                            .select('*')
+                            .eq('page_id', 'dental-power')
+                            .single();
+
+                        if (error || !data) {
+                            console.error('Dental Power CMS load failed', error);
+                            await this.$nextTick();
+                            this.syncSectionLayout();
+                            return;
+                        }
+
+                        const content = mode === 'preview'
+                            ? data.draft_content
+                            : (data.published_content ?? data.live_content);
+
+                        if (!content) {
+                            console.error('Dental Power CMS content missing for mode', mode);
+                            await this.$nextTick();
+                            this.syncSectionLayout();
+                            return;
+                        }
+
+                        this.pageData = JSON.parse(JSON.stringify(content));
+                        this.pageData = this.hydratePageData(this.pageData);
+
+                        console.log('Dental page_id:', 'dental-power');
+                        console.log('Fetched:', data);
+                        console.log('Final pageData:', this.pageData);
+
+                        await this.$nextTick();
+                        this.syncSectionLayout();
+                        this.isContentReady = true;
+                    } catch (error) {
+                        console.error('Dental Power CMS load failed', error);
+                        await this.$nextTick();
+                        this.syncSectionLayout();
+                    }
+                }
+            }));
+        });
+
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        let lastScrollTop = 0;
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (header) {
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    header.classList.add('header-hidden');
+                } else {
+                    header.classList.remove('header-hidden');
+                }
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (!backToTopBtn) return;
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
+            } else {
+                backToTopBtn.classList.add('translate-y-20', 'opacity-0');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+    <script src="js/site-nav.js"></script>
+    <script src="js/site-footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "^/((?!(?:about-us|admin|admin-accept-invite|admin-cms|admin-login|admin-reset|affiliate-plan|business-support-package|contact-us|cookie|dental-power|disclaimer|doctor-power|duplicate-page-shell|how-we-help-you|index|packages|powershell|privacy|purchase-power|support|tax-season-discount|terms|use-policy)\\.html$)[^/]+\\.html)$",
+      "dest": "/duplicate-page-shell.html"
+    }
+  ]
+}

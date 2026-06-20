@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Yourself First - Doctor Power</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Roboto Flex", 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-primary': '#389400',
+                        'brand-dark': '#1c1c1c',
+                        'footer-bg': '#1f2022',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdn.pagesense.io/js/payyourselffirst/c2e5673c7d15457d8a0925080101f545.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        .sticky-header { transition: transform 0.3s ease-in-out; }
+        .header-hidden { transform: translateY(-100%); }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+
+<body class="bg-white text-gray-800 font-sans antialiased flex flex-col min-h-screen" x-data="doctorPowerPage()" x-init="init()" x-cloak>
+    <div id="main-header" class="fixed top-0 left-0 w-full z-50 sticky-header shadow-md">
+        <div class="bg-brand-dark text-white py-6 text-xs font-semibold">
+            <div class="container mx-auto px-4 flex justify-end items-center space-x-6">
+                <a href="https://payyourselffirst.benefithub.com/Welcome" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas fa-dollar-sign"></i></div> DISCOUNT PORTAL
+                </a>
+                <a href="https://backoffice.pyfaffiliates.com/merchants/login.php#login" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <i class="fas fa-user text-brand-primary mr-2"></i> AFFILIATE LOGIN
+                </a>
+            </div>
+        </div>
+        <nav class="bg-white py-4">
+            <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
+                <a href="index.html"><img src="pyf-logo.svg" alt="Pay Yourself First Logo" class="h-12 object-contain"></a>
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl text-brand-dark focus:outline-none"><i class="fas fa-bars"></i></button>
+                <div data-site-nav-desktop class="hidden lg:flex items-center space-x-5 text-xs xl:text-sm font-bold text-gray-700 uppercase"></div>
+            </div>
+            <div id="mobile-menu" data-site-nav-mobile class="hidden lg:hidden text-sm bg-white border-t mt-4 p-4 flex flex-col space-y-4 font-bold text-gray-700 uppercase"></div>
+        </nav>
+    </div>
+
+    <main class="flex-grow pt-40 md:pt-44">
+        <div data-doctor-sections-root x-show="isContentReady">
+            <header data-doctor-section="hero" x-show="hasSection('hero')" class="container mx-auto px-4 mb-16 mt-8">
+                <div class="relative rounded-[2rem] overflow-hidden min-h-[500px] md:h-[600px] shadow-2xl group">
+                    <img :src="getSectionContent('hero').image || ''" alt="Doctor Power Hero" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/40"></div>
+                    <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 py-20 md:px-20 md:py-0">
+                        <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-6 uppercase leading-tight drop-shadow-md max-w-5xl" x-html="getSectionContent('hero').headline"></h1>
+                        <p class="text-base md:text-xl text-gray-100 mb-8 font-medium leading-relaxed max-w-5xl" x-html="getSectionContent('hero').desc"></p>
+                        <div class="inline-block border-2 border-white rounded px-6 py-2 text-white font-bold text-lg mb-8 bg-white/10 backdrop-blur-sm max-w-lg" x-text="getSectionContent('hero').price_text"></div>
+                        <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                            <template x-for="(button, index) in (getSectionContent('hero').buttons || [])" :key="`hero-btn-${index}`">
+                                <a :href="button.link || '#'" :target="button.link && button.link.startsWith('http') ? '_blank' : null" class="bg-[#4a8a0a] text-white font-bold py-4 px-10 rounded shadow hover:bg-[#389400] transition uppercase text-sm tracking-wide text-center" x-text="button.text"></a>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <section data-doctor-section="benefits" x-show="hasSection('benefits')" class="py-16 md:py-24 bg-white">
+                <div class="container mx-auto px-4">
+                    <div class="text-center max-w-7xl mx-auto mb-16">
+                        <h2 class="text-2xl md:text-4xl font-extrabold text-brand-dark uppercase mb-6 leading-tight" x-html="getSectionContent('benefits').headline"></h2>
+                        <p class="text-gray-600 font-medium text-sm md:text-base" x-html="getSectionContent('benefits').desc"></p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-start max-w-7xl mx-auto">
+                        <template x-for="(card, index) in (getSectionContent('benefits').cards || [])" :key="`benefit-${index}`">
+                            <div class="bg-gray-50 rounded-xl shadow-lg overflow-hidden border border-gray-100 flex flex-col h-full">
+                                <div class="bg-[#4a8a0a] p-4 text-center h-24 flex items-center justify-center">
+                                    <h3 class="text-white font-bold text-sm uppercase leading-tight" x-html="card.title"></h3>
+                                </div>
+                                <div class="p-6 text-sm text-gray-700 leading-relaxed flex-grow">
+                                    <img :src="card.image || ''" :alt="card.title || `Benefit ${index + 1}`" class="mb-4 rounded-lg shadow-md">
+                                    <p class="mb-2" x-html="card.intro"></p>
+                                    <div x-show="expandedCards[index]" class="mt-4 space-y-4">
+                                        <template x-for="(paragraph, paragraphIndex) in (card.paragraphs || [])" :key="`benefit-paragraph-${index}-${paragraphIndex}`">
+                                            <p x-html="paragraph"></p>
+                                        </template>
+                                        <template x-if="(card.bullets || []).length">
+                                            <ul class="space-y-3">
+                                                <template x-for="(item, itemIndex) in (card.bullets || [])" :key="`benefit-bullet-${index}-${itemIndex}`">
+                                                    <li class="flex items-start">
+                                                        <i class="fas fa-circle text-[8px] text-brand-primary mt-1.5 mr-2"></i>
+                                                        <span x-html="item"></span>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                        </template>
+                                        <div x-show="card.highlight_title || (card.highlight_items || []).length">
+                                            <h4 class="font-bold text-brand-primary text-xs uppercase mb-2" x-text="card.highlight_title"></h4>
+                                            <ul class="space-y-2 text-xs">
+                                                <template x-for="(item, itemIndex) in (card.highlight_items || [])" :key="`benefit-highlight-${index}-${itemIndex}`">
+                                                    <li x-text="item"></li>
+                                                </template>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-6 pt-0 mt-auto">
+                                    <button @click="toggleCard(index)" class="w-full border border-gray-300 rounded-lg py-3 text-gray-600 font-bold text-xs uppercase hover:bg-white hover:text-brand-primary transition flex items-center justify-center">
+                                        <span x-text="expandedCards[index] ? 'Collapse' : 'Expand'"></span>
+                                        <i class="fas fa-chevron-down ml-2 transform transition-transform" :class="expandedCards[index] ? 'rotate-180' : ''"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <section data-doctor-section="dialcare_usage" x-show="hasSection('dialcare_usage')" class="py-16 md:py-24 bg-gray-50">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-center text-brand-dark uppercase mb-16" x-html="getSectionContent('dialcare_usage').headline"></h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center max-w-6xl mx-auto">
+                        <div>
+                            <h3 class="text-xl font-bold text-brand-dark mb-8" x-text="getSectionContent('dialcare_usage').list_title"></h3>
+                            <ul class="space-y-4 mb-10">
+                                <template x-for="(item, index) in (getSectionContent('dialcare_usage').items || [])" :key="`dialcare-item-${index}`">
+                                    <li class="flex items-start">
+                                        <div class="w-6 h-6 rounded-full bg-[#00695c] flex items-center justify-center text-white text-xs mt-0.5 mr-4 flex-shrink-0">
+                                            <i class="fas fa-clock"></i>
+                                        </div>
+                                        <span class="text-gray-700 font-medium" x-text="item"></span>
+                                    </li>
+                                </template>
+                            </ul>
+                            <a :href="getSectionContent('dialcare_usage').button_link || '#'" :target="getSectionContent('dialcare_usage').button_link && getSectionContent('dialcare_usage').button_link.startsWith('http') ? '_blank' : null" class="bg-[#4a8a0a] text-white font-bold py-4 px-10 rounded shadow hover:bg-[#389400] transition uppercase text-sm tracking-wide inline-block" x-text="getSectionContent('dialcare_usage').button_text"></a>
+                        </div>
+                        <div class="h-full min-h-[400px]">
+                            <img :src="getSectionContent('dialcare_usage').image || ''" alt="Doctor Power Use Cases" class="rounded-[2rem] shadow-xl w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section data-doctor-section="pricing" x-show="hasSection('pricing')" class="py-16 md:py-24 bg-white">
+                <div class="container mx-auto px-4 text-center">
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-brand-dark uppercase mb-16" x-html="getSectionContent('pricing').headline"></h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+                        <div class="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-100 text-left">
+                            <div class="bg-[#dcfce7] py-4 text-center">
+                                <h3 class="text-brand-dark font-black uppercase tracking-wider" x-text="getSectionContent('pricing').plan_name"></h3>
+                            </div>
+                            <div class="bg-[#4a8a0a] py-6 text-center">
+                                <h2 class="text-white text-3xl font-black uppercase" x-text="getSectionContent('pricing').price"></h2>
+                            </div>
+                            <div class="p-8">
+                                <h4 class="font-bold text-gray-900 text-sm mb-6 uppercase" x-text="getSectionContent('pricing').includes_title"></h4>
+                                <ul class="space-y-4 mb-8">
+                                    <template x-for="(item, index) in (getSectionContent('pricing').includes || [])" :key="`pricing-item-${index}`">
+                                        <li class="flex items-center">
+                                            <i class="fas fa-check-square text-brand-primary text-xl mr-3"></i>
+                                            <span class="text-gray-700 font-bold text-sm" x-text="item"></span>
+                                        </li>
+                                    </template>
+                                </ul>
+                                <a :href="getSectionContent('pricing').button_link || '#'" :target="getSectionContent('pricing').button_link && getSectionContent('pricing').button_link.startsWith('http') ? '_blank' : null" class="block w-full bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-4 rounded shadow transition text-center text-sm uppercase tracking-wide" x-text="getSectionContent('pricing').button_text"></a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="rounded-xl overflow-hidden shadow-lg mb-6 h-[350px]">
+                                <img :src="getSectionContent('pricing').image || ''" alt="Doctor Power Package" class="w-full h-full object-cover">
+                            </div>
+                            <div class="bg-[#dcfce7] p-4 rounded-lg text-center">
+                                <p class="text-sm font-medium text-gray-800" x-text="getSectionContent('pricing').note"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section data-doctor-section="faq" x-show="hasSection('faq')" class="py-16 bg-gray-50">
+                <div class="container mx-auto px-4 max-w-4xl">
+                    <h2 class="text-3xl font-extrabold text-center text-brand-dark uppercase mb-12" x-html="getSectionContent('faq').headline"></h2>
+                    <div class="space-y-4">
+                        <template x-for="(faq, index) in (getSectionContent('faq').questions || [])" :key="`faq-${index}`">
+                            <div class="border border-gray-200 rounded-lg overflow-hidden bg-white">
+                                <button @click="toggleFaq(index)" class="w-full flex justify-between items-center p-6 hover:bg-gray-50 transition focus:outline-none">
+                                    <span class="font-bold text-gray-900 text-left pr-4" x-text="faq.q"></span>
+                                    <i class="fas fa-chevron-down text-brand-primary transform transition-transform duration-300" :class="openFaqs[index] ? 'rotate-180' : ''"></i>
+                                </button>
+                                <div x-show="openFaqs[index]" class="p-6 border-t border-gray-100 text-gray-600 text-sm leading-relaxed" x-text="faq.a"></div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <section data-doctor-section="bottom_cta" x-show="hasSection('bottom_cta')" class="py-20 bg-[#F2FFEB]">
+                <div class="container mx-auto px-4 text-center">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-10" x-html="getSectionContent('bottom_cta').headline"></h2>
+                    <div class="mb-16">
+                        <a :href="getSectionContent('bottom_cta').button_link || '#'" :target="getSectionContent('bottom_cta').button_link && getSectionContent('bottom_cta').button_link.startsWith('http') ? '_blank' : null" class="bg-[#4a8a0a] hover:bg-[#389400] text-white font-bold py-5 px-16 rounded shadow-lg transition uppercase text-sm tracking-widest inline-block transform hover:-translate-y-1 hover:shadow-xl" x-text="getSectionContent('bottom_cta').button_text"></a>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                        <template x-for="(badge, index) in (getSectionContent('bottom_cta').badges || [])" :key="`cta-badge-${index}`">
+                            <div class="bg-[#dcfce7] rounded-xl p-6 flex items-center justify-center space-x-4 shadow-sm">
+                                <i class="fas fa-check-circle text-brand-primary text-3xl"></i>
+                                <span class="font-bold text-brand-dark text-sm" x-text="badge"></span>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <section data-doctor-section="disclaimer_section" x-show="hasSection('disclaimer_section')" class="py-12 bg-white">
+                <div class="container mx-auto px-4 max-w-6xl text-center">
+                    <h3 class="text-2xl font-bold text-brand-dark uppercase mb-8 pb-4 border-b border-gray-200 inline-block px-12" x-text="getSectionContent('disclaimer_section').headline"></h3>
+                    <div class="space-y-6 text-sm text-gray-500 leading-relaxed max-w-6xl mx-auto text-justify">
+                        <div>
+                            <p x-html="getSectionContent('disclaimer_section').body"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div data-pyf-footer-root></div>
+
+    <button id="backToTopBtn" onclick="scrollToTop()" class="fixed bottom-8 right-8 z-50 bg-brand-primary hover:bg-[#2d7a00] text-white w-12 h-12 rounded-full shadow-lg transition-all duration-300 transform translate-y-20 opacity-0 flex items-center justify-center focus:outline-none">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const supabaseUrl = 'https://nqwggnereuhphwmkqove.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xd2dnbmVyZXVocGh3bWtxb3ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDUxMjAsImV4cCI6MjA5MTM4MTEyMH0.1OM-fLTth5FcMKUPHgepeM3BdJMydHiK1coD0vw0o0M';
+
+        document.addEventListener('alpine:init', () => {
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+            Alpine.data('doctorPowerPage', () => ({
+                isContentReady: false,
+                pageData: { sections: [] },
+                expandedCards: {},
+                openFaqs: {},
+
+                getDefaultPageData() {
+                    return {
+                        sections: [
+                            {
+                                id: 'doctor-hero',
+                                type: 'hero',
+                                enabled: true,
+                                order: 1,
+                                content: {
+                                    headline: 'Health & Wellness Discounts For The Whole Household',
+                                    desc: 'Doctor Power gives you 24/7 telemedicine, dental savings, wellness discounts, and family legal support. <br> All in one comprehensive plan.',
+                                    price_text: 'PRICE: $24.95/month',
+                                    image: 'Doctor-power-page/Doctor Power_Hero.jpg',
+                                    buttons: [{ text: 'Get Doctor Power', link: 'https://buy.stripe.com/aFacMY9MK4Wz4Py9G8cIE04' }]
+                                }
+                            },
+                            {
+                                id: 'doctor-benefits',
+                                type: 'benefits',
+                                enabled: true,
+                                order: 2,
+                                content: {
+                                    headline: 'Essential Savings For <span class="text-brand-primary">Health, Wellness, And Legal Support</span>',
+                                    desc: 'Doctor Power is our most comprehensive health and wellness discount service, combining telemedicine, dental, wellness, and legal support savings in one service.',
+                                    cards: [
+                                        {
+                                            title: 'DialCare Physician Access -<br>24/7 Telehealth On Your Terms',
+                                            image: 'Doctor-power-page/Dialcare Physician Access_DoctorPower_card.jpg',
+                                            intro: 'DialCare Physician Access is a modern, easy-to-use telemedicine solution for non-emergency illnesses and general care.',
+                                            paragraphs: [
+                                                'Members and their families have direct access to state-licensed and fully credentialed doctors, via phone or video consultations, to receive treatment and advice for common ailments, including colds, the flu, rashes and more. When medically appropriate, a DialCare doctor may prescribe a short term, non-DEA controlled medication for the member to pick up at the pharmacy of their choice.',
+                                                'Doctors are available 24 hours a day, 365 days a year, allowing members and their families convenient access to quality care from home, work or on the go.'
+                                            ],
+                                            bullets: [],
+                                            highlight_title: '',
+                                            highlight_items: []
+                                        },
+                                        {
+                                            title: 'Dental, Vision & Hearing Savings',
+                                            image: 'Doctor-power-page/Dental. Vision. Hearing & Savings_DoctorPower_card.jpg',
+                                            intro: 'Included with Doctor Power.',
+                                            paragraphs: [],
+                                            bullets: ['Nationwide Dental Network', 'Vision Program', 'Hearing Program', 'Nurse Hotline', 'Prescription Discounts'],
+                                            highlight_title: '',
+                                            highlight_items: []
+                                        },
+                                        {
+                                            title: 'Wellness & Fitness Savings',
+                                            image: 'Doctor-power-page/Wellness & Fitness_DoctorPower_card.jpg',
+                                            intro: 'Members will have access to a wide variety of complementary health care programs through American Specialty Health Networks, Inc. and its affiliate Healthyroads, Inc.',
+                                            paragraphs: [
+                                                'Members will receive a 25% discount off normal fees for services. Our complementary health care network includes Chiropractors, Massage Therapists, Acupuncturists, and Dietitians.'
+                                            ],
+                                            bullets: [
+                                                'Receive discounts on a wide variety of health and wellness products including vitamins, minerals, herbal supplements, homeopathic remedies, sports nutrition products, health related books and DVDs, fitness products, and skin care items, with free shipping on most orders.',
+                                                'Utilize a nationwide network of more than 20,000 credentialed complementary health care providers which include more than 14,000 chiropractors.',
+                                                'You may receive either a minimum 10 percent discount off initiation and/or monthly dues, or the best available public rate based on the type of membership selected at 14,000 fitness clubs and exercise centers nationwide.'
+                                            ],
+                                            highlight_title: 'Your Wellness Access Includes:',
+                                            highlight_items: ['25% off services like chiropractic care, massage therapy, acupuncture, and dietitians', 'Discounts on vitamins, supplements, natural remedies, fitness gear, books, and more', 'Free shipping on most wellness product orders', 'Nationwide network of 20,000+ credentialed providers', 'Save at 14,000 fitness centers with discounted rates or try a facility free for one week']
+                                        },
+                                        {
+                                            title: 'Legal Referral Program',
+                                            image: 'Doctor-power-page/Legal Referral Program_DoctorPower_card.jpg',
+                                            intro: 'You and your family will have access to a nationwide network of over 20,000 plan attorneys that have contracted with Legal Club to provide free and discounted legal services.',
+                                            paragraphs: [
+                                                'Legal Club of America - Legal Referral Program',
+                                                'Upon contacting our Member Service department, you will be referred to a plan attorney based on language, area of law and location.',
+                                                'Legal peace of mind, made simple. Whether it\'s drafting a will or handling a landlord dispute, get the legal guidance you need without the high cost.'
+                                            ],
+                                            bullets: ['No-Cost Services', 'Exclusive Flat Fee Services*', 'Low Hourly Plan Rate Discount Services', 'Discounted Contingency Fees'],
+                                            highlight_title: 'What\'s included:',
+                                            highlight_items: ['Free initial phone or in-person consultations with licensed attorneys', 'Access to 20,000+ attorneys across the U.S.', 'Flat-fee services for common needs', 'Discounted hourly rates for more complex matters', 'Help with wills, traffic tickets, family law, real estate, and more']
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                id: 'doctor-dialcare',
+                                type: 'dialcare_usage',
+                                enabled: true,
+                                order: 3,
+                                content: {
+                                    headline: 'When To Use <span class="text-brand-primary">DialCare</span>',
+                                    list_title: 'Use Dialcare When',
+                                    items: ['You need medical guidance for a non-emergency issue', 'It\'s after-hours, on the weekend, or a holiday', 'Your primary doctor is unavailable', 'You\'re traveling and need care on the road', 'You live far from a clinic or doctor\'s office', 'You need quick advice before going to urgent care', 'You\'re managing a minor chronic condition', 'You\'re caring for a child or elderly parent and need direction', 'You want to avoid exposure in crowded waiting rooms'],
+                                    button_text: 'Get Doctor Power',
+                                    button_link: 'https://buy.stripe.com/aFacMY9MK4Wz4Py9G8cIE04',
+                                    image: 'Doctor-power-page/Doctor Power_When to use Dialcare.jpg'
+                                }
+                            },
+                            {
+                                id: 'doctor-pricing',
+                                type: 'pricing',
+                                enabled: true,
+                                order: 4,
+                                content: {
+                                    headline: 'A Comprehensive Package For Just <span class="text-brand-primary">$24.95/mo</span>',
+                                    plan_name: 'Doctor Power',
+                                    price: '$24.95/Month',
+                                    includes_title: 'Includes',
+                                    includes: ['24/7 telemedicine access', 'Dental, vision & hearing savings (Dental Power included)', 'Wellness & fitness discounts', 'Legal referral program', 'Nationwide provider networks', 'Purchase Power retail discounts'],
+                                    button_text: 'Get Doctor Power',
+                                    button_link: 'https://buy.stripe.com/aFacMY9MK4Wz4Py9G8cIE04',
+                                    image: 'Doctor-power-page/Comprehensive Package.jpg',
+                                    note: 'Doctor Power includes Dental Power and Purchase Power.'
+                                }
+                            },
+                            {
+                                id: 'doctor-faq',
+                                type: 'faq',
+                                enabled: true,
+                                order: 5,
+                                content: {
+                                    headline: 'Common <span class="text-brand-primary">Questions</span>',
+                                    questions: [
+                                        { q: 'Is this health insurance?', a: 'No. Doctor Power is a discount program, not insurance. It provides access to discounted health and wellness services.' },
+                                        { q: 'Can my whole family use it?', a: 'Yes. The Doctor Power plan can be used by your entire household.' },
+                                        { q: 'Can I get Doctor Power without joining as an affiliate?', a: 'Yes. Doctor Power can be purchased directly as a customer without becoming an affiliate.' },
+                                        { q: 'What does "affiliate enrollment" mean?', a: 'It means you choose to join the PYF affiliate program and can earn referral fees by sharing our services. This is optional and not required to purchase Doctor Power.' },
+                                        { q: 'What kinds of medical issues can I use DialCare for?', a: 'DialCare is for non-emergency medical issues like colds, flu, sinus infections, allergies, minor skin conditions, and general health concerns.' },
+                                        { q: 'Are DialCare doctors licensed?', a: 'Yes. DialCare doctors are fully licensed, state-credentialed physicians.' },
+                                        { q: 'Can I use DialCare while traveling?', a: 'Yes. If you are traveling within the U.S., you can still use DialCare from wherever you are.' },
+                                        { q: 'Are there any fees associated with DialCare?', a: 'No. Doctor Power gives you access to DialCare as part of your monthly membership.' },
+                                        { q: 'What should I do in an emergency?', a: 'In an emergency, call 911 or go to the nearest emergency room. DialCare is not for emergency situations.' },
+                                        { q: 'Are prescriptions guaranteed?', a: 'No. Prescriptions are issued only when medically appropriate and are determined by the doctor.' },
+                                        { q: 'What legal services are included in the Family Legal Plan?', a: 'The plan includes referrals to network attorneys, free consultations, discounted hourly rates, and exclusive flat-fee services for common legal matters.' },
+                                        { q: 'What is included in the Wellness & Fitness program?', a: 'Get discounts on chiropractic, massage, acupuncture, dietitian services, wellness products, and fitness club memberships-all through the Doctor Power complementary care program.' },
+                                        { q: 'Is Doctor Power available through my employer or organization?', a: 'Yes. Doctor Power is available to groups/employers with 3+ members/employees. Contact us to learn more about group enrollment options.' }
+                                    ]
+                                }
+                            },
+                            {
+                                id: 'doctor-cta',
+                                type: 'bottom_cta',
+                                enabled: true,
+                                order: 6,
+                                content: {
+                                    headline: 'Ready To Get <span class="text-brand-primary">Doctor Power?</span>',
+                                    button_text: 'Get Doctor Power',
+                                    button_link: 'https://buy.stripe.com/aFacMY9MK4Wz4Py9G8cIE04',
+                                    badges: ['30-Day Money-Back Guarantee', 'No Long-Term Contract', 'Providing service since 2011']
+                                }
+                            },
+                            {
+                                id: 'doctor-disclaimer',
+                                type: 'disclaimer_section',
+                                enabled: true,
+                                order: 7,
+                                content: {
+                                    headline: 'Disclaimer',
+                                    body: '<strong>Disclosure:</strong> THIS PLAN IS NOT INSURANCE. THIS IS NOT A MEDICARE PRESCRIPTION DRUG PLAN.* This plan does not meet the minimum creditable coverage requirements under M.G.L. c. 111M and 956 CMR 5.00. The plan provides discounts at certain health care providers for medical services. The range of discounts will vary depending on the type of provider and service. The plan does not make payments directly to the providers of medical services. Plan members are obligated to pay for all health care services but will receive a discount from those health care providers who have contracted with the discount medical plan organization. You may access a list of participating health care providers at this website. Upon request the plan will make available a written list of participating health care providers. You have the right to cancel within the first 30 days after receipt of membership materials and receive a full refund, less a nominal processing fee (nominal fee for MD residents is $5). Discount Medical Plan Organization and administrator: Careington International Corporation, 7400 Gaylord Parkway, Frisco, TX 75034; phone 800-441-0380. The program and its administrators have no liability for providing or guaranteeing service by providers or the quality of service rendered by providers. This program is not available in Montana and Vermont. This plan is not currently available in Washington. *Medicare statement applies to MD residents when pharmacy discounts are part of program'
+                                }
+                            }
+                        ]
+                    };
+                },
+
+                normalizeSection(section = {}, fallback = {}, index = 0) {
+                    return {
+                        id: section.id || fallback.id || `doctor-section-${index + 1}`,
+                        type: section.type || fallback.type || `section-${index + 1}`,
+                        enabled: typeof section.enabled === 'boolean' ? section.enabled : (typeof fallback.enabled === 'boolean' ? fallback.enabled : true),
+                        order: Number(section.order ?? fallback.order ?? index + 1),
+                        content: JSON.parse(JSON.stringify(section.content || fallback.content || {}))
+                    };
+                },
+
+                hydratePageData(content = {}) {
+                    const defaults = this.getDefaultPageData();
+                    const defaultSections = defaults.sections || [];
+                    const incomingSections = Array.isArray(content.sections) ? content.sections : [];
+                    const sections = incomingSections.length
+                        ? incomingSections.map((section, index) => {
+                            const fallback = defaultSections.find((item) => item.type === section.type) || {};
+                            return this.normalizeSection(section, fallback, index);
+                        })
+                        : defaultSections.map((section, index) => this.normalizeSection(section, section, index));
+
+                    return { sections };
+                },
+
+                getOrderedSections() {
+                    return (this.pageData.sections || []).sort((a, b) => a.order - b.order);
+                },
+
+                hasSection(type) {
+                    return (this.pageData.sections || []).some((section) => section.type === type && section.enabled !== false);
+                },
+
+                getSection(type) {
+                    return (this.pageData.sections || []).find((section) => section.type === type) || null;
+                },
+
+                getSectionContent(type) {
+                    return this.getSection(type)?.content || {};
+                },
+
+                toggleCard(index) {
+                    this.expandedCards[index] = !this.expandedCards[index];
+                },
+
+                toggleFaq(index) {
+                    this.openFaqs[index] = !this.openFaqs[index];
+                },
+
+                syncSectionLayout() {
+                    const root = document.querySelector('[data-doctor-sections-root]');
+                    if (!root) return;
+
+                    const nodesByType = new Map(
+                        Array.from(root.querySelectorAll('[data-doctor-section]')).map((node) => [node.dataset.doctorSection, node])
+                    );
+
+                    (this.pageData.sections || [])
+                        .sort((a, b) => a.order - b.order)
+                        .forEach((section) => {
+                            const node = nodesByType.get(section.type);
+                            if (node) root.appendChild(node);
+                        });
+                },
+
+                async init() {
+                    const mode = new URLSearchParams(window.location.search).get('mode');
+                    this.pageData = this.hydratePageData(this.getDefaultPageData());
+                    this.isContentReady = true;
+
+                    try {
+                        const { data, error } = await supabase
+                            .from('site_content')
+                            .select('*')
+                            .eq('page_id', 'doctor-power')
+                            .single();
+
+                        if (error || !data) {
+                            console.error('Doctor Power CMS load failed', error);
+                            await this.$nextTick();
+                            this.syncSectionLayout();
+                            return;
+                        }
+
+                        const content = mode === 'preview'
+                            ? data.draft_content
+                            : (data.published_content ?? data.live_content);
+
+                        if (!content) {
+                            console.error('Doctor Power CMS content missing for mode', mode);
+                            await this.$nextTick();
+                            this.syncSectionLayout();
+                            return;
+                        }
+
+                        this.pageData = JSON.parse(JSON.stringify(content));
+                        this.pageData = this.hydratePageData(this.pageData);
+
+                        console.log('Doctor page_id:', 'doctor-power');
+                        console.log('Fetched:', data);
+                        console.log('Final pageData:', this.pageData);
+
+                        await this.$nextTick();
+                        this.syncSectionLayout();
+                        this.isContentReady = true;
+                    } catch (error) {
+                        console.error('Doctor Power CMS load failed', error);
+                        await this.$nextTick();
+                        this.syncSectionLayout();
+                    }
+                }
+            }));
+        });
+
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        let lastScrollTop = 0;
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (header) {
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    header.classList.add('header-hidden');
+                } else {
+                    header.classList.remove('header-hidden');
+                }
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => {
+            if (!backToTopBtn) return;
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
+            } else {
+                backToTopBtn.classList.add('translate-y-20', 'opacity-0');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+    <script src="js/site-nav.js"></script>
+    <script src="js/site-footer.js"></script>
+</body>
+</html>

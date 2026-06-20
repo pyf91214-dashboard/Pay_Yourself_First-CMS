@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Yourself First</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Roboto Flex", 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-primary': '#389400', 
+                        'brand-dark': '#1c1c1c',
+                        'footer-bg': '#1f2022',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom styles for sticky header transition */
+         .sticky-header { transition: transform 0.3s ease-in-out; }
+        .header-hidden { transform: translateY(-100%); }
+        .cms-image-pending { opacity: 0; }
+        .cms-image-ready { opacity: 1; }
+        [x-cloak] { display: none !important; }
+        
+    </style>
+
+    <script src="https://cdn.pagesense.io/js/payyourselffirst/c2e5673c7d15457d8a0925080101f545.js"></script>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Alpine.js for Interactions -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+</head>
+
+<body class="bg-white text-gray-800 font-sans antialiased flex flex-col min-h-screen" x-data="siteData">
+
+   <div id="main-header" class="fixed top-0 left-0 w-full z-50 sticky-header shadow-md">
+        <div class="bg-brand-dark text-white py-6 text-xs font-semibold">
+            <div class="container mx-auto px-4 flex justify-end items-center space-x-6">
+                <a href="https://payyourselffirst.benefithub.com/Welcome" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas fa-dollar-sign"></i></div> DISCOUNT PORTAL
+                </a>
+                <a href="https://backoffice.pyfaffiliates.com/merchants/login.php#login" class="flex items-center hover:text-brand-primary transition" target="_blank">
+                    <i class="fas fa-user text-brand-primary mr-2"></i> AFFILIATE LOGIN
+                </a>
+            </div>
+        </div>
+        <nav class="bg-white py-4">
+            <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
+                <a href="index.html"><img src="pyf-logo.svg" alt="Pay Yourself First Logo" class="h-12 object-contain"></a>
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl text-brand-dark focus:outline-none"><i class="fas fa-bars"></i></button>
+                <div data-site-nav-desktop class="hidden lg:flex items-center space-x-5 text-xs xl:text-sm font-bold text-gray-700 uppercase"></div>
+            </div>
+            <div id="mobile-menu" data-site-nav-mobile class="hidden lg:hidden text-sm bg-white border-t mt-4 p-4 flex flex-col space-y-4 font-bold text-gray-700 uppercase"></div>
+        </nav>
+    </div>
+
+ <div data-home-sections-root>
+
+ <header data-home-section="hero" x-cloak x-show="isContentReady && hasSection('hero')" class="container mx-auto px-4 mb-16 mt-48">
+        <div class="relative rounded-[2rem] overflow-hidden min-h-[600px] md:h-[750px] shadow-2xl group flex flex-col justify-center">
+            
+            <img :src="resolvedImages.hero || ''"
+                 alt="Couple Relaxing" 
+                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                 :class="loadedImages.hero ? 'cms-image-ready' : 'cms-image-pending'">
+            
+            <div class="absolute inset-0 bg-black/40"></div>
+
+            <div class="relative z-10 flex flex-col items-center justify-center text-center px-4 md:px-20 py-16 md:py-0">
+                <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white mb-8 uppercase leading-relaxed drop-shadow-md" x-text="pageData.hero_title || 'Loading...'">
+                </h1>
+                
+                <p class="text-base md:text-xl text-gray-100 mb-12 max-w-4xl font-normal leading-relaxed" x-text="pageData.hero_subtitle || ''">
+                </p>
+                
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                    <template x-for="(button, index) in pageData.hero_buttons || []" :key="`hero-button-${index}`">
+                        <a :href="button.url || '#'" target="_blank" :class="index === 0 ? 'bg-gradient-to-r from-[#E0FFCC] to-[#F2FFEB] text-brand-primary font-extrabold' : 'bg-gradient-to-r from-[#389400] to-[#75C400] text-white font-bold'" class="py-4 px-10 rounded shadow hover:shadow-lg transition uppercase text-sm tracking-wide" x-text="button.text || `Button ${index + 1}`">
+                        </a>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+
+   <main class="flex-grow">
+
+
+<section data-home-section="pillars" x-cloak x-show="isContentReady && hasSection('pillars')" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+            
+            <h2 class="text-2xl md:text-4xl font-extrabold text-center text-brand-dark uppercase mb-16">
+                Three Ways to Take <span class="text-brand-primary">Control</span> of Your <span class="text-brand-primary">Money</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
+                <template x-for="(pillar, index) in pageData.pillars" :key="index">
+                    <div :class="index === 2 ? 'bg-brand-primary p-10 rounded-3xl text-center shadow-xl transform md:-translate-y-2' : 'bg-[#F2FFEB] p-10 rounded-3xl text-center shadow-sm hover:shadow-md transition duration-300'">
+                        <div :class="index === 2 ? 'bg-white text-brand-primary' : 'bg-brand-primary text-white'" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl shadow-lg">
+                            <i class="fas" :class="pillar.icon || 'fa-star'"></i>
+                        </div>
+                        <h3 :class="index === 2 ? 'text-white' : 'text-gray-900'" class="text-xl font-bold mb-4" x-text="pillar.title"></h3>
+                        <p :class="index === 2 ? 'text-white text-opacity-90' : 'text-gray-600'" class="text-sm leading-relaxed" x-text="pillar.desc"></p>
+                    </div>
+                </template>
+            </div>
+
+            <div class="text-center max-w-4xl mx-auto">
+                <p class="text-gray-700 font-medium text-lg mb-10 leading-relaxed">
+                    Whether you want one, two, or all three—Pay Yourself First has an option designed for your goals. Most people serious about tax savings, financial literacy, and entrepreneurship choose Business Support Package.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <template x-for="(button, index) in pageData.pillars_buttons || []" :key="`pillars-button-${index}`">
+                        <a :href="button.url || '#'" target="_blank" :class="index === 0 ? 'bg-gradient-to-r from-[#E0FFCC] to-[#F2FFEB] text-brand-primary font-extrabold' : 'bg-gradient-to-r from-[#389400] to-[#75C400] text-white font-bold'" class="py-3 px-8 rounded shadow hover:shadow-lg transition uppercase text-xs tracking-wider" x-text="button.text || `Button ${index + 1}`">
+                        </a>
+                    </template>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section data-home-section="tax_systems" x-cloak x-show="isContentReady && hasSection('tax_systems')" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+            
+            <h2 class="text-2xl md:text-4xl font-extrabold text-center text-brand-dark uppercase mb-16" x-html="pageData.tax_systems.headline">
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                
+                <div>
+                    <p class="text-gray-600 mb-8 text-base leading-relaxed" x-text="pageData.tax_systems.desc">
+                    </p>
+
+                    <h4 class="font-bold text-gray-900 text-lg mb-6" x-text="pageData.tax_systems.perks_headline || 'If any of these perks sound attractive, you\'re not alone:'"></h4>
+
+                    <ul class="space-y-5 mb-10">
+                        <template x-for="(perk, index) in pageData.tax_systems.perks_list || []" :key="index">
+                            <li class="flex items-start">
+                                <div class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-primary flex items-center justify-center text-white text-xs mt-1 mr-4">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <span class="text-gray-700 text-sm font-medium" x-text="perk"></span>
+                            </li>
+                        </template>
+                    </ul>
+
+                    <div class="flex flex-col sm:flex-row sm:flex-wrap gap-4">
+                        <template x-for="(button, index) in pageData.tax_systems.buttons || []" :key="`tax-button-${index}`">
+                            <a :href="button.url || '#'" target="_blank" class="bg-gradient-to-r from-[#389400] to-[#75C400] text-white font-bold py-4 px-10 rounded shadow-md hover:shadow-lg transition uppercase text-sm inline-block" x-text="button.text || `Button ${index + 1}`">
+                            </a>
+                        </template>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <img :src="resolvedImages.taxSystems || ''" 
+                         alt="Consultation Meeting" 
+                         class="rounded-[2rem] shadow-xl w-full object-cover h-[500px] transition-opacity duration-200"
+                         :class="loadedImages.taxSystems ? 'cms-image-ready' : 'cms-image-pending'">
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section data-home-section="peace_of_mind" x-cloak x-show="isContentReady && hasSection('peace_of_mind')" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                
+                <div class="relative order-2 lg:order-1">
+                    <img :src="resolvedImages.peaceOfMind || ''" 
+                         alt="Money in Pocket" 
+                         class="rounded-[2rem] shadow-xl w-full object-cover h-[450px] transition-opacity duration-200"
+                         :class="loadedImages.peaceOfMind ? 'cms-image-ready' : 'cms-image-pending'">
+                </div>
+
+                <div class="order-1 lg:order-2">
+                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold text-brand-dark uppercase mb-6 leading-tight" x-html="pageData.peace_of_mind.headline">
+                    </h2>
+                    
+                    <p class="text-gray-600 mb-8 text-base leading-relaxed" x-text="pageData.peace_of_mind.desc">
+                    </p>
+
+                    <h4 class="font-bold text-gray-900 text-lg mb-6" x-text="pageData.peace_of_mind.advantages_headline || 'Key Advantages'"></h4>
+
+                    <ul class="space-y-4 mb-10">
+                        <template x-for="(adv, index) in pageData.peace_of_mind.advantages_list || []" :key="index">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-square text-brand-primary text-xl mt-1 mr-4"></i>
+                                <span class="text-gray-700 text-sm font-medium leading-relaxed" x-text="adv"></span>
+                            </li>
+                        </template>
+                    </ul>
+
+                    <div class="flex flex-col sm:flex-row sm:flex-wrap gap-4">
+                        <template x-for="(button, index) in pageData.peace_of_mind.buttons || []" :key="`peace-button-${index}`">
+                            <a :href="button.url || '#'" target="_blank" class="bg-gradient-to-r from-[#389400] to-[#75C400] text-white font-bold py-4 px-10 rounded shadow-md hover:shadow-lg transition uppercase text-sm inline-block tracking-wide" x-text="button.text || `Button ${index + 1}`">
+                            </a>
+                        </template>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section data-home-section="support_features" x-cloak x-show="isContentReady && hasSection('support_features')" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            
+            <h2 class="text-2xl md:text-4xl font-extrabold text-brand-dark uppercase mb-6">
+                Support You Can <span class="text-brand-primary">Count</span> On
+            </h2>
+            <p class="text-gray-600 max-w-5xl mx-auto mb-16 text-sm md:text-base">
+                Professional support is included with Business Support Package - tax guidance, legal services, business coaching, and discount access.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <template x-for="(feature, index) in pageData.support_features || []" :key="feature.id || index">
+                    <div class="bg-[#efffe0] p-8 rounded-2xl flex flex-col items-center hover:shadow-md transition duration-300">
+                        <div class="w-16 h-16 bg-brand-primary rounded-full flex items-center justify-center mb-6 text-white text-2xl shadow-sm">
+                            <i class="fas" :class="feature.icon || 'fa-star'"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900 text-lg mb-3" x-text="feature.title"></h3>
+                        <p class="text-gray-600 text-sm leading-relaxed" x-text="feature.desc"></p>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+        <section data-home-section="history" x-cloak x-show="isContentReady && hasSection('history')" class="py-16 bg-[#efffe0] text-center text-white items-center justify-center">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl md:text-3xl text-[#0D3500] font-extrabold uppercase mb-4 tracking-wide" x-text="pageData.history.headline">
+                Serving People Since 2011
+            </h2>
+            <p class="text-[#222222] text-opacity-90 max-w-2xl mx-auto mb-8 text-lg font-medium" x-text="pageData.history.desc">
+               For over a decade, Pay Yourself First has helped W-2 employees,
+independent contractors, and entrepreneurs legally reduce their tax liability, cut
+expenses, and build an additional income stream.
+            </p>
+
+            <p class="text-brand-primary text-opacity-90 max-w-2xl mx-auto text-xl font-semibold" x-text="pageData.history.guarantee">
+                All backed by our 30-Day Money-Back Guarantee.
+            </p>
+            
+        </div>
+    </section>
+
+
+ <section data-home-section="testimonials" x-cloak x-show="isContentReady && hasSection('testimonials')" x-init="$nextTick(() => initHomeTestimonialSlider())" class="py-20 bg-gray-50 relative group">
+        <div class="container mx-auto px-4">
+            
+            <h2 class="text-3xl md:text-4xl font-extrabold text-center uppercase mb-16 text-brand-dark">
+                Real People. <span class="text-brand-primary">Real Results.</span>
+            </h2>
+
+            <div class="relative max-w-6xl mx-auto">
+                
+                <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 lg:-translate-x-12 z-20 bg-white text-brand-primary hover:bg-brand-primary hover:text-white border-2 border-brand-primary w-12 h-12 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 opacity-0 pointer-events-none" onclick="scrollSlider(-1)">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+
+                <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 lg:translate-x-12 z-20 bg-brand-primary text-white hover:bg-[#2c7500] w-12 h-12 rounded-full flex items-center justify-center shadow-xl transition-all duration-300" onclick="scrollSlider(1)">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+
+                <div id="sliderContainer" class="flex space-x-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-8 pt-4 px-2 items-stretch" style="scrollbar-width: none; -ms-overflow-style: none;">
+                    <template x-for="(testimonial, index) in pageData.testimonials.items" :key="index">
+                        <div class="min-w-[100%] md:min-w-[calc(50%-12px)] bg-white p-8 md:p-10 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.06)] border border-gray-100 snap-start flex flex-col justify-between relative overflow-hidden group hover:shadow-[0_8px_30px_rgba(0,0,0,0.1)] transition-shadow duration-300 h-auto">
+                            <i class="fas fa-quote-right absolute -bottom-6 -right-6 text-9xl text-brand-primary opacity-5 group-hover:opacity-10 transition-opacity duration-300"></i>
+                            <div>
+                                <div class="flex space-x-1 text-yellow-400 text-sm mb-6">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-gray-700 text-base md:text-lg italic font-medium leading-relaxed relative z-10" x-text="`&quot;${testimonial.quote}&quot;`"></p>
+                            </div>
+                            <div class="mt-10 flex items-center relative z-10">
+                                <div class="w-12 h-12 rounded-full bg-[#F2FFEB] flex items-center justify-center text-brand-primary font-bold text-lg border border-[#dcfce7]" x-text="testimonial.author_initials"></div>
+                                <div class="ml-4">
+                                    <h4 class="font-bold text-brand-dark" x-text="testimonial.author_name"></h4>
+                                    <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold mt-0.5">Verified Member</p>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            #sliderContainer::-webkit-scrollbar { display: none; }
+        </style>
+
+        <script>
+            function getHomeSliderParts() {
+                return {
+                    slider: document.getElementById('sliderContainer'),
+                    prevBtn: document.getElementById('prevBtn'),
+                    nextBtn: document.getElementById('nextBtn')
+                };
+            }
+
+            function scrollSlider(direction) {
+                const { slider } = getHomeSliderParts();
+                if (!slider || !slider.firstElementChild) return;
+
+                const cardWidth = slider.firstElementChild.offsetWidth + 24;
+                slider.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+            }
+
+            function updateArrows() {
+                const { slider, prevBtn, nextBtn } = getHomeSliderParts();
+                if (!slider || !prevBtn || !nextBtn) return;
+
+                const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
+
+                if (slider.scrollLeft > 10) {
+                    prevBtn.classList.remove('opacity-0', 'pointer-events-none');
+                } else {
+                    prevBtn.classList.add('opacity-0', 'pointer-events-none');
+                }
+
+                if (slider.scrollLeft >= maxScrollLeft - 10) {
+                    nextBtn.classList.add('opacity-0', 'pointer-events-none');
+                } else {
+                    nextBtn.classList.remove('opacity-0', 'pointer-events-none');
+                }
+            }
+
+            function initHomeTestimonialSlider() {
+                const { slider } = getHomeSliderParts();
+                if (!slider || slider.dataset.sliderBound === 'true') {
+                    updateArrows();
+                    return;
+                }
+
+                slider.addEventListener('scroll', updateArrows);
+                slider.dataset.sliderBound = 'true';
+                updateArrows();
+            }
+
+            window.addEventListener('load', updateArrows);
+            window.addEventListener('resize', updateArrows);
+        </script>
+    </section>
+
+    <section data-home-section="packages_intro" x-cloak x-show="isContentReady && hasSection('packages_intro')" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+            
+            <div class="text-center mb-16 max-w-4xl mx-auto">
+                <h2 class="text-2xl md:text-4xl font-extrabold text-brand-dark uppercase mb-6 leading-tight" x-html="pageData.packages_intro.headline">
+                </h2>
+                <p class="text-gray-600 text-sm md:text-base leading-relaxed" x-text="pageData.packages_intro.desc">
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20 items-stretch">
+                
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-sm border border-gray-100 flex flex-col">
+                    <div class="bg-brand-primary py-4 px-8">
+                        <h3 class="text-white font-bold text-xl uppercase tracking-wide">Affiliate Program</h3>
+                    </div>
+                    <div class="p-8 flex-grow flex flex-col justify-between">
+                        <p class="text-gray-600 text-sm leading-7 mb-8" x-text="pageData.packages_intro.affiliate_text">
+                        </p>
+                        <div>
+                            <a href="affiliate-plan.html" target="_blank" class="bg-brand-primary text-white font-bold py-3 px-8 rounded shadow hover:bg-[#75C400] transition uppercase text-xs tracking-wider inline-block">
+                               View Affiliate Program
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="h-[360px] min-h-[300px]">
+                    <img :src="resolvedImages.affiliate || ''" 
+                         alt="Happy Family" 
+                         class="w-full h-full object-cover rounded-xl shadow-lg transition-opacity duration-200"
+                         :class="loadedImages.affiliate ? 'cms-image-ready' : 'cms-image-pending'">
+                </div>
+            </div>
+
+            <div class="rounded-xl overflow-hidden shadow-lg border border-gray-200">
+                <div class="bg-brand-primary py-5 text-center">
+                    <h3 class="text-white font-extrabold text-2xl uppercase tracking-wider">Service Packages</h3>
+                </div>
+
+                <div class="bg-white p-6 md:p-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <template x-for="(pkg, index) in pageData.service_packages || []" :key="index">
+                            <div class="bg-[#F2FFEB] p-8 rounded-lg flex flex-col h-full hover:shadow-md transition">
+                                <h4 class="font-bold text-xl text-gray-900 mb-3" x-text="pkg.title"></h4>
+                                <p class="text-gray-600 text-sm mb-6 flex-grow" x-text="pkg.desc"></p>
+                                <a :href="pkg.btn_link" target="_blank" class="bg-brand-primary text-white font-bold py-3 px-6 rounded text-center text-xs uppercase hover:bg-[#75C400] transition shadow-sm" x-text="pkg.btn_text"></a>
+                            </div>
+                        </template>
+
+                    </div>
+                </div>
+            </div>
+
+          
+
+        </div>
+    </section>
+
+
+<section data-home-section="bottom_cta" x-cloak x-show="isContentReady && hasSection('bottom_cta')" class="py-20 bg-[#F2FFEB]">
+        <div class="container mx-auto px-4 text-center">
+            
+            <h2 class="text-2xl md:text-4xl font-extrabold text-brand-dark uppercase mb-6 leading-tight" x-html="pageData.bottom_cta.headline">
+            </h2>
+
+            <p class="text-gray-700 font-medium text-lg mb-10 max-w-6xl mx-auto" x-text="pageData.bottom_cta.desc">
+            </p>
+
+            <div class="mb-16 flex flex-col sm:flex-row sm:flex-wrap justify-center gap-4">
+                <template x-for="(button, index) in pageData.bottom_cta.buttons || []" :key="`bottom-cta-button-${index}`">
+                    <a :href="button.url || '#'" target="_blank" class="bg-gradient-to-r from-[#389400] to-[#75C400] text-white font-bold py-4 px-12 rounded shadow-lg hover:shadow-xl hover:opacity-95 transition uppercase text-sm tracking-wide inline-block" x-text="button.text || `Button ${index + 1}`">
+                    </a>
+                </template>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <template x-for="(feature, index) in pageData.bottom_cta.features || []" :key="feature.id || index">
+                    <div class="bg-[#dcfce7] border border-[#bbf7d0] py-6 px-4 rounded-xl flex items-center justify-center space-x-4 shadow-sm">
+                        <i class="fas text-3xl text-brand-primary" :class="feature.icon || 'fa-check-circle'"></i>
+                        <span class="text-brand-dark font-bold text-sm text-left" x-text="feature.text"></span>
+                    </div>
+                </template>
+            </div>
+
+        </div>
+    </section>
+
+
+    </main>
+
+    </div>
+
+    <main x-cloak x-show="isContentReady && isBusinessRoute" class="flex-grow pt-40 md:pt-44">
+        <div class="business-route-content">
+            <template x-for="(section, sectionIndex) in businessPageData.sections || []" :key="section.id || `${section.type}-${sectionIndex}`">
+                <section class="py-16 md:py-24" :class="section.type === 'hero' ? 'container mx-auto px-4 mb-16 mt-8 py-0' : (sectionIndex % 2 ? 'bg-gray-50' : 'bg-white')">
+                    <template x-if="section.type === 'hero'">
+                        <div class="relative rounded-[2rem] overflow-hidden min-h-[500px] md:h-[600px] shadow-2xl">
+                            <img :src="section.image || 'Business-Support-Page/IPP_Hero.jpg'" alt="Business Support Package" class="absolute inset-0 w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/30"></div>
+                            <div class="relative z-10 h-full flex flex-col justify-center px-6 py-20 md:px-20 max-w-6xl">
+                                <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-6 uppercase leading-tight drop-shadow-md" x-html="section.headline"></h1>
+                                <p class="text-base md:text-xl text-gray-100 mb-10 font-medium leading-relaxed max-w-4xl" x-text="section.desc"></p>
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <template x-for="(button, index) in section.buttons || []" :key="`business-hero-button-${index}`">
+                                        <a :href="button.link || button.url || '#'" :target="isExternalLink(button.link || button.url) ? '_blank' : null" :class="getBusinessButtonClass(button, index)" class="text-center" x-text="button.text"></a>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template x-if="section.type === 'intro' || section.type === 'ideal_for'">
+                        <div class="container mx-auto px-4 max-w-7xl">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                                <div :class="section.type === 'ideal_for' ? 'order-1 lg:order-2' : ''">
+                                    <h2 class="text-2xl md:text-4xl font-extrabold text-brand-dark uppercase mb-6 leading-tight" x-html="section.headline"></h2>
+                                    <template x-if="section.desc1">
+                                        <p class="text-gray-700 mb-6 leading-relaxed" x-text="section.desc1"></p>
+                                    </template>
+                                    <template x-if="section.did_you_know">
+                                        <p class="text-brand-primary font-bold text-lg mb-8" x-html="section.did_you_know"></p>
+                                    </template>
+                                    <template x-if="section.desc2">
+                                        <p class="text-gray-700 mb-6 leading-relaxed" x-text="section.desc2"></p>
+                                    </template>
+                                    <template x-if="section.desc">
+                                        <p class="text-gray-700 mb-8 leading-relaxed" x-text="section.desc"></p>
+                                    </template>
+                                    <template x-if="section.list_headline">
+                                        <h3 class="text-xl font-bold text-brand-dark mb-6" x-text="section.list_headline"></h3>
+                                    </template>
+                                    <ul class="space-y-3 mb-8">
+                                        <template x-for="(item, index) in section.list || []" :key="`business-list-${section.type}-${index}`">
+                                            <li class="flex items-start">
+                                                <i class="fas fa-check-circle text-brand-primary mt-1 mr-3"></i>
+                                                <span class="text-gray-700 font-medium" x-text="item"></span>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                    <template x-if="section.button && (section.button.text || section.button.link)">
+                                        <a :href="section.button.link || '#'" :target="isExternalLink(section.button.link) ? '_blank' : null" class="inline-flex items-center bg-[#4a8a0a] text-white font-bold py-4 px-8 rounded shadow hover:bg-[#389400] transition uppercase text-sm tracking-wide" x-text="section.button.text"></a>
+                                    </template>
+                                </div>
+                                <div class="h-[400px] lg:h-[520px]" :class="section.type === 'ideal_for' ? 'order-2 lg:order-1' : ''">
+                                    <img :src="section.image" :alt="stripHtml(section.headline || 'Business Support Package')" class="rounded-[2rem] shadow-xl w-full h-full object-cover">
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template x-if="section.type === 'features' || section.type === 'advantages'">
+                        <div class="container mx-auto px-4 max-w-7xl">
+                            <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-14 text-center" x-html="section.headline || (section.type === 'features' ? 'Features' : 'Advantages')"></h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                                <template x-for="(card, index) in section.cards || []" :key="`business-card-${section.type}-${index}`">
+                                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 flex flex-col">
+                                        <template x-if="card.image">
+                                            <img :src="card.image" :alt="card.title || `Card ${index + 1}`" class="h-48 w-full object-cover">
+                                        </template>
+                                        <div class="p-8 flex-grow">
+                                            <div class="w-12 h-12 rounded-full bg-brand-primary text-white flex items-center justify-center mb-5 text-lg">
+                                                <i :class="`fas ${card.icon || 'fa-check'}`"></i>
+                                            </div>
+                                            <h3 class="font-bold text-gray-900 text-lg mb-4" x-text="card.title"></h3>
+                                            <template x-if="card.desc">
+                                                <p class="text-sm text-gray-600 mb-6" x-text="card.desc"></p>
+                                            </template>
+                                            <ul class="space-y-3 text-sm text-gray-700">
+                                                <template x-for="(item, itemIndex) in card.list || []" :key="`business-card-list-${index}-${itemIndex}`">
+                                                    <li class="flex items-start">
+                                                        <i class="fas fa-check-square text-brand-primary mt-1 mr-2"></i>
+                                                        <span x-text="item"></span>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template x-if="section.type === 'value_section'">
+                        <div class="container mx-auto px-4 max-w-7xl">
+                            <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-12 text-center" x-html="section.headline"></h2>
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                                <div class="overflow-hidden rounded-lg shadow-lg border border-gray-200 bg-white">
+                                    <table class="w-full text-left text-sm">
+                                        <tbody>
+                                            <template x-for="(row, index) in section.table || []" :key="`business-value-row-${index}`">
+                                                <tr class="border-b last:border-b-0">
+                                                    <td class="p-4 font-bold text-gray-900" x-text="row.service"></td>
+                                                    <td class="p-4 text-gray-700" x-text="row.market"></td>
+                                                    <td class="p-4 text-brand-primary font-semibold" x-text="row.included"></td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div>
+                                    <img :src="section.image" alt="Business Support Package Value" class="rounded-[2rem] shadow-xl w-full object-cover mb-8">
+                                    <p class="text-xl font-extrabold text-brand-primary mb-4" x-text="section.total_value"></p>
+                                    <p class="text-lg font-bold text-gray-900 mb-4" x-html="section.price_title || section.investment"></p>
+                                    <p class="text-gray-700 leading-relaxed" x-text="section.bottom_line"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template x-if="section.type === 'testimonials'">
+                        <div class="container mx-auto px-4 max-w-6xl text-center">
+                            <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-6" x-html="section.headline"></h2>
+                            <p class="text-gray-700 max-w-4xl mx-auto mb-10" x-text="section.desc"></p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <template x-for="(video, index) in section.videos || []" :key="`business-video-${index}`">
+                                    <div class="aspect-video rounded-2xl overflow-hidden shadow-xl bg-black">
+                                        <iframe :src="resolveBusinessVideoUrl(video.url)" :title="video.title || `Business Support Video ${index + 1}`" class="w-full h-full" allowfullscreen></iframe>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template x-if="section.type === 'investment_card' || section.type === 'bottom_cta'">
+                        <div class="container mx-auto px-4 max-w-5xl text-center">
+                            <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-6" x-html="section.headline"></h2>
+                            <p class="text-gray-700 mb-8" x-text="section.desc"></p>
+                            <template x-if="section.includes_title">
+                                <h3 class="text-xl font-bold mb-5" x-text="section.includes_title"></h3>
+                            </template>
+                            <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-left mb-10">
+                                <template x-for="(item, index) in section.list || []" :key="`business-invest-list-${index}`">
+                                    <li class="flex items-start bg-white rounded-xl border p-4">
+                                        <i class="fas fa-check-circle text-brand-primary mt-1 mr-3"></i>
+                                        <span x-text="item"></span>
+                                    </li>
+                                </template>
+                            </ul>
+                            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                                <template x-for="(button, index) in getBusinessSectionButtons(section)" :key="`business-cta-button-${index}`">
+                                    <a :href="button.link || button.url || '#'" :target="isExternalLink(button.link || button.url) ? '_blank' : null" :class="getBusinessButtonClass(button, index)" x-text="button.text"></a>
+                                </template>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
+                                <template x-for="(badge, index) in section.badges || []" :key="`business-badge-${index}`">
+                                    <div class="bg-white border rounded-xl p-4 font-bold text-sm text-brand-dark">
+                                        <i class="fas text-brand-primary mr-2" :class="badge.icon || 'fa-check-circle'"></i>
+                                        <span x-text="badge.text"></span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template x-if="section.type === 'faq' || section.type === 'disclaimer_section'">
+                        <div class="container mx-auto px-4 max-w-5xl">
+                            <h2 class="text-3xl md:text-4xl font-extrabold text-brand-dark uppercase mb-10 text-center" x-html="section.headline"></h2>
+                            <div class="space-y-5">
+                                <template x-for="(item, index) in (section.questions || section.blocks || [])" :key="`business-text-block-${index}`">
+                                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+                                        <h3 class="font-bold text-brand-dark mb-3" x-text="item.q || item.title"></h3>
+                                        <p class="text-gray-700 leading-relaxed" x-text="item.a || item.text"></p>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </section>
+            </template>
+        </div>
+    </main>
+
+
+
+
+
+    <div data-pyf-footer-root></div>
+
+
+
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Sticky Header Logic
+        let lastScrollTop = 0;
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) { header.classList.add('header-hidden'); } 
+            else { header.classList.remove('header-hidden'); }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+    </script>
+
+    <button id="backToTopBtn" 
+            onclick="scrollToTop()" 
+            class="fixed bottom-8 right-8 z-50 bg-brand-primary hover:bg-[#2d7a00] text-white w-12 h-12 rounded-full shadow-lg transition-all duration-300 transform translate-y-20 opacity-0 flex items-center justify-center focus:outline-none">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        // Show/Hide logic based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show after scrolling down 300px
+                backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
+            } else {
+                backToTopBtn.classList.add('translate-y-20', 'opacity-0');
+            }
+        });
+
+        // Smooth scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+    
+    <!-- Supabase Dynamic Data Script -->
+    <script>
+        const supabaseUrl = 'https://nqwggnereuhphwmkqove.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xd2dnbmVyZXVocGh3bWtxb3ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDUxMjAsImV4cCI6MjA5MTM4MTEyMH0.1OM-fLTth5FcMKUPHgepeM3BdJMydHiK1coD0vw0o0M';
+        
+        document.addEventListener('alpine:init', () => {
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            
+            Alpine.data('siteData', () => ({
+                pageData: {
+                    hero_title: 'An Empowered Lifestyle Starts With Putting Money Back In Your Pocket',
+                    hero_subtitle: 'PYF is a lifestyle empowerment company dedicated to educating, equipping, and empowering families and individuals with practical strategies, systems, and tools for financial independence.',
+                    hero_image: 'Homepage/Website Home Hero Image.jpg',
+                    hero_buttons: [
+                        { text: 'View Service Packages', url: 'packages.html' },
+                        { text: 'View Affiliate Program', url: 'affiliate-plan.html' }
+                    ],
+                    pillars: [
+                        { title: "Save Money", desc: "Access millions of discounts on products and services you already buy.", icon: "fa-piggy-bank", color: "blue-500" },
+                        { title: "Reduce Taxes", desc: "Leverage business deductions to keep more of what you earn—with professional CPA level support.", icon: "fa-file-invoice-dollar", color: "brand-primary" },
+                        { title: "Build Income", desc: "As an affiliate you can create a residual revenue stream on your own schedule, independent of an employer. It is free and optional to be a PYF affiliate. There are no upfront or ongoing qualifications to be an affiliate.", icon: "fa-chart-line", color: "green-500" }
+                    ],
+                    pillars_buttons: [
+                        { text: 'View Service Packages', url: 'packages.html' },
+                        { text: 'View Affiliate Program', url: 'affiliate-plan.html' }
+                    ],
+                    tax_systems: {
+                        headline: 'There Are <span class="text-brand-primary">Two</span> Tax Systems. Which One Are <span class="text-brand-primary">You</span> In?',
+                        desc: 'Many work hard yet still fall behind financially. With rising costs and stagnant wages, the financial squeeze is real. The solution? Most overlook the legitimate, government-approved tax deductions that can dramatically improve your finances.',
+                        perks_headline: 'If any of these perks sound attractive, you\'re not alone:',
+                        perks_list: [
+                            'Imagine keeping $3,000-$10,000 more annually by accessing tax deductions',
+                            'Building income through our affiliate program',
+                            'Envision having professional support without the professional price tag'
+                        ],
+                        image: 'Homepage/Two Tax Systems.jpg',
+                        btn_text: 'Get Business Support Package',
+                        btn_link: 'business-support-package.html',
+                        buttons: [
+                            { text: 'Get Business Support Package', url: 'business-support-package.html' }
+                        ]
+                    },
+                    peace_of_mind: {
+                        headline: 'Lower <span class="text-brand-primary">Taxes</span>, Higher <span class="text-brand-primary">Cash</span> Flow, And Increased <span class="text-brand-primary">Financial Peace Of Mind.</span>',
+                        desc: 'Business Support Package combines tax support, legal services, entrepreneurship training, and more—in one comprehensive plan.',
+                        advantages_headline: 'Key Advantages',
+                        advantages_list: [
+                            'Leverage business tax deductions. Including expenses you currently have.',
+                            'Get tax, legal, and business guidance when you need it.',
+                            'Educational resources and support tools for entrepreneurs.'
+                        ],
+                        image: 'Homepage/Financial Peace of Mind.jpg',
+                        btn_text: 'Get Business Support Package',
+                        btn_link: 'business-support-package.html',
+                        buttons: [
+                            { text: 'Get Business Support Package', url: 'business-support-package.html' }
+                        ]
+                    },
+                    support_features: [
+                         { title: "Tax Support", desc: "Guidance from experienced tax professionals", icon: "fa-file-invoice-dollar" },
+                         { title: "Legal Support", desc: "Help with business and personal legal matters", icon: "fa-scale-balanced" },
+                         { title: "Business Support", desc: "Tools, training, and coaching for growth", icon: "fa-users" },
+                         { title: "Discount Platform", desc: "Savings on everyday essentials", icon: "fa-percent" }
+                    ],
+                    history: {
+                        headline: "Serving People Since 2011",
+                        desc: "For over a decade, Pay Yourself First has helped W-2 employees, independent contractors, and entrepreneurs legally reduce their tax liability, cut expenses, and build an additional income stream.",
+                        guarantee: "All backed by our 30-Day Money-Back Guarantee."
+                    },
+                    testimonials: {
+                        headline: "Real People. Real Results.",
+                        items: [
+                            { quote: "Pay Yourself First shifted my mindset from a consumer to a CEO. A person who owns their own business.", author_initials: "DT", author_name: "D. Thomas" },
+                            { quote: "I've saved much more money using Pay Yourself First than what I pay for the subscription.", author_initials: "CW", author_name: "C. Wheeler" },
+                            { quote: "Pay Yourself First changed my position from owing taxes every year to getting a larger refund. In the short-term I can instantly posture myself into a better tax outcome this year. I can instantly use business owner deductions for my own personal tax account this year.", author_initials: "MM", author_name: "M. Moore" }
+                        ]
+                    },
+                    packages_intro: {
+                        headline: 'Save Money. Make Money. Or Both.<br><span class="text-brand-primary">Which Package Is Right For You?</span>',
+                        desc: 'Business Support Package is our most popular package because it combines tax savings guidance, entrepreneurship training and support, discounts, and professional support in one comprehensive system. But we also offer alternative Packages based on your specific goals.',
+                        affiliate_text: 'It is free to become a PYF Affiliate. There is no cost and no upfront or ongoing requirements or qualifications. As a PYF affiliate you can receive referral fees when you share PYF products with others. If a product is paid on a one-time basis you will be paid a one-time referral fee. If a product is paid on a monthly basis you will be paid a monthly referral fee. You can become a PYF affiliate without purchasing a PYF product or in combination with any PYF product.',
+                        affiliate_img: 'Homepage/Affiliate Program.jpg'
+                    },
+                    service_packages: [
+                        { title: 'Business Support Package', desc: 'The ultimate package for tax savings, business growth, and financial independence. Includes all features.', btn_text: 'Get Business Support Package', btn_link: 'business-support-package.html' },
+                        { title: 'Doctor Power', desc: 'Convenient telehealth and wellness savings for families. Access doctors 24/7 without high costs.', btn_text: 'Get Doctor Power', btn_link: 'doctor-power.html' },
+                        { title: 'Dental Power', desc: 'Lower dental, vision, and hearing care costs. Keep your family\'s smile bright for less.', btn_text: 'Get Dental Power', btn_link: 'dental-power.html' },
+                        { title: 'Purchase Power', desc: 'Save money on shopping, dining, entertainment, and more. Everyday discounts that add up fast.', btn_text: 'Get Purchase Power', btn_link: 'purchase-power.html' }
+                    ],
+                    bottom_cta: {
+                        headline: 'Don\'t Overpay Your Taxes. Keep <span class="text-brand-primary">More</span> Of Your <span class="text-brand-primary">Earnings</span>. <br> Save More <span class="text-brand-primary">Money</span>.',
+                        desc: 'Get the PYF Business Support Package and start keeping more of what you earn while building additional income if you choose to.',
+                        btn_text: 'Get Business Support Package',
+                        btn_link: 'business-support-package.html',
+                        buttons: [
+                            { text: 'Get Business Support Package', url: 'business-support-package.html' }
+                        ],
+                        features: [
+                            { icon: 'fa-check-circle', text: '30-Day Money-Back Guarantee' },
+                            { icon: 'fa-user-tie', text: 'Professional CPA Support Included' },
+                            { icon: 'fa-file-contract', text: 'No Long Term Contract' }
+                        ]
+                    },
+                    sections: [
+                        { id: 'hero', type: 'hero', label: 'Hero Banner' },
+                        { id: 'pillars', type: 'pillars', label: 'The Three Pillars' },
+                        { id: 'tax-systems', type: 'tax_systems', label: 'Tax Systems' },
+                        { id: 'peace-of-mind', type: 'peace_of_mind', label: 'Peace Of Mind' },
+                        { id: 'support-features', type: 'support_features', label: 'Support Features' },
+                        { id: 'history', type: 'history', label: 'History' },
+                        { id: 'testimonials', type: 'testimonials', label: 'Testimonials' },
+                        { id: 'packages-intro', type: 'packages_intro', label: 'Packages Intro' },
+                        { id: 'bottom-cta', type: 'bottom_cta', label: 'Bottom CTA' }
+                    ]
+                },
+                isContentReady: false,
+                isBusinessRoute: false,
+                businessPageData: {
+                    sections: []
+                },
+                resolvedImages: {
+                    hero: '',
+                    taxSystems: '',
+                    peaceOfMind: '',
+                    affiliate: ''
+                },
+                loadedImages: {
+                    hero: false,
+                    taxSystems: false,
+                    peaceOfMind: false,
+                    affiliate: false
+                },
+
+                getDefaultSections() {
+                    return [
+                        { id: 'hero', type: 'hero', label: 'Hero Banner' },
+                        { id: 'pillars', type: 'pillars', label: 'The Three Pillars' },
+                        { id: 'tax-systems', type: 'tax_systems', label: 'Tax Systems' },
+                        { id: 'peace-of-mind', type: 'peace_of_mind', label: 'Peace Of Mind' },
+                        { id: 'support-features', type: 'support_features', label: 'Support Features' },
+                        { id: 'history', type: 'history', label: 'History' },
+                        { id: 'testimonials', type: 'testimonials', label: 'Testimonials' },
+                        { id: 'packages-intro', type: 'packages_intro', label: 'Packages Intro' },
+                        { id: 'bottom-cta', type: 'bottom_cta', label: 'Bottom CTA' }
+                    ];
+                },
+
+                normalizeSections(sections) {
+                    const defaults = this.getDefaultSections();
+                    if (!Array.isArray(sections)) return defaults;
+
+                    return sections
+                        .map((section, index) => {
+                            const type = section?.type || section?.id;
+                            const fallback = defaults.find(item => item.type === type || item.id === type);
+                            if (!fallback) return null;
+
+                            return {
+                                id: section?.id || `${fallback.id}-${index + 1}`,
+                                type: fallback.type,
+                                label: section?.label || fallback.label
+                            };
+                        })
+                        .filter(Boolean);
+                },
+
+                normalizeRepeaterItems(value, fallback = []) {
+                    const items = Array.isArray(value)
+                        ? value
+                        : (Array.isArray(value?.items) ? value.items : fallback);
+
+                    return JSON.parse(JSON.stringify(Array.isArray(items) ? items : fallback));
+                },
+
+                normalizeServicePackages(value, fallback = []) {
+                    const items = Array.isArray(value)
+                        ? value
+                        : (Array.isArray(value?.packages) ? value.packages : fallback);
+                    return JSON.parse(JSON.stringify(Array.isArray(items) ? items : fallback));
+                },
+
+                stripHtml(html = '') {
+                    const temp = document.createElement('div');
+                    temp.innerHTML = html || '';
+                    return (temp.textContent || temp.innerText || '').trim();
+                },
+
+                createHomeButton(button = {}) {
+                    return {
+                        text: button?.text || '',
+                        url: button?.url || button?.link || ''
+                    };
+                },
+
+                normalizeHomeButtons(buttons, fallbackButtons = []) {
+                    const source = Array.isArray(buttons) && buttons.length ? buttons : fallbackButtons;
+                    return (Array.isArray(source) ? source : [])
+                        .map(button => this.createHomeButton(button))
+                        .filter(button => button.text || button.url);
+                },
+
+                normalizeHomeContent(content = {}) {
+                    const taxSource = { ...(this.pageData.tax_systems || {}), ...(content.tax_systems || {}) };
+                    const peaceSource = { ...(this.pageData.peace_of_mind || {}), ...(content.peace_of_mind || {}) };
+                    const bottomCtaSource = { ...(this.pageData.bottom_cta || {}), ...(content.bottom_cta || {}) };
+                    const historySource = { ...(this.pageData.history || {}), ...(content.history || {}) };
+                    const testimonialSource = { ...(this.pageData.testimonials || {}), ...(content.testimonials || {}) };
+                    const packagesIntroSource = { ...(this.pageData.packages_intro || {}), ...(content.packages_intro || {}) };
+                    const heroButtons = this.normalizeHomeButtons(
+                        content.hero_buttons,
+                        this.pageData.hero_buttons
+                    );
+                    const pillarsButtons = this.normalizeHomeButtons(
+                        content.pillars_buttons,
+                        this.pageData.pillars_buttons
+                    );
+                    const taxLegacyButtons = [{ text: content.tax_systems?.btn_text || '', url: content.tax_systems?.btn_link || content.tax_systems?.link || '' }]
+                        .filter(button => button.text || button.url);
+                    const peaceLegacyButtons = [{ text: content.peace_of_mind?.btn_text || '', url: content.peace_of_mind?.btn_link || content.peace_of_mind?.link || '' }]
+                        .filter(button => button.text || button.url);
+                    const bottomLegacyButtons = [{ text: content.bottom_cta?.btn_text || '', url: content.bottom_cta?.btn_link || content.bottom_cta?.link || '' }]
+                        .filter(button => button.text || button.url);
+                    const taxButtons = this.normalizeHomeButtons(
+                        content.tax_systems?.buttons,
+                        taxLegacyButtons.length ? taxLegacyButtons : (this.pageData.tax_systems?.buttons || [])
+                    );
+                    const peaceButtons = this.normalizeHomeButtons(
+                        content.peace_of_mind?.buttons,
+                        peaceLegacyButtons.length ? peaceLegacyButtons : (this.pageData.peace_of_mind?.buttons || [])
+                    );
+                    const bottomCtaButtons = this.normalizeHomeButtons(
+                        content.bottom_cta?.buttons,
+                        bottomLegacyButtons.length ? bottomLegacyButtons : (this.pageData.bottom_cta?.buttons || [])
+                    );
+
+                    return {
+                        ...this.pageData,
+                        ...content,
+                        hero_buttons: heroButtons,
+                        pillars: this.normalizeRepeaterItems(content.pillars, this.pageData.pillars),
+                        pillars_buttons: pillarsButtons,
+                        tax_systems: {
+                            ...(this.pageData.tax_systems || {}),
+                            ...(content.tax_systems || {}),
+                            buttons: taxButtons,
+                            btn_text: taxButtons[0]?.text || '',
+                            btn_link: taxButtons[0]?.url || ''
+                        },
+                        peace_of_mind: {
+                            ...(this.pageData.peace_of_mind || {}),
+                            ...(content.peace_of_mind || {}),
+                            buttons: peaceButtons,
+                            btn_text: peaceButtons[0]?.text || '',
+                            btn_link: peaceButtons[0]?.url || ''
+                        },
+                        support_features: this.normalizeRepeaterItems(content.support_features, this.pageData.support_features),
+                        history: historySource,
+                        testimonials: {
+                            ...testimonialSource,
+                            items: this.normalizeRepeaterItems(content.testimonials?.items, this.pageData.testimonials?.items || [])
+                        },
+                        packages_intro: packagesIntroSource,
+                        service_packages: this.normalizeServicePackages(content.service_packages, this.pageData.service_packages),
+                        bottom_cta: {
+                            ...(this.pageData.bottom_cta || {}),
+                            ...(content.bottom_cta || {}),
+                            buttons: bottomCtaButtons,
+                            btn_text: bottomCtaButtons[0]?.text || '',
+                            btn_link: bottomCtaButtons[0]?.url || ''
+                        },
+                        sections: this.normalizeSections(content.sections ?? this.pageData.sections)
+                    };
+                },
+
+                applyBusinessSupportPackageOverlay(homeContent = {}, businessContent = {}) {
+                    if (!businessContent || typeof businessContent !== 'object') {
+                        return homeContent;
+                    }
+
+                    const packageTitle = this.stripHtml(
+                        businessContent.ideal_for?.headline
+                        || businessContent.hero?.headline
+                        || ''
+                    ) || 'Business Support Package';
+                    const packageDesc = businessContent.ideal_for?.desc || businessContent.hero?.desc || '';
+                    const packageButtonText = businessContent.investment_card?.btn_text || businessContent.hero?.btn1_text || '';
+                    const packageButtonLink = businessContent.investment_card?.btn_link || businessContent.hero?.btn1_link || '';
+
+                    if (!packageTitle && !packageDesc && !packageButtonText && !packageButtonLink) {
+                        return homeContent;
+                    }
+
+                    const packages = this.normalizeServicePackages(
+                        homeContent.service_packages,
+                        this.pageData.service_packages
+                    );
+
+                    if (!packages.length) {
+                        packages.push({
+                            title: 'Business Support Package',
+                            desc: '',
+                            btn_text: '',
+                            btn_link: ''
+                        });
+                    }
+
+                    const packageIndex = packages.findIndex(pkg => /business support package/i.test(pkg?.title || ''));
+                    const targetIndex = packageIndex >= 0 ? packageIndex : 0;
+                    const currentPackage = packages[targetIndex] || {};
+
+                    packages[targetIndex] = {
+                        ...currentPackage,
+                        title: packageTitle || currentPackage.title || 'Business Support Package',
+                        desc: packageDesc || currentPackage.desc || '',
+                        btn_text: packageButtonText || currentPackage.btn_text || '',
+                        btn_link: packageButtonLink || currentPackage.btn_link || ''
+                    };
+
+                    return {
+                        ...homeContent,
+                        service_packages: packages
+                    };
+                },
+
+                buildHomePackageCardFromPackagesPage(packageCard = {}) {
+                    if (!packageCard || typeof packageCard !== 'object') {
+                        return null;
+                    }
+
+                    const title = packageCard.title || '';
+                    const desc = packageCard.desc || packageCard.best_for || '';
+                    const btnText = packageCard.btn_text || 'View Details';
+                    const btnLink = packageCard.btn_link || '#';
+
+                    if (!title && !desc && !btnText && !btnLink) {
+                        return null;
+                    }
+
+                    return {
+                        title,
+                        desc,
+                        btn_text: btnText,
+                        btn_link: btnLink
+                    };
+                },
+
+                applyPackagesOverlay(homeContent = {}, packagesContent = {}) {
+                    const packageCards = Array.isArray(packagesContent?.service_packages?.packages)
+                        ? packagesContent.service_packages.packages
+                        : [];
+
+                    if (!packageCards.length) {
+                        return homeContent;
+                    }
+
+                    const normalizedCards = packageCards
+                        .map(card => this.buildHomePackageCardFromPackagesPage(card))
+                        .filter(Boolean);
+
+                    if (!normalizedCards.length) {
+                        return homeContent;
+                    }
+
+                    return {
+                        ...homeContent,
+                        service_packages: normalizedCards
+                    };
+                },
+
+                isBusinessSupportRoute() {
+                    const path = window.location.pathname.toLowerCase();
+                    const params = new URLSearchParams(window.location.search);
+                    return path.includes('business-support-package') || params.get('page') === 'business-support-package';
+                },
+
+                createBusinessButton(button = {}) {
+                    return {
+                        text: button?.text || '',
+                        link: button?.link || button?.url || '',
+                        style: button?.style === 'secondary' ? 'secondary' : 'primary'
+                    };
+                },
+
+                normalizeBusinessContent(content = {}) {
+                    const order = [
+                        'hero',
+                        'intro',
+                        'ideal_for',
+                        'features',
+                        'advantages',
+                        'value_section',
+                        'testimonials',
+                        'investment_card',
+                        'faq',
+                        'bottom_cta',
+                        'disclaimer_section'
+                    ];
+                    const rawSections = Array.isArray(content.sections) && content.sections.length
+                        ? content.sections
+                        : order.map(type => ({ type, id: `business-${type}` }));
+
+                    return {
+                        ...content,
+                        sections: rawSections.map((section, index) => {
+                            const type = section?.type || section?.id;
+                            const legacy = content[type] || {};
+                            const normalized = {
+                                ...legacy,
+                                ...section,
+                                id: section?.id || `business-${type || index}`,
+                                type,
+                                label: section?.label || legacy.label || type
+                            };
+
+                            if (Array.isArray(normalized.buttons)) {
+                                normalized.buttons = normalized.buttons.map(button => this.createBusinessButton(button));
+                            }
+
+                            if (normalized.button) {
+                                normalized.button = this.createBusinessButton(normalized.button);
+                            }
+
+                            if (!normalized.buttons && type === 'hero') {
+                                normalized.buttons = [
+                                    { text: normalized.btn1_text || '', link: normalized.btn1_link || '', style: 'primary' },
+                                    { text: normalized.btn2_text || '', link: normalized.btn2_link || '', style: 'secondary' }
+                                ].filter(button => button.text || button.link).map(button => this.createBusinessButton(button));
+                            }
+
+                            if (!normalized.buttons && type === 'bottom_cta') {
+                                normalized.buttons = [
+                                    { text: normalized.btn1_text || '', link: normalized.btn1_link || '', style: 'primary' },
+                                    { text: normalized.btn2_text || '', link: normalized.btn2_link || '', style: 'secondary' }
+                                ].filter(button => button.text || button.link).map(button => this.createBusinessButton(button));
+                            }
+
+                            if (!normalized.button && (type === 'intro' || type === 'investment_card')) {
+                                normalized.button = this.createBusinessButton({
+                                    text: normalized.btn_text || '',
+                                    link: normalized.btn_link || '',
+                                    style: 'primary'
+                                });
+                            }
+
+                            normalized.list = Array.isArray(normalized.list) ? normalized.list : [];
+                            normalized.cards = Array.isArray(normalized.cards) ? normalized.cards : [];
+                            normalized.table = Array.isArray(normalized.table) ? normalized.table : [];
+                            normalized.videos = Array.isArray(normalized.videos)
+                                ? normalized.videos
+                                : (normalized.video_url ? [{ url: normalized.video_url, title: normalized.headline || 'Business Support Video' }] : []);
+                            normalized.questions = Array.isArray(normalized.questions) ? normalized.questions : [];
+                            normalized.blocks = Array.isArray(normalized.blocks) ? normalized.blocks : [];
+                            normalized.badges = Array.isArray(normalized.badges) ? normalized.badges : [];
+
+                            return normalized;
+                        }).filter(section => section.type)
+                    };
+                },
+
+                getBusinessSectionButtons(section = {}) {
+                    if (Array.isArray(section.buttons) && section.buttons.length) {
+                        return section.buttons.map(button => this.createBusinessButton(button));
+                    }
+
+                    if (section.button && (section.button.text || section.button.link)) {
+                        return [this.createBusinessButton(section.button)];
+                    }
+
+                    return [];
+                },
+
+                getBusinessButtonClass(button, index) {
+                    const style = button?.style || (index === 0 ? 'primary' : 'secondary');
+                    const base = 'w-full sm:w-auto font-bold py-4 px-8 rounded shadow transition uppercase text-sm tracking-wide inline-block';
+                    return style === 'secondary'
+                        ? `${base} bg-[#dcfce7] text-brand-primary hover:bg-white`
+                        : `${base} bg-[#4a8a0a] text-white hover:bg-[#389400]`;
+                },
+
+                isExternalLink(url = '') {
+                    return /^https?:\/\//i.test(url);
+                },
+
+                resolveBusinessVideoUrl(url = '') {
+                    if (!url) return '';
+                    if (url.includes('youtube-nocookie.com/embed/') || url.includes('youtube.com/embed/')) return url;
+
+                    try {
+                        const parsed = new URL(url, window.location.origin);
+                        const host = parsed.hostname.replace(/^www\./, '');
+                        let videoId = '';
+
+                        if (host === 'youtu.be') {
+                            videoId = parsed.pathname.replace('/', '');
+                        } else if (host.includes('youtube.com')) {
+                            videoId = parsed.searchParams.get('v') || parsed.pathname.split('/').filter(Boolean).pop();
+                        }
+
+                        return videoId ? `https://www.youtube-nocookie.com/embed/${videoId}?rel=0` : url;
+                    } catch (error) {
+                        return url;
+                    }
+                },
+
+                hasSection(type) {
+                    if (this.isBusinessRoute) return false;
+                    return (this.pageData.sections || []).some(section => section.type === type);
+                },
+
+                syncSectionLayout() {
+                    const root = document.querySelector('[data-home-sections-root]');
+                    if (!root) return;
+
+                    const nodesByType = new Map(
+                        Array.from(root.querySelectorAll('[data-home-section]')).map(node => [node.dataset.homeSection, node])
+                    );
+
+                    (this.pageData.sections || []).forEach(section => {
+                        const node = nodesByType.get(section.type);
+                        if (node) root.appendChild(node);
+                    });
+                },
+
+                getImageTargets(content) {
+                    return {
+                        hero: content.hero_image || 'Homepage/Website Home Hero Image.jpg',
+                        taxSystems: content.tax_systems?.image || 'Homepage/Two Tax Systems.jpg',
+                        peaceOfMind: content.peace_of_mind?.image || 'Homepage/Financial Peace of Mind.jpg',
+                        affiliate: content.packages_intro?.affiliate_img || 'Homepage/Affiliate Program.jpg'
+                    };
+                },
+
+                preloadImage(src) {
+                    return new Promise((resolve, reject) => {
+                        if (!src) {
+                            reject(new Error('Missing image source'));
+                            return;
+                        }
+
+                        const img = new Image();
+                        img.onload = () => resolve(src);
+                        img.onerror = () => reject(new Error(`Failed to preload image: ${src}`));
+                        img.src = src;
+                    });
+                },
+
+                async resolveImages(content) {
+                    const imageTargets = this.getImageTargets(content);
+
+                    await Promise.all(Object.entries(imageTargets).map(async ([key, src]) => {
+                        try {
+                            const loadedSrc = await this.preloadImage(src);
+                            this.resolvedImages[key] = loadedSrc;
+                            this.loadedImages[key] = true;
+                        } catch (error) {
+                            console.error(error);
+                        }
+                    }));
+                },
+
+                async fetchSiteContentRecord(pageId) {
+                    const response = await fetch(`${supabaseUrl}/rest/v1/site_content?select=*&page_id=eq.${pageId}`, {
+                        method: 'GET',
+                        headers: {
+                            apikey: supabaseKey,
+                            Authorization: `Bearer ${supabaseKey}`
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(await response.text());
+                    }
+
+                    const rows = await response.json();
+                    return Array.isArray(rows) && rows.length ? rows[0] : null;
+                },
+
+                async init() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const isPreviewMode = urlParams.get('mode') === 'preview';
+                    this.isBusinessRoute = this.isBusinessSupportRoute();
+
+                    if (this.isBusinessRoute) {
+                        try {
+                            const businessData = await this.fetchSiteContentRecord('business-support-package')
+                                .then(record => record || this.fetchSiteContentRecord('business'));
+                            const loadedBusinessContent = businessData
+                                ? (isPreviewMode ? businessData.draft_content : businessData.live_content)
+                                : {};
+
+                            if (!businessData || !loadedBusinessContent) {
+                                console.error('Business Support Package content was not found for index.html route rendering.');
+                            }
+
+                            this.businessPageData = this.normalizeBusinessContent(loadedBusinessContent || {});
+                        } catch (e) {
+                            console.error('Failed to load Business Support Package data for index.html route', e);
+                            this.businessPageData = this.normalizeBusinessContent({});
+                        }
+
+                        this.isContentReady = true;
+                        return;
+                    }
+
+                    let mergedContent = { ...this.pageData };
+                    
+                    try {
+                        const [
+                            homeData,
+                            packagesData,
+                            businessData
+                        ] = await Promise.all([
+                            this.fetchSiteContentRecord('home'),
+                            this.fetchSiteContentRecord('packages'),
+                            this.fetchSiteContentRecord('business-support-package').then(record => record || this.fetchSiteContentRecord('business'))
+                        ]);
+
+                        if (homeData) {
+                            const loadedHomeContent = isPreviewMode ? homeData.draft_content : homeData.live_content;
+                            mergedContent = this.normalizeHomeContent(loadedHomeContent || {});
+                        }
+
+                        if (packagesData) {
+                            const loadedPackagesContent = isPreviewMode ? packagesData.draft_content : packagesData.live_content;
+                            mergedContent = this.applyPackagesOverlay(mergedContent, loadedPackagesContent || {});
+                        }
+
+                        if (businessData) {
+                            const loadedBusinessContent = isPreviewMode ? businessData.draft_content : businessData.live_content;
+                            mergedContent = this.applyBusinessSupportPackageOverlay(mergedContent, loadedBusinessContent || {});
+                        }
+                    } catch (e) {
+                        console.error("Failed to load CMS data", e);
+                    }
+
+                    this.pageData = this.normalizeHomeContent(mergedContent);
+                    this.syncSectionLayout();
+                    this.isContentReady = true;
+                    await this.resolveImages(this.pageData);
+                }
+            }));
+        });
+    </script>
+    <script src="js/site-nav.js"></script>
+    <script src="js/site-footer.js"></script>
+</body>
+</html>

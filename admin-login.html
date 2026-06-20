@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-stone-950">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PYF Admin Login</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/admin-auth.js?v=20260516-guard2"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#389400',
+                            900: '#101410',
+                        }
+                    },
+                    boxShadow: {
+                        glow: '0 24px 60px rgba(56, 148, 0, 0.22)'
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body[data-auth-pending="true"] {
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-stone-950 font-sans text-white" data-auth-pending="true">
+    <div class="relative isolate min-h-screen overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(34,197,94,0.22),transparent_34%),linear-gradient(135deg,#0c120c_0%,#111827_55%,#0c120c_100%)]"></div>
+        <div class="absolute -left-16 top-20 h-72 w-72 rounded-full bg-brand-700/20 blur-3xl"></div>
+        <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl"></div>
+
+        <main class="relative mx-auto flex min-h-screen max-w-6xl items-center px-6 py-12 lg:px-10">
+            <div class="grid w-full gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+                <section class="max-w-2xl">
+                    <div class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-emerald-100/90 backdrop-blur">
+                        <i class="fas fa-shield-halved mr-2 text-brand-500"></i>
+                        Secure CMS access with Supabase Auth
+                    </div>
+                    <h1 class="mt-6 text-4xl font-extrabold leading-tight text-white sm:text-5xl">
+                        Admin access for the
+                        <span class="text-brand-500">PYF content hub</span>
+                    </h1>
+                    <p class="mt-6 max-w-xl text-base leading-7 text-stone-300 sm:text-lg">
+                        Sign in with your approved admin email to manage drafts, publish updates, and upload CMS assets.
+                    </p>
+                    <div class="mt-8 grid gap-4 text-sm text-stone-300 sm:grid-cols-2">
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+                            <p class="font-semibold text-white">Authentication</p>
+                            <p class="mt-2">Handled with Supabase email and password sessions.</p>
+                        </div>
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+                            <p class="font-semibold text-white">Authorization</p>
+                            <p class="mt-2">Enforced by RLS once the SQL in `supabase/admin-auth-phase1.sql` is applied.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section x-data="{ showReset: false, showSetup: false }" class="rounded-[2rem] border border-white/10 bg-white/8 p-8 shadow-glow backdrop-blur-xl">
+                    <div class="mb-8">
+                        <p class="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-200/80">Admin Login</p>
+                        <h2 class="mt-3 text-2xl font-bold text-white">Sign in to continue</h2>
+                        <p class="mt-2 text-sm text-stone-300">Use your approved admin email and password. First-time approved admins can create their password below.</p>
+                    </div>
+
+                    <form id="admin-login-form" class="space-y-5">
+                        <div>
+                            <label for="email" class="mb-2 block text-sm font-medium text-stone-200">Email</label>
+                            <input id="email" name="email" type="email" autocomplete="email" required class="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-stone-500 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20" placeholder="admin@payyourselffirst.com">
+                        </div>
+                        <div>
+                            <div class="mb-2 flex items-center justify-between">
+                                <label for="password" class="block text-sm font-medium text-stone-200">Password</label>
+                            </div>
+                            <input id="password" name="password" type="password" autocomplete="current-password" required class="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-stone-500 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20" placeholder="Enter your password">
+                            <div class="mt-3 flex items-center justify-between gap-3">
+                                <button type="button" @click="showSetup = !showSetup; if (showSetup) showReset = false" class="text-sm font-medium text-emerald-200 transition hover:text-white">
+                                    <span x-text="showSetup ? 'Back to Login' : 'First Time Admin?'"></span>
+                                </button>
+                                <button type="button" @click="showReset = !showReset" class="text-sm font-medium text-emerald-200 transition hover:text-white">
+                                    <span x-text="showReset ? 'Back to Login' : 'Forgot Password?'"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="login-message" class="hidden rounded-2xl border px-4 py-3 text-sm"></div>
+                        <button id="login-submit" type="submit" class="inline-flex w-full items-center justify-center rounded-2xl bg-brand-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-60">
+                            <i class="fas fa-right-to-bracket mr-2"></i>
+                            <span>Sign In</span>
+                        </button>
+                    </form>
+
+                    <form id="reset-password-form" x-show="showReset" x-transition.opacity class="mt-5 space-y-4 rounded-2xl border border-white/10 bg-black/10 p-5">
+                        <div>
+                            <label for="reset-email" class="mb-2 block text-sm font-medium text-stone-200">Reset email</label>
+                            <input id="reset-email" name="reset-email" type="email" autocomplete="email" class="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-stone-500 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20" placeholder="admin@payyourselffirst.com">
+                        </div>
+                        <button id="reset-submit" type="submit" class="inline-flex w-full items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            <span>Send Password Reset</span>
+                        </button>
+                    </form>
+
+                    <form id="setup-password-form" x-show="showSetup" x-transition.opacity class="mt-5 space-y-4 rounded-2xl border border-white/10 bg-black/10 p-5">
+                        <div>
+                            <label for="setup-email" class="mb-2 block text-sm font-medium text-stone-200">Approved admin email</label>
+                            <input id="setup-email" name="setup-email" type="email" autocomplete="email" class="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-stone-500 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20" placeholder="admin@payyourselffirst.com">
+                        </div>
+                        <div>
+                            <label for="setup-password" class="mb-2 block text-sm font-medium text-stone-200">Create password</label>
+                            <input id="setup-password" name="setup-password" type="password" autocomplete="new-password" class="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-stone-500 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20" placeholder="Create a strong password">
+                        </div>
+                        <div>
+                            <label for="setup-confirm-password" class="mb-2 block text-sm font-medium text-stone-200">Confirm password</label>
+                            <input id="setup-confirm-password" name="setup-confirm-password" type="password" autocomplete="new-password" class="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-stone-500 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20" placeholder="Repeat your password">
+                        </div>
+                        <button id="setup-submit" type="submit" class="inline-flex w-full items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60">
+                            <i class="fas fa-key mr-2"></i>
+                            <span>Create Password</span>
+                        </button>
+                    </form>
+
+                    <p class="mt-6 text-xs leading-6 text-stone-400">
+                        If login succeeds but editing is still denied, add your user to the `admin_users` table and apply the RLS policies in the Supabase SQL editor.
+                    </p>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('admin-login-form');
+            const submitButton = document.getElementById('login-submit');
+            const message = document.getElementById('login-message');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const resetForm = document.getElementById('reset-password-form');
+            const resetEmailInput = document.getElementById('reset-email');
+            const resetSubmitButton = document.getElementById('reset-submit');
+            const setupForm = document.getElementById('setup-password-form');
+            const setupEmailInput = document.getElementById('setup-email');
+            const setupPasswordInput = document.getElementById('setup-password');
+            const setupConfirmPasswordInput = document.getElementById('setup-confirm-password');
+            const setupSubmitButton = document.getElementById('setup-submit');
+            const redirectTarget = new URLSearchParams(window.location.search).get('redirect') || 'admin.html';
+            const prefillEmail = new URLSearchParams(window.location.search).get('email') || '';
+            const authError = new URLSearchParams(window.location.search).get('error') || '';
+
+            if (prefillEmail) {
+                emailInput.value = prefillEmail;
+                resetEmailInput.value = prefillEmail;
+                setupEmailInput.value = prefillEmail;
+            }
+
+            function setMessage(text, type) {
+                message.textContent = text;
+                message.className = 'rounded-2xl border px-4 py-3 text-sm';
+
+                if (type === 'error') {
+                    message.classList.add('border-red-500/30', 'bg-red-500/10', 'text-red-100');
+                } else {
+                    message.classList.add('border-emerald-500/30', 'bg-emerald-500/10', 'text-emerald-100');
+                }
+
+                message.classList.remove('hidden');
+            }
+
+            if (authError === 'not-approved') {
+                setMessage('This email is not approved for CMS admin access.', 'error');
+            }
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+                submitButton.disabled = true;
+                setMessage('Signing you in...', 'success');
+
+                const { error } = await window.pyfSupabase.auth.signInWithPassword({
+                    email: emailInput.value.trim(),
+                    password: passwordInput.value
+                });
+
+                if (error) {
+                    setMessage(error.message || 'Unable to sign in.', 'error');
+                    submitButton.disabled = false;
+                    return;
+                }
+
+                const approval = await window.pyfEnsureApprovedAdminSession();
+
+                if (!approval.ok) {
+                    setMessage('This email is not approved for CMS admin access.', 'error');
+                    submitButton.disabled = false;
+                    return;
+                }
+
+                setMessage('Login successful. Redirecting to the admin panel...', 'success');
+                window.location.replace(redirectTarget);
+            });
+
+            resetForm.addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                const resetEmail = resetEmailInput.value.trim() || emailInput.value.trim();
+
+                if (!resetEmail) {
+                    alert('Please enter your email address.');
+                    return;
+                }
+
+                resetSubmitButton.disabled = true;
+                const result = await window.sendPasswordReset(resetEmail);
+                resetSubmitButton.disabled = false;
+
+                if (!result.ok) {
+                    setMessage(result.error || 'Unable to send password reset email.', 'error');
+                    return;
+                }
+
+                setMessage(result.message || 'Password reset email sent.', 'success');
+            });
+
+            setupForm.addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                const setupEmail = setupEmailInput.value.trim() || emailInput.value.trim();
+                const setupPassword = setupPasswordInput.value;
+                const setupConfirmPassword = setupConfirmPasswordInput.value;
+
+                if (!setupEmail) {
+                    setMessage('Please enter your approved admin email.', 'error');
+                    return;
+                }
+
+                if (setupPassword.length < 8) {
+                    setMessage('Password must be at least 8 characters long.', 'error');
+                    return;
+                }
+
+                if (setupPassword !== setupConfirmPassword) {
+                    setMessage('Passwords do not match.', 'error');
+                    return;
+                }
+
+                setupSubmitButton.disabled = true;
+                setMessage('Creating your admin password...', 'success');
+
+                const response = await fetch(`${window.PYF_SUPABASE_URL}/functions/v1/admin-self-register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        apikey: window.PYF_SUPABASE_KEY,
+                        Authorization: `Bearer ${window.PYF_SUPABASE_KEY}`
+                    },
+                    body: JSON.stringify({
+                        email: setupEmail,
+                        password: setupPassword
+                    })
+                });
+
+                const result = await response.json().catch(() => ({}));
+
+                if (!response.ok) {
+                    setMessage(result.error || result.message || 'Unable to create password.', 'error');
+                    setupSubmitButton.disabled = false;
+                    return;
+                }
+
+                setMessage(result.message || 'Password created successfully. Sign in with your new password.', 'success');
+                window.location.replace(`admin-login.html?email=${encodeURIComponent(setupEmail)}`);
+            });
+        });
+    </script>
+</body>
+</html>
+

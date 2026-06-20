@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pay Yourself First - Support</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+   <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                       sans: ["Roboto Flex", 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-green': '#6BCB03',
+                        'brand-primary': '#389400', 
+                        'brand-dark': '#1c1c1c',
+                        'footer-bg': '#1f2022',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdn.pagesense.io/js/payyourselffirst/c2e5673c7d15457d8a0925080101f545.js"></script>
+
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Alpine.js for Interactions -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        /* Custom styles for sticky header transition */
+         .sticky-header { transition: transform 0.3s ease-in-out; }
+        .header-hidden { transform: translateY(-100%); }
+
+        /* Accordion Transitions */
+        .accordion-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.active {
+            opacity: 1;
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-btn[aria-expanded="true"] .accordion-icon {
+            transform: rotate(180deg);
+        }
+        .cms-image-pending { opacity: 0; }
+        .cms-image-ready { opacity: 1; }
+        
+    </style>
+
+</head>
+
+<body class="bg-white text-gray-800 font-sans antialiased flex flex-col min-h-screen" x-data="siteData" x-cloak>
+
+   <div id="main-header" class="fixed top-0 left-0 w-full z-50 sticky-header shadow-md">
+        <div class="bg-brand-dark text-white py-6 text-xs font-semibold">
+            <div class="container mx-auto px-4 flex justify-end items-center space-x-6">
+                <a href="#" class="flex items-center hover:text-brand-primary transition">
+                    <div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas fa-dollar-sign"></i></div> DISCOUNT PORTAL
+                </a>
+                <a href="#" class="flex items-center hover:text-brand-primary transition">
+                    <i class="fas fa-user text-brand-primary mr-2"></i> AFFILIATE LOGIN
+                </a>
+            </div>
+        </div>
+        <nav class="bg-white py-4">
+            <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
+                <a href="index.html"><img src="pyf-logo.svg" alt="Pay Yourself First Logo" class="h-12 object-contain"></a>
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl text-brand-dark focus:outline-none"><i class="fas fa-bars"></i></button>
+                <div data-site-nav-desktop class="hidden lg:flex items-center space-x-5 text-xs xl:text-sm font-bold text-gray-700 uppercase"></div>
+            </div>
+            <div id="mobile-menu" data-site-nav-mobile class="hidden lg:hidden text-sm bg-white border-t mt-4 p-4 flex flex-col space-y-4 font-bold text-gray-700 uppercase"></div>
+        </nav>
+    </div>
+
+    <div data-support-sections-root>
+        <header data-support-section="hero" x-cloak x-show="isContentReady && hasSection('hero')" class="container mx-auto px-4 mt-48">
+            <div class="relative rounded-[2rem] overflow-hidden h-[600px] shadow-2xl group">
+                <img :src="resolvedImages.hero || ''"
+                     alt="Customer Support Team"
+                     class="absolute inset-0 w-full h-full object-cover transition-opacity duration-200"
+                     :class="loadedImages.hero ? 'cms-image-ready' : 'cms-image-pending'">
+
+                <div class="absolute inset-0 bg-black/40"></div>
+
+                <div class="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 md:px-20">
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-6 uppercase leading-tight drop-shadow-md" x-html="getHeroSection().headline"></h1>
+                    <p class="text-md md:text-md text-gray-100 font-medium leading-relaxed max-w-6xl whitespace-pre-line" x-text="getHeroSection().desc"></p>
+                </div>
+            </div>
+        </header>
+
+        <main data-support-section="faq_categories" x-cloak x-show="isContentReady && hasSection('faq_categories')" class="flex-grow pt-[110px] md:pt-[130px] px-4 md:px-8 bg-white">
+            <div class="max-w-4xl mx-auto py-12">
+                <template x-for="(cat, catIndex) in getFaqCategories()" :key="catIndex">
+                    <div class="mb-12">
+                        <div class="mb-6 border-b border-brand-green/30 pb-2">
+                            <h2 class="text-2xl font-bold text-brand-green uppercase tracking-wide" x-html="cat.title"></h2>
+                        </div>
+
+                        <div class="space-y-4">
+                            <template x-for="(faq, qIndex) in cat.questions" :key="qIndex">
+                                <div class="bg-faq-bg rounded-sm">
+                                    <button class="accordion-btn w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none" aria-expanded="false" @click="toggleAccordion($event)">
+                                        <span class="font-bold text-brand-dark text-base md:text-lg" x-text="faq.q"></span>
+                                        <i class="fa-solid fa-chevron-down text-brand-green text-xl accordion-icon flex-shrink-0 ml-4"></i>
+                                    </button>
+                                    <div class="accordion-content">
+                                        <div class="px-6 pb-6 pt-0 text-gray-600 leading-relaxed" x-html="faq.a"></div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </main>
+    </div>
+
+
+
+
+
+
+     <div data-pyf-footer-root></div>
+
+
+
+
+
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Sticky Header Logic
+        let lastScrollTop = 0;
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) { header.classList.add('header-hidden'); } 
+            else { header.classList.remove('header-hidden'); }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        });
+
+    </script>
+
+    <button id="backToTopBtn" 
+            onclick="scrollToTop()" 
+            class="fixed bottom-8 right-8 z-50 bg-brand-primary hover:bg-[#2d7a00] text-white w-12 h-12 rounded-full shadow-lg transition-all duration-300 transform translate-y-20 opacity-0 flex items-center justify-center focus:outline-none">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        // Show/Hide logic based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show after scrolling down 300px
+                backToTopBtn.classList.remove('translate-y-20', 'opacity-0');
+            } else {
+                backToTopBtn.classList.add('translate-y-20', 'opacity-0');
+            }
+        });
+
+        // Smooth scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+                // --- Accordion Logic ---
+        const accordions = document.querySelectorAll('.accordion-btn');
+
+        accordions.forEach(acc => {
+            acc.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                this.setAttribute('aria-expanded', !isExpanded);
+                if (!isExpanded) {
+                    content.classList.add('active');
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } else {
+                    content.classList.remove('active');
+                    content.style.maxHeight = null;
+                }
+            });
+        });
+    </script>
+
+    <!-- Supabase Dynamic Data Script -->
+    <script>
+        const supabaseUrl = 'https://nqwggnereuhphwmkqove.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xd2dnbmVyZXVocGh3bWtxb3ZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU4MDUxMjAsImV4cCI6MjA5MTM4MTEyMH0.1OM-fLTth5FcMKUPHgepeM3BdJMydHiK1coD0vw0o0M';
+        
+        document.addEventListener('alpine:init', () => {
+            const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+            
+            Alpine.data('siteData', () => ({
+                pageData: {
+                    support: {
+    "hero": {
+        "headline": "Pay Yourself First Customer and Affiliate FAQ",
+        "desc": "This FAQ answers common questions about our services and affiliate program.\nWhether you're considering becoming a customer, an affiliate, or both, \nyou'll find clear explanations to help you understand exactly what PYF offers.",
+        "image": "Support-Page/Support Page_Hero.jpg"
+    },
+    "categories": [
+        {
+            "title": "General Questions",
+            "questions": [
+                {
+                    "q": "Q: What is Pay Yourself First?",
+                    "a": "Pay Yourself First (PYF) is a financial empowerment company that helps you earn more, keep more, and spend less. We offer discount programs, health and wellness services, and an affiliate program that allows you to earn referral fees by sharing PYF products with others."
+                },
+                {
+                    "q": "Q: Who can purchase PYF products?",
+                    "a": "Anyone can purchase PYF products. You don't need to be an affiliate or part of any organization\u2014our products are available to all."
+                },
+                {
+                    "q": "Q: What's the difference between being a customer and being an affiliate?",
+                    "a": "As a customer, you purchase PYF products (The Business Support Package, Doctor Power, Dental Power, Purchase Power, etc) for your own use. As an affiliate, you can earn referral fees by sharing PYF products with others. You can be a customer only, an affiliate only, or both\u2014it's completely up to you."
+                },
+                {
+                    "q": "Q: Do I have to purchase a product to become an affiliate?",
+                    "a": "No. The PYF affiliate program is completely free with no purchase requirements. You can sign up as an affiliate at no cost and start earning referral fees."
+                },
+                {
+                    "q": "Q: Can I sign up as an affiliate and purchase products at the same time?",
+                    "a": "Yes. Many people choose to become affiliates and purchase products for their own use simultaneously. This allows you to experience the advantages of PYF products while earning referral fees by sharing them with others."
+                }
+            ]
+        },
+        {
+            "title": "Affiliate Program FAQ",
+            "questions": [
+                {
+                    "q": "Q: What is the PYF Affiliate Program?",
+                    "a": "The PYF Affiliate Program is an opportunity to earn referral fees by sharing PYF products with others. There are no signup fees, no monthly costs, and no purchase requirements."
+                },
+                {
+                    "q": "Q: How much does it cost to become an affiliate?",
+                    "a": "Zero. The affiliate program is completely free\u2014no signup fees, no monthly fees, no hidden costs."
+                },
+                {
+                    "q": "Q: Are there any purchase requirements to be an affiliate?",
+                    "a": "No. You don't need to purchase any PYF products to become an affiliate or remain active as an affiliate."
+                },
+                {
+                    "q": "Q: Are there production quotas or sales requirements?",
+                    "a": "No. There are no production requirements, sales quotas, or minimum activity levels to maintain your affiliate status."
+                },
+                {
+                    "q": "Q: What products can I promote as an affiliate?",
+                    "a": "<p class=\"mb-2\">As a PYF affiliate, you can promote all PYF products immediately, including:</p>\n                            <ul class=\"list-disc list-inside space-y-1 ml-2\"><li>The Business Support Package ($149.99/month)</li><li>Doctor Power ($24.95/month)</li><li>Dental Power ($16.95/month)</li><li>Purchase Power ($9.95/month)</li><li>Tax Preparation & Advice ($49/one time)</li></ul>"
+                },
+                {
+                    "q": "Q: When can I start earning referral fees?",
+                    "a": "Immediately upon enrollment. All affiliates are eligible for all referral fees and bonuses from day one\u2014no waiting periods, no purchase requirements, no production qualifications."
+                },
+                {
+                    "q": "Q: How do affiliate referral fees work?",
+                    "a": "You earn referral fees when someone you refer purchases a PYF product and remains an active paying customer. Fee amounts vary based on the product your referral purchases. Detailed referral fee structures are available in your affiliate dashboard."
+                },
+                {
+                    "q": "Q: Do affiliates receive referral fees for referring other affiliates?",
+                    "a": "No. Affiliates only earn referral fees when paying customers purchase PYF products, not when someone enrolls as an affiliate."
+                },
+                {
+                    "q": "Q: What is a co-referral fee?",
+                    "a": "If Affiliate A refers Affiliate B, and Affiliate B refers a paying customer, Affiliate A earns a co-referral fee."
+                },
+                {
+                    "q": "Q: Is the co-referral fee multi-level?",
+                    "a": "No. The co-referral fee is one-level only. It does not extend deeper, does not stack, and does not function like a multi-level commission structure."
+                },
+                {
+                    "q": "Q: Do I need to purchase anything to receive recurring referral fees?",
+                    "a": "No. Referral fees are tied to customer purchases, not affiliate purchases or referrals."
+                },
+                {
+                    "q": "Q: When do I get paid for referrals?",
+                    "a": "Referral fees are processed monthly according to the schedule outlined in your affiliate agreement. Payment dates and amounts are visible in your affiliate dashboard."
+                },
+                {
+                    "q": "Q: How do I track my referrals?",
+                    "a": "Log in to your affiliate portal and go to your Referral Dashboard to see your referral activity, pending referral fees, and payment history."
+                },
+                {
+                    "q": "Q: Are affiliates employees of PYF?",
+                    "a": "No. Affiliates are independent and are responsible for complying with applicable laws, platform rules, and PYF policies."
+                },
+                {
+                    "q": "Q: Are earnings guaranteed?",
+                    "a": "No. Earnings depend on individual effort, market conditions, and adherence to our policies. No purchase is required to be an affiliate, and being an affiliate doesn't guarantee income."
+                },
+                {
+                    "q": "Q: What training do affiliates receive?",
+                    "a": "Affiliates receive access to marketing materials, product training, compliance guidelines, and sales resources to help them effectively share PYF products."
+                },
+                {
+                    "q": "Q: What marketing is prohibited for affiliates?",
+                    "a": "Misleading claims; unsubstantiated savings/income claims; spam; failure to disclose material connections; non-compliant telemarketing/texting; and any use of PYF trademarks beyond permitted guidelines."
+                },
+                {
+                    "q": "Q: Do affiliates need to use disclosures on social media?",
+                    "a": "Yes\u2014clear, unavoidable, and proximate disclosures (e.g., \"#ad\" at the beginning, not buried). Affiliates must follow the FTC Endorsement Guides and PYF compliance."
+                },
+                {
+                    "q": "Q: Can affiliates use PYF logos and trademarks?",
+                    "a": "Only per written brand guidelines and license; no alterations or confusingly similar marks."
+                },
+                {
+                    "q": "Q: Can affiliates create their own landing pages?",
+                    "a": "Only if approved by PYF. Pages must include required disclosures, accurate plan descriptions, and PYF's cancellation/consent options."
+                }
+            ]
+        },
+        {
+            "title": "Business Support Pacakage FAQ",
+            "questions": [
+                {
+                    "q": "Q: What is the Business Support Package?",
+                    "a": "The Business Support Package (BSP) is designed so that anyone can benefit from the\nfinancial wellness, legal support, savings tools, and general guidance. However, some\ncomponents\u2014such as business tax support and strategy guidance\u2014are particularly valuable for\nindividuals who operate a business, side business, or home-based business."
+                },
+                {
+                    "q": "Q: Who can purchase the Business Support Package?",
+                    "a": "Anyone can purchase The Business Support Package. You don't need to be in business\u2014IPP is available to all customers who want professional business, tax, and legal support."
+                },
+                {
+                    "q": "Q: Do I need to be an affiliate to buy The Business Support Package?",
+                    "a": "No. The Business Support Package is a product that anyone can purchase. However, many IPP users also choose to become affiliates to earn referral fees by sharing PYF products with others."
+                },
+                {
+                    "q": "Q: Is The Business Support Package a business opportunity?",
+                    "a": "No. The Business Support Package is a service product, not a business opportunity."
+                },
+                {
+                    "q": "Q: What's included with The Business Support Package?",
+                    "a": "<p class=\"mb-2\">The Business Support Package includes:</p>\n                            <ul class=\"list-disc list-inside space-y-1 ml-2\"><li>Professional tax support with licensed CPAs</li><li>Current and past tax return preparation</li><li>Business and personal tax guidance</li><li>Business structure consulting</li><li>Personal and business legal support</li><li>Business coaching and training</li><li>Marketing and sales education</li><li>Purchase Power retail discounts ($9.95 value included)</li><li>Tools and resources for home-based business success</li></ul>"
+                },
+                {
+                    "q": "Q: Do I need prior business experience?",
+                    "a": "No experience is necessary."
+                },
+                {
+                    "q": "Q: How much can I save on taxes with a home-based business?",
+                    "a": "Home-based business owners have access to over 400 potential tax deductions. The exact savings depend on your specific situation, but many business owners save thousands annually by properly claiming legitimate deductions they previously missed."
+                },
+                {
+                    "q": "Q: What if I've been missing deductions in previous years?",
+                    "a": "The tax professionals included in your plan can prepare amended returns for previous years to claim missed deductions, potentially resulting in significant refunds. You can typically amend returns for up to three years back."
+                },
+                {
+                    "q": "Q: Why do I need legal support for my business?",
+                    "a": "Legal support is crucial for running your business \"the right way\" and is needed for everything from reviewing contracts to ensuring compliance."
+                },
+                {
+                    "q": "Q: Are the legal services free?",
+                    "a": "Some key services are free, such as unlimited initial phone consultations and contract reviews (up to 10 pages). Other services are offered at a deeply discounted rate."
+                },
+                {
+                    "q": "Q: Can attorneys help with contract issues?",
+                    "a": "Yes, the plan attorneys can help with contract disputes, negotiations, and reviews with vendors, customers, or partners."
+                },
+                {
+                    "q": "Q: What about intellectual property?",
+                    "a": "The plan includes support for protecting your intellectual property."
+                },
+                {
+                    "q": "Q: Can I get help with compliance and licensing?",
+                    "a": "Yes, the attorneys can provide guidance on industry-specific regulations and licensing requirements."
+                }
+            ]
+        },
+        {
+            "title": "Purchase Power FAQ",
+            "questions": [
+                {
+                    "q": "Q: What is Purchase Power?",
+                    "a": "Purchase Power is a discount program that gives you access to savings on everyday spending\u2014including groceries, dining, shopping, travel, entertainment, automotive, and more. This plan is $9.95/month standalone, or it's included with Dental Power, Doctor Power, and The Business Support Package at no additional cost."
+                },
+                {
+                    "q": "Q: Who can purchase Purchase Power?",
+                    "a": "Anyone. Purchase Power is available to all customers."
+                },
+                {
+                    "q": "Q: Is Purchase Power included with other plans?",
+                    "a": "Yes. Purchase Power is included at no additional cost with Dental Power, Doctor Power, and The Business Support Package plans."
+                },
+                {
+                    "q": "Q: What types of stores and services are included?",
+                    "a": "Everything from national chains to local favorites\u2014groceries, electronics, travel, dining, entertainment, automotive, health services, home services, pet care, and more."
+                },
+                {
+                    "q": "Q: Do I need to clip coupons or install anything?",
+                    "a": "No. Just log in to your customer portal, search for a deal, and follow the instructions. It's quick and user-friendly."
+                },
+                {
+                    "q": "Q: Can I use Purchase Power with my existing store rewards?",
+                    "a": "In many cases, yes. You can often combine Purchase Power discounts with loyalty programs or other promotions."
+                },
+                {
+                    "q": "Q: How much can I realistically save?",
+                    "a": "Savings depend on usage, but many customers save thousands of dollars per year."
+                },
+                {
+                    "q": "Q: How do I access the discounts?",
+                    "a": "Simply log in to your customer portal. You can browse deals, print offers, or access them online or in-store."
+                },
+                {
+                    "q": "Q: Is there a mobile app?",
+                    "a": "Yes. A mobile-friendly version is available, and many discounts can be redeemed directly from your phone."
+                },
+                {
+                    "q": "Q: Are there any hidden fees?",
+                    "a": "No hidden fees. Your $9.95 monthly plan (or included access with other plans) gives you unlimited access to all discounts. Some vendors may have their own terms, but there are no additional charges from Purchase Power."
+                },
+                {
+                    "q": "Q: Is this a long-term commitment?",
+                    "a": "No. This is a month-to-month plan with no long-term contract."
+                },
+                {
+                    "q": "Q: Is there a minimum purchase required to use discounts?",
+                    "a": "Requirements vary by vendor. Most discounts have no minimum purchase, but some merchants may set their own terms."
+                },
+                {
+                    "q": "Q: How do I know if a business participates before I visit?",
+                    "a": "Use the portal or app to search by location, category, or business name. You can verify participating locations and current offers before making your trip."
+                },
+                {
+                    "q": "Q: Can my family members use my plan?",
+                    "a": "Yes. Your plan typically includes your household. Check specific terms for family usage guidelines."
+                },
+                {
+                    "q": "Q: What happens if a discount doesn't work?",
+                    "a": "Contact customer support immediately. We'll work with the merchant to resolve problems and ensure you receive your promised savings."
+                }
+            ]
+        },
+        {
+            "title": "Dental Power FAQ",
+            "questions": [
+                {
+                    "q": "Q: What is Dental Power?",
+                    "a": "Dental Power is a discount plan providing savings on dental, vision, hearing, and prescription services. This plan is $16.95/month and includes Purchase Power discounts at no additional cost."
+                },
+                {
+                    "q": "Q: Who can purchase Dental Power?",
+                    "a": "Anyone. Dental Power is available to all customers."
+                },
+                {
+                    "q": "Q: Is Dental Power insurance?",
+                    "a": "No. Dental Power is a discount plan that provides predetermined discounts on dental, vision, hearing, and prescription services. You pay the discounted price directly to participating providers."
+                },
+                {
+                    "q": "Q: What dental services are included?",
+                    "a": "The plan includes discounts on routine cleanings, exams, x-rays, fillings, root canals, crowns, dentures, cosmetic procedures, and more."
+                },
+                {
+                    "q": "Q: How much can I save?",
+                    "a": "Dental savings typically range from 20% to 60% depending on the procedure and provider."
+                },
+                {
+                    "q": "Q: Are there any waiting periods or annual limits?",
+                    "a": "No. There are no waiting periods, no annual limits, and no pre-approvals required."
+                },
+                {
+                    "q": "Q: Can I use this plan if I already have dental insurance?",
+                    "a": "Yes. This plan can complement your existing dental insurance for additional savings on procedures not fully covered."
+                },
+                {
+                    "q": "Q: Can I use Dental Power with my current dentist?",
+                    "a": "You can use the plan with any provider in the Dental Power network. Check the provider directory to see if your dentist participates\u2014there are over 70,000 participating dental providers nationwide."
+                },
+                {
+                    "q": "Q: What vision services are included?",
+                    "a": "Vision savings through the VSP network, including discounts on exams, glasses, and contact lenses."
+                },
+                {
+                    "q": "Q: What hearing services are included?",
+                    "a": "Discounts on hearing exams, hearing aids, and related services through participating providers."
+                },
+                {
+                    "q": "Q: Are prescription discounts included?",
+                    "a": "Yes. Prescription discounts are available at over 53,000 pharmacies nationwide, including major chains and mail-order options."
+                },
+                {
+                    "q": "Q: Who in my household can use this plan?",
+                    "a": "Your entire household is included under this single plan\u2014no need to pay extra for each person."
+                },
+                {
+                    "q": "Q: Is Purchase Power included?",
+                    "a": "Yes. Dental Power includes Purchase Power retail discounts at no additional cost."
+                },
+                {
+                    "q": "Q: Is this a long-term commitment?",
+                    "a": "No. This is a month-to-month plan with no long-term contract."
+                }
+            ]
+        },
+        {
+            "title": "Doctor Power FAQ",
+            "questions": [
+                {
+                    "q": "Q: What is Doctor Power?",
+                    "a": "Doctor Power is a health and wellness plan, providing 24/7 telehealth access, dental/vision/hearing savings, wellness and fitness discounts, personal legal referral, and Purchase Power retail discounts. This plan is $24.95/month."
+                },
+                {
+                    "q": "Q: Who can purchase Doctor Power?",
+                    "a": "Anyone. Doctor Power is available to all customers."
+                },
+                {
+                    "q": "Q: Is Doctor Power insurance?",
+                    "a": "No. Doctor Power is a discount plan that provides access to telehealth, dental/vision/hearing savings, wellness discounts, and legal referral services. It is not health insurance and does not pay medical providers."
+                },
+                {
+                    "q": "Q: What's included with Doctor Power?",
+                    "a": "<p class=\"mb-2\">Doctor Power includes:</p>\n                            <ul class=\"list-disc list-inside space-y-1 ml-2 mb-2\"><li>24/7 telehealth access through DialCare</li><li>All Dental Power services (dental, vision, hearing, prescription savings)</li><li>Wellness and fitness program discounts</li><li>Personal legal referral services</li><li>Purchase Power retail discounts</li></ul>\n                            <p>All for $24.95/month.</p>"
+                },
+                {
+                    "q": "Q: What is DialCare?",
+                    "a": "DialCare is the 24/7 telehealth service included with Doctor Power. You have unlimited access to board-certified U.S. physicians by phone or video for non-emergency medical consultations."
+                },
+                {
+                    "q": "Q: What kinds of medical issues can I use DialCare for?",
+                    "a": "DialCare doctors can provide treatment and advice for common non-emergency conditions such as colds, flu, rashes, sinus infections, minor UTIs, sore throats, headaches, allergies, and general health questions."
+                },
+                {
+                    "q": "Q: Are DialCare doctors licensed?",
+                    "a": "Yes. All DialCare doctors are U.S.-based, state-licensed, and fully credentialed to provide consultations and prescribe medications when appropriate."
+                },
+                {
+                    "q": "Q: Can DialCare doctors prescribe medications?",
+                    "a": "Yes, when medically appropriate. However, prescribing is at the independent clinician's discretion and subject to state law. Certain medications (e.g., DEA-controlled substances) cannot be prescribed via telehealth."
+                },
+                {
+                    "q": "Q: Are there any fees for DialCare consultations?",
+                    "a": "No. You and your family have unlimited access to consultations with no fees or copays."
+                },
+                {
+                    "q": "Q: Can I use DialCare while traveling?",
+                    "a": "Yes. DialCare works wherever you are in the U.S., making it a great resource when you're away from home."
+                },
+                {
+                    "q": "Q: What should I do in an emergency?",
+                    "a": "Do not use telehealth for emergencies. Call 911 or go to the nearest emergency room."
+                },
+                {
+                    "q": "Q: What legal services are included?",
+                    "a": "The Family Legal Plan includes free consultations, access to flat-fee and discounted services, and help with matters like wills, family law, landlord/tenant issues, real estate, traffic tickets, and more."
+                },
+                {
+                    "q": "Q: What is included in the Wellness & Fitness program?",
+                    "a": "Discounts of up to 25% on chiropractic care, massage therapy, acupuncture, dietitian services, wellness products, vitamins, supplements, and fitness club memberships through a nationwide network of over 20,000 providers."
+                },
+                {
+                    "q": "Q: Does Doctor Power include dental and vision?",
+                    "a": "Yes. Doctor Power includes all Dental Power services (dental, vision, hearing, and prescription savings) plus telehealth, wellness, fitness, and legal services."
+                },
+                {
+                    "q": "Q: Is Purchase Power included?",
+                    "a": "Yes. Doctor Power includes Purchase Power retail discounts at no additional cost."
+                },
+                {
+                    "q": "Q: Who in my household is included?",
+                    "a": "Your entire household is included under a single plan."
+                },
+                {
+                    "q": "Q: Is this a long-term commitment?",
+                    "a": "No. This is a month-to-month plan with no long-term contract."
+                }
+            ]
+        },
+        {
+            "title": "Plan & Billing FAQ",
+            "questions": [
+                {
+                    "q": "Q: Is my plan a subscription with automatic renewal?",
+                    "a": "Yes. PYF plans automatically renew monthly unless you cancel. Before you enroll, we clearly show the renewal terms, price, and billing frequency and require your affirmative consent. After purchase, you receive a confirmation email with all terms."
+                },
+                {
+                    "q": "Q: When will I be charged?",
+                    "a": "Plans are billed monthly on the date you originally enrolled. You'll receive an email receipt after each payment. The price, billing frequency, and first charge date are disclosed at checkout."
+                },
+                {
+                    "q": "Q: What payment methods do you accept?",
+                    "a": "We accept major credit cards (Visa, MasterCard, American Express, Discover), debit cards, ACH bank transfers, and payroll deduction."
+                },
+                {
+                    "q": "Q: How do I modify my plan?",
+                    "a": "Contact PYF support by web, email, or through your customer portal. Modifications are processed at the end of your current billing cycle."
+                },
+                {
+                    "q": "Q: What's the refund policy?",
+                    "a": "New plans have a 30-day money-back guarantee. Contact support within 30 days of enrollment for a full refund (minus processing fees). The refund policy is stated clearly at checkout and in your confirmation email."
+                },
+                {
+                    "q": "Q: Do you offer free trials?",
+                    "a": "No. We do not offer free trials or promotional periods."
+                },
+                {
+                    "q": "Q: Are there any hidden fees?",
+                    "a": "No. The monthly price you see at checkout is what you pay\u2014no hidden fees or charges. Some third-party providers may have their own fees, but those are disclosed separately."
+                }
+            ]
+        },
+        {
+            "title": "Compliance & Legal FAQ",
+            "questions": [
+                {
+                    "q": "Q: Does PYF guarantee savings or provider availability?",
+                    "a": "No. Discounts and participating providers/merchants can change at any time and may vary by location, date, and product/service. Examples shown are illustrative, not guarantees of future results."
+                },
+                {
+                    "q": "Q: Is PYF health insurance or a health plan?",
+                    "a": "No. PYF plans are not insurance. Discount programs do not pay providers\u2014you pay the discounted price directly to participating providers or merchants."
+                },
+                {
+                    "q": "Q: Is PYF a law, tax, investment, or medical service?",
+                    "a": "No. The information we provide is educational. Decisions about taxes, legal matters, investing, or medical care should be made with qualified professionals."
+                },
+                {
+                    "q": "Q: Are all PYF services available in every state?",
+                    "a": "Most services are available nationwide, but some (especially telehealth) have state-specific limitations. Check state availability before enrolling."
+                },
+                {
+                    "q": "Q: How are affiliate disclosures handled?",
+                    "a": "Affiliates must clearly and conspicuously disclose any material connection (e.g., commissions) in the same format and placement as their content\u2014including social posts, videos, emails, and presentations. We train and monitor affiliates for compliance."
+                },
+                {
+                    "q": "Q: Can affiliates make earnings or income claims?",
+                    "a": "Only if they have competent and reliable evidence, which is rare. If typical earnings are shared, we disclose what \"typical\" means, timeframes, and relevant costs. Affiliates cannot make unsubstantiated income claims."
+                }
+            ]
+        },
+        {
+            "title": "Privacy & Data FAQ",
+            "questions": [
+                {
+                    "q": "Q: What data do you collect and why?",
+                    "a": "We collect only what we need to provide plan services, prevent fraud, and comply with law. Our Privacy Notice describes categories of data, uses, retention periods, and your rights (access, delete, opt-out of sale/sharing, where applicable)."
+                },
+                {
+                    "q": "Q: Do you share my data?",
+                    "a": "We share only as needed to deliver your plans and comply with law. Marketing communications require appropriate consent, and you can opt out anytime."
+                },
+                {
+                    "q": "Q: Is my information secure?",
+                    "a": "Yes. We use industry-standard encryption and security measures to protect your personal and payment information. We do not sell your data to third parties."
+                }
+            ]
+        },
+        {
+            "title": "Support & Contact FAQ",
+            "questions": [
+                {
+                    "q": "Q: How do I contact PYF support?",
+                    "a": "Contact us by email, through our website contact form, or via our official social media channels. Contact details are available on our <a href=\"contact.html\" class=\"text-brand-green hover:underline\">Contact page</a>."
+                }
+            ]
+        }
+    ]
+}
+                },
+                isContentReady: false,
+                resolvedImages: {
+                    hero: ''
+                },
+                loadedImages: {
+                    hero: false
+                },
+
+                getDefaultSections(heroSource = null, categoriesSource = null) {
+                    const hero = heroSource || this.pageData.support.hero || {};
+                    const categories = Array.isArray(categoriesSource) && categoriesSource.length
+                        ? categoriesSource
+                        : (Array.isArray(this.pageData.support.categories) ? this.pageData.support.categories : []);
+
+                    return [
+                        {
+                            id: 'hero',
+                            type: 'hero',
+                            label: 'Support Hero',
+                            headline: hero.headline || '',
+                            desc: hero.desc || '',
+                            image: hero.image || 'Support-Page/Support Page_Hero.jpg'
+                        },
+                        {
+                            id: 'faq-categories',
+                            type: 'faq_categories',
+                            label: 'FAQ Categories',
+                            categories: categories.map(category => ({
+                                title: category?.title || '',
+                                questions: (Array.isArray(category?.questions) ? category.questions : []).map(question => ({
+                                    q: question?.q || '',
+                                    a: question?.a || ''
+                                }))
+                            }))
+                        }
+                    ];
+                },
+
+                normalizeSections(sections, heroSource = null, categoriesSource = null) {
+                    const defaults = this.getDefaultSections(heroSource, categoriesSource);
+                    if (!Array.isArray(sections)) return defaults;
+
+                    return sections
+                        .map((section, index) => {
+                            const type = section?.type || section?.id;
+                            const fallback = defaults.find(item => item.type === type || item.id === type);
+                            if (!fallback) return null;
+
+                            if (fallback.type === 'hero') {
+                                return {
+                                    id: section?.id || fallback.id,
+                                    type: fallback.type,
+                                    label: section?.label || fallback.label,
+                                    headline: section?.headline || fallback.headline,
+                                    desc: section?.desc || fallback.desc,
+                                    image: section?.image || fallback.image
+                                };
+                            }
+
+                            return {
+                                id: section?.id || `${fallback.id}-${index + 1}`,
+                                type: fallback.type,
+                                label: section?.label || fallback.label,
+                                categories: (Array.isArray(section?.categories) ? section.categories : fallback.categories).map(category => ({
+                                    title: category?.title || '',
+                                    questions: (Array.isArray(category?.questions) ? category.questions : []).map(question => ({
+                                        q: question?.q || '',
+                                        a: question?.a || ''
+                                    }))
+                                }))
+                            };
+                        })
+                        .filter(Boolean);
+                },
+
+                normalizeSupportData(pageData = {}) {
+                    const base = this.pageData.support;
+                    const incomingSections = Array.isArray(pageData.sections) ? pageData.sections : [];
+                    const heroSection = incomingSections.find(section => (section?.type || section?.id) === 'hero');
+                    const faqSection = incomingSections.find(section => (section?.type || section?.id) === 'faq_categories');
+                    const hero = {
+                        ...(base.hero || {}),
+                        ...(pageData.hero || {}),
+                        ...(heroSection || {})
+                    };
+                    const categories = Array.isArray(faqSection?.categories)
+                        ? faqSection.categories
+                        : (Array.isArray(pageData.categories) && pageData.categories.length ? pageData.categories : (base.categories || []));
+                    const sections = this.normalizeSections(pageData.sections, hero, categories);
+                    const normalizedHero = sections.find(section => section.type === 'hero') || this.getDefaultSections(hero, categories)[0];
+                    const normalizedFaq = sections.find(section => section.type === 'faq_categories') || this.getDefaultSections(hero, categories)[1];
+
+                    return {
+                        ...base,
+                        ...pageData,
+                        hero: {
+                            headline: normalizedHero.headline || '',
+                            desc: normalizedHero.desc || '',
+                            image: normalizedHero.image || 'Support-Page/Support Page_Hero.jpg'
+                        },
+                        categories: (normalizedFaq.categories || []).map(category => ({
+                            title: category?.title || '',
+                            questions: (Array.isArray(category?.questions) ? category.questions : []).map(question => ({
+                                q: question?.q || '',
+                                a: question?.a || ''
+                            }))
+                        })),
+                        sections
+                    };
+                },
+
+                hasSection(type) {
+                    return (this.pageData.support.sections || []).some(section => section.type === type);
+                },
+
+                getSection(type) {
+                    return (this.pageData.support.sections || []).find(section => section.type === type) || {};
+                },
+
+                getHeroSection() {
+                    return this.getSection('hero');
+                },
+
+                getFaqCategories() {
+                    const section = this.getSection('faq_categories');
+                    return Array.isArray(section.categories) ? section.categories : [];
+                },
+
+                syncSectionLayout() {
+                    const root = document.querySelector('[data-support-sections-root]');
+                    if (!root) return;
+
+                    const nodesByType = new Map(
+                        Array.from(root.querySelectorAll('[data-support-section]')).map(node => [node.dataset.supportSection, node])
+                    );
+
+                    (this.pageData.support.sections || []).forEach(section => {
+                        const node = nodesByType.get(section.type);
+                        if (node) root.appendChild(node);
+                    });
+                },
+
+                async init() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const isPreviewMode = urlParams.get('mode') === 'preview';
+                    let mergedSupport = { ...this.pageData.support };
+                    
+                    try {
+                        let { data, error } = await supabase.from('site_content').select('*').eq('page_id', 'support').single();
+                        if (error) throw error;
+                        if (data) {
+                            const loadedContent = isPreviewMode ? data.draft_content : data.live_content;
+                            mergedSupport = { ...this.pageData.support, ...(loadedContent || {}) };
+                        }
+                    } catch (e) {
+                        console.error("Failed to load CMS data", e);
+                    }
+
+                    mergedSupport = this.normalizeSupportData(mergedSupport);
+                    this.pageData.support = mergedSupport;
+                    this.syncSectionLayout();
+                    this.isContentReady = true;
+                    await this.resolveImages(mergedSupport);
+                },
+
+                getImageTargets(content) {
+                    return {
+                        hero: this.getHeroSection().image || content.hero?.image || 'Support-Page/Support Page_Hero.jpg'
+                    };
+                },
+
+                preloadImage(src) {
+                    return new Promise((resolve, reject) => {
+                        if (!src) {
+                            reject(new Error('Missing image source'));
+                            return;
+                        }
+
+                        const img = new Image();
+                        img.onload = () => resolve(src);
+                        img.onerror = () => reject(new Error(`Failed to preload image: ${src}`));
+                        img.src = src;
+                    });
+                },
+
+                async resolveImages(content) {
+                    const imageTargets = this.getImageTargets(content);
+
+                    await Promise.all(Object.entries(imageTargets).map(async ([key, src]) => {
+                        try {
+                            const loadedSrc = await this.preloadImage(src);
+                            this.resolvedImages[key] = loadedSrc;
+                            this.loadedImages[key] = true;
+                        } catch (error) {
+                            console.error(error);
+                        }
+                    }));
+                },
+                
+                toggleAccordion(event) {
+                    const btn = event.currentTarget;
+                    const content = btn.nextElementSibling;
+                    const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+                    
+                    btn.setAttribute('aria-expanded', !isExpanded);
+                    
+                    if (!isExpanded) {
+                        content.classList.add('active');
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    } else {
+                        content.classList.remove('active');
+                        content.style.maxHeight = null;
+                    }
+                }
+            }));
+        });
+    </script>
+    <script src="js/site-nav.js"></script>
+    <script src="js/site-footer.js"></script>
+</body>
+</html>
