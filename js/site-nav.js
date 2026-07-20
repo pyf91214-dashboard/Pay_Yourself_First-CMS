@@ -39,6 +39,10 @@
                             { label: 'About Us', url: 'about-us.html', visible: true },
                             { label: 'Contact Us', url: 'contact-us.html', visible: true },
                             { label: 'Business Support Package', url: 'business-support-package.html', visible: true }
+                        ],
+                        utility_links: [
+                            { label: 'DISCOUNT PORTAL', url: 'https://payyourselffirst.benefithub.com/Welcome', icon: 'fa-dollar-sign', visible: true, newTab: true },
+                            { label: 'AFFILIATE LOGIN', url: 'https://backoffice.pyfaffiliates.com/merchants/login.php#login', icon: 'fa-user', visible: true, newTab: true }
                         ]
                     }
                 }
@@ -55,15 +59,30 @@
         };
     }
 
+    function normalizeUtilityLink(link, index) {
+        return {
+            id: asText(link && link.id, 'utility-link-' + index),
+            label: asText(link && link.label, ''),
+            url: asText(link && link.url, ''),
+            icon: asText(link && link.icon, ''),
+            visible: typeof link?.visible === 'boolean' ? link.visible : true,
+            newTab: typeof link?.newTab === 'boolean' ? link.newTab : true
+        };
+    }
+
     function normalizeNavContent(content) {
         const defaults = getDefaultNavContent();
         const source = content && typeof content === 'object' ? content : {};
         const sourceSection = Array.isArray(source.sections) ? source.sections[0] : null;
         const defaultSection = defaults.sections[0];
         const linkSource = sourceSection?.content?.links;
+        const utilityLinkSource = sourceSection?.content?.utility_links;
         const links = Array.isArray(linkSource)
             ? linkSource.map(normalizeLink).filter((link) => link.label || link.url)
             : clone(defaultSection.content.links).map(normalizeLink);
+        const utilityLinks = Array.isArray(utilityLinkSource)
+            ? utilityLinkSource.map(normalizeUtilityLink).filter((link) => link.label || link.url)
+            : clone(defaultSection.content.utility_links).map(normalizeUtilityLink);
 
         return {
             sections: [
@@ -73,7 +92,8 @@
                     enabled: typeof sourceSection?.enabled === 'boolean' ? sourceSection.enabled : true,
                     order: Number.isFinite(sourceSection?.order) ? sourceSection.order : 1,
                     content: {
-                        links
+                        links,
+                        utility_links: utilityLinks
                     }
                 }
             ]
@@ -163,6 +183,17 @@
         return '<a href="' + escapeHtml(href) + '" class="' + escapeHtml(className) + '"' + target + '>' + escapeHtml(link.label) + '</a>';
     }
 
+    function renderUtilityLink(link) {
+        const href = normalizeHref(link.url);
+        const openInNewTab = link.newTab || isExternalUrl(href);
+        const target = openInNewTab ? ' target="_blank" rel="noopener noreferrer"' : '';
+        const icon = link.icon
+            ? '<div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas ' + escapeHtml(link.icon) + '"></i></div>'
+            : '';
+
+        return '<a href="' + escapeHtml(href) + '" class="flex items-center hover:text-brand-primary transition"' + target + '>' + icon + escapeHtml(link.label) + '</a>';
+    }
+
     function renderLinks(content, mode) {
         const section = Array.isArray(content?.sections) ? content.sections[0] : null;
         const links = Array.isArray(section?.content?.links) ? section.content.links : [];
@@ -173,6 +204,19 @@
         return links
             .filter((link) => link.visible !== false && (link.label || link.url))
             .map((link) => renderLink(link, mode))
+            .join('');
+    }
+
+    function renderUtilityLinks(content) {
+        const section = Array.isArray(content?.sections) ? content.sections[0] : null;
+        const links = Array.isArray(section?.content?.utility_links) ? section.content.utility_links : [];
+        if (section && section.enabled === false) {
+            return '';
+        }
+
+        return links
+            .filter((link) => link.visible !== false && (link.label || link.url))
+            .map((link) => renderUtilityLink(link))
             .join('');
     }
 
@@ -214,26 +258,32 @@
     async function applyGlobalNav() {
         const desktopNav = document.querySelector('[data-site-nav-desktop]');
         const mobileNav = document.querySelector('[data-site-nav-mobile]');
-        if (!desktopNav && !mobileNav) {
+        const utilityNav = document.querySelector('[data-site-utility-nav]');
+        if (!desktopNav && !mobileNav && !utilityNav) {
             return;
         }
 
+        let content = getDefaultNavContent();
         try {
             const record = await fetchNavRecord();
-            const content = getResolvedContent(record);
-            if (!content) {
-                return;
-            }
-
-            if (desktopNav) {
-                desktopNav.innerHTML = renderLinks(content, 'desktop');
-            }
-
-            if (mobileNav) {
-                mobileNav.innerHTML = renderLinks(content, 'mobile');
+            const resolvedContent = getResolvedContent(record);
+            if (resolvedContent) {
+                content = resolvedContent;
             }
         } catch (error) {
             console.error('Failed to load global nav content', error);
+        }
+
+        if (desktopNav) {
+            desktopNav.innerHTML = renderLinks(content, 'desktop');
+        }
+
+        if (mobileNav) {
+            mobileNav.innerHTML = renderLinks(content, 'mobile');
+        }
+
+        if (utilityNav) {
+            utilityNav.innerHTML = renderUtilityLinks(content);
         }
     }
 

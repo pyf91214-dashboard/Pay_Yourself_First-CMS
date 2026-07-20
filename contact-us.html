@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -52,14 +52,7 @@
 
    <div id="main-header" class="fixed top-0 left-0 w-full z-50 sticky-header shadow-md">
         <div class="bg-brand-dark text-white py-6 text-xs font-semibold">
-            <div class="container mx-auto px-4 flex justify-end items-center space-x-6">
-                <a href="#" class="flex items-center hover:text-brand-primary transition">
-                    <div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas fa-dollar-sign"></i></div> DISCOUNT PORTAL
-                </a>
-                <a href="#" class="flex items-center hover:text-brand-primary transition">
-                    <i class="fas fa-user text-brand-primary mr-2"></i> AFFILIATE LOGIN
-                </a>
-            </div>
+            <div data-site-utility-nav class="container mx-auto px-4 flex justify-end items-center space-x-6"></div>
         </div>
         <nav class="bg-white py-4">
             <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
@@ -537,7 +530,7 @@
             <div class="container mx-auto px-4 py-16 md:py-24">
                 
                 <div class="text-center max-w-5xl mx-auto mb-16">
-                    <h2 class="text-2xl font-bold text-brand-dark leading-relaxed" x-text="pageData.contact_us.bottom_text || 'We’re committed to making your experience with Pay Yourself First as smooth and supportive as possible. If you need help, don’t hesitate to reach out.'"></h2>
+                    <h2 class="text-2xl font-bold text-brand-dark leading-relaxed" x-text="pageData.contact_us.bottom_text || 'Weâ€™re committed to making your experience with Pay Yourself First as smooth and supportive as possible. If you need help, donâ€™t hesitate to reach out.'"></h2>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -708,7 +701,7 @@
                             cta_text: 'Go To Form',
                             cta_link: '#form'
                         },
-                        bottom_text: 'We’re committed to making your experience with Pay Yourself First as smooth and supportive as possible. If you need help, don’t hesitate to reach out.',
+                        bottom_text: 'Weâ€™re committed to making your experience with Pay Yourself First as smooth and supportive as possible. If you need help, donâ€™t hesitate to reach out.',
                         bottom_notices: [
                             {icon: 'fa-user-clock', text: 'Please Allow 1-2 Business Days For A Response'},
                             {icon: 'fa-stop', text: 'PYF Cannot and Does Not Provide Tax, Legal, or Medical Advice'},
@@ -942,7 +935,7 @@
                     normalized.bottom_notices = Array.isArray(contactData.bottom_notices) && contactData.bottom_notices.length
                         ? contactData.bottom_notices
                         : defaultBottomNotices.map(notice => ({ ...notice }));
-                    normalized.bottom_text = contactData.bottom_text || 'Weâ€™re committed to making your experience with Pay Yourself First as smooth and supportive as possible. If you need help, donâ€™t hesitate to reach out.';
+                    normalized.bottom_text = contactData.bottom_text || 'WeÃ¢â‚¬â„¢re committed to making your experience with Pay Yourself First as smooth and supportive as possible. If you need help, donÃ¢â‚¬â„¢t hesitate to reach out.';
                     normalized.form_action = contactData.form_action || 'https://forms.zohopublic.com/payyourselffirst1/form/PYFMainSiteContactUs/formperma/c6Fb3hI5V4Qrp9CMD5OPrutVAxOgF5v8wy10YwxFd8A/htmlRecords/submit';
 
                     return normalized;
@@ -1171,3 +1164,4 @@
     <script src="js/site-footer.js"></script>
 </body>
 </html>
+

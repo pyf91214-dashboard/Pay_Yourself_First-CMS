@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -45,14 +45,7 @@
 
     <div id="main-header" class="fixed top-0 left-0 w-full z-50 sticky-header shadow-md">
         <div class="bg-brand-dark text-white py-6 text-xs font-semibold">
-            <div class="container mx-auto px-4 flex justify-end items-center space-x-6">
-                <a href="https://payyourselffirst.benefithub.com/Welcome" class="flex items-center hover:text-brand-primary transition" target="_blank">
-                    <div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas fa-dollar-sign"></i></div> DISCOUNT PORTAL
-                </a>
-                <a href="https://backoffice.pyfaffiliates.com/merchants/login.php#login" class="flex items-center hover:text-brand-primary transition" target="_blank">
-                    <i class="fas fa-user text-brand-primary mr-2"></i> AFFILIATE LOGIN
-                </a>
-            </div>
+            <div data-site-utility-nav class="container mx-auto px-4 flex justify-end items-center space-x-6"></div>
         </div>
         <nav class="bg-white py-4">
             <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
@@ -242,10 +235,10 @@
                                     <span x-text="pkg.includes_title" class="font-bold text-gray-900 text-[10px] xl:text-xs block mb-2"></span>
                                     <ul class="space-y-2 text-[9px] xl:text-[10px] text-gray-600 font-medium">
                                         <template x-for="item in pkg.includes_list1" :key="item">
-                                            <li x-text="'• ' + item"></li>
+                                            <li x-text="'â€¢ ' + item"></li>
                                         </template>
                                         <template x-for="item in pkg.includes_list2" :key="item">
-                                            <li x-text="'• ' + item"></li>
+                                            <li x-text="'â€¢ ' + item"></li>
                                         </template>
                                     </ul>
                                 </div>
@@ -891,3 +884,4 @@
     <script src="js/site-footer.js"></script>
 </body>
 </html>
+

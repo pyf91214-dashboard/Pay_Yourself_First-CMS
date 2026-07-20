@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -40,14 +40,7 @@
 <body class="bg-white text-gray-800 font-sans antialiased flex flex-col min-h-screen" x-data="doctorPowerPage()" x-init="init()" x-cloak>
     <div id="main-header" class="fixed top-0 left-0 w-full z-50 sticky-header shadow-md">
         <div class="bg-brand-dark text-white py-6 text-xs font-semibold">
-            <div class="container mx-auto px-4 flex justify-end items-center space-x-6">
-                <a href="https://payyourselffirst.benefithub.com/Welcome" class="flex items-center hover:text-brand-primary transition" target="_blank">
-                    <div class="w-4 h-4 rounded-full bg-brand-primary flex items-center justify-center text-white mr-2 text-[10px]"><i class="fas fa-dollar-sign"></i></div> DISCOUNT PORTAL
-                </a>
-                <a href="https://backoffice.pyfaffiliates.com/merchants/login.php#login" class="flex items-center hover:text-brand-primary transition" target="_blank">
-                    <i class="fas fa-user text-brand-primary mr-2"></i> AFFILIATE LOGIN
-                </a>
-            </div>
+            <div data-site-utility-nav class="container mx-auto px-4 flex justify-end items-center space-x-6"></div>
         </div>
         <nav class="bg-white py-4">
             <div class="container mx-auto px-4 flex flex-wrap justify-between items-center">
@@ -573,3 +566,4 @@
     <script src="js/site-footer.js"></script>
 </body>
 </html>
+
