@@ -1,7 +1,36 @@
 // $Id: $
-function zf_ValidateAndSubmit(){
-		if(zf_CheckMandatory()){
-			if(zf_ValidCheck()){
+function zf_GetTargetForm(formElem){
+		if(formElem && formElem.nodeName === 'FORM'){
+			return formElem;
+		}
+		return document.forms.form || null;
+	}
+function zf_GetField(formElem, fieldName){
+		if(!formElem || !fieldName){
+			return null;
+		}
+		if(typeof formElem.elements?.namedItem === 'function'){
+			return formElem.elements.namedItem(fieldName);
+		}
+		return formElem[fieldName] || null;
+	}
+function zf_GetFieldErrorElement(formElem, uniqName){
+		if(!formElem || !uniqName){
+			return null;
+		}
+		var linkName = uniqName.split('_')[0] + "_error";
+		if(typeof formElem.querySelectorAll === 'function'){
+			var errorMatches = formElem.querySelectorAll('#' + linkName);
+			if(errorMatches && errorMatches.length){
+				return errorMatches[0];
+			}
+		}
+		return document.getElementById(linkName);
+	}
+function zf_ValidateAndSubmit(formElem){
+		var targetForm = zf_GetTargetForm(formElem);
+		if(zf_CheckMandatory(targetForm)){
+			if(zf_ValidCheck(targetForm)){
 				if(isSalesIQIntegrationEnabled){
 					zf_addDataToSalesIQ();
 				}
@@ -13,36 +42,36 @@ function zf_ValidateAndSubmit(){
 			return false;
 		}
 	}
-		function zf_CheckMandatory(){
+		function zf_CheckMandatory(formElem){
 		for(i = 0 ; i < zf_MandArray.length ; i ++) {
-		  	var fieldObj=document.forms.form[zf_MandArray[i]];
+		  	var fieldObj=zf_GetField(formElem, zf_MandArray[i]);
 		  	if(fieldObj) {
 				  	if(fieldObj.nodeName != null ){
 				  		if ( fieldObj.nodeName=='OBJECT' ) {
 								if(!zf_MandatoryCheckSignature(fieldObj)){
-									zf_ShowErrorMsg(zf_MandArray[i]);
+									zf_ShowErrorMsg(formElem, zf_MandArray[i]);
 								 	return false;
 								}
 							}else if (((fieldObj.value).replace(/^\s+|\s+$/g, '')).length==0) {
 							 if(fieldObj.type =='file')
 								{
 								 fieldObj.focus();
-								 zf_ShowErrorMsg(zf_MandArray[i]);
+								 zf_ShowErrorMsg(formElem, zf_MandArray[i]);
 								 return false;
 								}
 				   	   	  	  fieldObj.focus();
-				   	   	  	  zf_ShowErrorMsg(zf_MandArray[i]);
+				   	   	  	  zf_ShowErrorMsg(formElem, zf_MandArray[i]);
 				   	   	  	  return false;
 							}  else if( fieldObj.nodeName=='SELECT' ) {// No I18N
 				  	   	   	 if(fieldObj.options[fieldObj.selectedIndex].value=='-Select-') {
 								fieldObj.focus();
-								zf_ShowErrorMsg(zf_MandArray[i]);
+								zf_ShowErrorMsg(formElem, zf_MandArray[i]);
 								return false;
 							   }
 							} else if( fieldObj.type =='checkbox' || fieldObj.type =='radio' ){
 								if(fieldObj.checked == false){
 									fieldObj.focus();
-									zf_ShowErrorMsg(zf_MandArray[i]);
+									zf_ShowErrorMsg(formElem, zf_MandArray[i]);
 									return false;
 			   					}
 							}
@@ -56,7 +85,7 @@ function zf_ValidateAndSubmit(){
 							}
 							if ( checkedValsCount == 0) {
 									inpChoiceElems[0].focus();
-									zf_ShowErrorMsg(zf_MandArray[i]);
+									zf_ShowErrorMsg(formElem, zf_MandArray[i]);
 									return false;
 							 	}
 					}
@@ -64,10 +93,10 @@ function zf_ValidateAndSubmit(){
 		}
 		return true;
 	}
-	function zf_ValidCheck(){
+	function zf_ValidCheck(formElem){
 		var isValid = true;
 		for(ind = 0 ; ind < zf_FieldArray.length ; ind++ ) {
-			var fieldObj=document.forms.form[zf_FieldArray[ind]];
+			var fieldObj=zf_GetField(formElem, zf_FieldArray[ind]);
 		  	if(fieldObj) {
 		  		if(fieldObj.nodeName != null ){
 			  		var checkType = fieldObj.getAttribute("checktype");
@@ -75,42 +104,42 @@ function zf_ValidateAndSubmit(){
 			  			if( !zf_ValidateNumber(fieldObj)){
 							isValid = false;
 							fieldObj.focus();
-							zf_ShowErrorMsg(zf_FieldArray[ind]);
+							zf_ShowErrorMsg(formElem, zf_FieldArray[ind]);
 							return false;
 						}
 			  		}else if( checkType == "c3" ){// No I18N
 			  			if (!zf_ValidateCurrency(fieldObj) || !zf_ValidateDecimalLength(fieldObj,10) ) {
 							isValid = false;
 							fieldObj.focus();
-							zf_ShowErrorMsg(zf_FieldArray[ind]);
+							zf_ShowErrorMsg(formElem, zf_FieldArray[ind]);
 							return false;
 						}
 			  		}else if( checkType == "c4" ){// No I18N
 			  			if( !zf_ValidateDateFormat(fieldObj)){
 							isValid = false;
 							fieldObj.focus();
-							zf_ShowErrorMsg(zf_FieldArray[ind]);
+							zf_ShowErrorMsg(formElem, zf_FieldArray[ind]);
 							return false;
 						}
 			  		}else if( checkType == "c5" ){// No I18N
 			  			if (!zf_ValidateEmailID(fieldObj)) {
 							isValid = false;
 							fieldObj.focus();
-							zf_ShowErrorMsg(zf_FieldArray[ind]);
+							zf_ShowErrorMsg(formElem, zf_FieldArray[ind]);
 							return false;
 						}
 			  		}else if( checkType == "c6" ){// No I18N
 			  			if (!zf_ValidateLiveUrl(fieldObj)) {
 							isValid = false;
 							fieldObj.focus();
-							zf_ShowErrorMsg(zf_FieldArray[ind]);
+							zf_ShowErrorMsg(formElem, zf_FieldArray[ind]);
 							return false;
 							}
 			  		}else if( checkType == "c7" ){// No I18N
 			  			if (!zf_ValidatePhone(fieldObj)) {
 							isValid = false;
 							fieldObj.focus();
-							zf_ShowErrorMsg(zf_FieldArray[ind]);
+							zf_ShowErrorMsg(formElem, zf_FieldArray[ind]);
 							return false;
 							}
 			  		}else if( checkType == "c8" ){// No I18N
@@ -119,7 +148,7 @@ function zf_ValidateAndSubmit(){
 						if( !zf_ValidateMonthYearFormat(fieldObj)){
 							isValid = false;
 							fieldObj.focus();
-							zf_ShowErrorMsg(zf_FieldArray[ind]);
+							zf_ShowErrorMsg(formElem, zf_FieldArray[ind]);
 							return false;
 						}
 			  		}
@@ -128,14 +157,19 @@ function zf_ValidateAndSubmit(){
 		}
          	return isValid;
 	}
-	function zf_ShowErrorMsg(uniqName){
+	function zf_ShowErrorMsg(formElem, uniqName){
 		var fldLinkName;
 		for( errInd = 0 ; errInd < zf_FieldArray.length ; errInd ++ ) {
 			fldLinkName = zf_FieldArray[errInd].split('_')[0];
-			document.getElementById(fldLinkName+"_error").style.display = 'none';
+			var hideErrorElem = zf_GetFieldErrorElement(formElem, fldLinkName);
+			if(hideErrorElem){
+				hideErrorElem.style.display = 'none';
+			}
 		}
-		var linkName = uniqName.split('_')[0];
-		document.getElementById(linkName+"_error").style.display = 'block';
+		var showErrorElem = zf_GetFieldErrorElement(formElem, uniqName);
+		if(showErrorElem){
+			showErrorElem.style.display = 'block';
+		}
 	}
 	function zf_ValidateNumber(elem) {
 	 	var validChars = "-0123456789";
